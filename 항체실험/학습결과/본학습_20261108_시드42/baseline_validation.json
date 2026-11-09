@@ -1,0 +1,135 @@
+{
+  "metrics": {
+    "nll": 0.803422958434385,
+    "perplexity": 2.23317191540944,
+    "tokens": 4803
+  },
+  "per_sequence": [
+    {
+      "id": "pdl1:a855e9e34ac530ed",
+      "group_id": "pdl1:a855e9e34ac530ed",
+      "tokens": 232,
+      "nll": 0.33976600910055227
+    },
+    {
+      "id": "plabdab_candidate:0143eea039e6b091",
+      "group_id": "pdl1:a855e9e34ac530ed",
+      "tokens": 232,
+      "nll": 0.3840027513175175
+    },
+    {
+      "id": "plabdab_candidate:1b25a87862a69c38",
+      "group_id": "plabdab_candidate:1b25a87862a69c38",
+      "tokens": 224,
+      "nll": 0.6834133693150112
+    },
+    {
+      "id": "plabdab_candidate:2684c67dffafb7c1",
+      "group_id": "plabdab_candidate:2684c67dffafb7c1",
+      "tokens": 232,
+      "nll": 0.819949906447838
+    },
+    {
+      "id": "plabdab_candidate:3e6e8549f01e9d24",
+      "group_id": "plabdab_candidate:3e6e8549f01e9d24",
+      "tokens": 226,
+      "nll": 0.9775424383382881
+    },
+    {
+      "id": "plabdab_candidate:4677dfc8a7ed766c",
+      "group_id": "plabdab_candidate:4677dfc8a7ed766c",
+      "tokens": 227,
+      "nll": 0.6025988204888836
+    },
+    {
+      "id": "plabdab_candidate:524f6f97e8d06224",
+      "group_id": "plabdab_candidate:2684c67dffafb7c1",
+      "tokens": 232,
+      "nll": 0.7846382404195851
+    },
+    {
+      "id": "plabdab_candidate:6ddbf7ae82a9c2b3",
+      "group_id": "plabdab_candidate:2684c67dffafb7c1",
+      "tokens": 232,
+      "nll": 0.9525916000892376
+    },
+    {
+      "id": "plabdab_candidate:6e158af186794b34",
+      "group_id": "plabdab_candidate:6e158af186794b34",
+      "tokens": 225,
+      "nll": 0.8514512803819444
+    },
+    {
+      "id": "plabdab_candidate:71550cdfe1fb41c1",
+      "group_id": "plabdab_candidate:3e6e8549f01e9d24",
+      "tokens": 228,
+      "nll": 0.9484706677888569
+    },
+    {
+      "id": "plabdab_candidate:763f1393d72fea81",
+      "group_id": "plabdab_candidate:2684c67dffafb7c1",
+      "tokens": 232,
+      "nll": 0.7652998957140692
+    },
+    {
+      "id": "plabdab_candidate:79c0f3568c5d0a78",
+      "group_id": "plabdab_candidate:6e158af186794b34",
+      "tokens": 225,
+      "nll": 0.9638959418402778
+    },
+    {
+      "id": "plabdab_candidate:959e39ecd088c491",
+      "group_id": "plabdab_candidate:1b25a87862a69c38",
+      "tokens": 225,
+      "nll": 0.7462830946180555
+    },
+    {
+      "id": "plabdab_candidate:a2d67781c7a050db",
+      "group_id": "plabdab_candidate:1b25a87862a69c38",
+      "tokens": 225,
+      "nll": 0.8019740125868056
+    },
+    {
+      "id": "plabdab_candidate:ab9d18b86b540ca7",
+      "group_id": "plabdab_candidate:1b25a87862a69c38",
+      "tokens": 229,
+      "nll": 0.9620705816943572
+    },
+    {
+      "id": "plabdab_candidate:b9f97516948cc285",
+      "group_id": "plabdab_candidate:3e6e8549f01e9d24",
+      "tokens": 228,
+      "nll": 0.6579455994723136
+    },
+    {
+      "id": "plabdab_candidate:c526b11bff5a1f11",
+      "group_id": "plabdab_candidate:2684c67dffafb7c1",
+      "tokens": 232,
+      "nll": 0.9796072861243939
+    },
+    {
+      "id": "plabdab_candidate:c571068df55f4c77",
+      "group_id": "plabdab_candidate:2684c67dffafb7c1",
+      "tokens": 232,
+      "nll": 1.0353616517165611
+    },
+    {
+      "id": "plabdab_candidate:cdddfbaf4625e968",
+      "group_id": "plabdab_candidate:2684c67dffafb7c1",
+      "tokens": 232,
+      "nll": 0.8319119420544855
+    },
+    {
+      "id": "plabdab_candidate:e02fab3fac16520e",
+      "group_id": "plabdab_candidate:e02fab3fac16520e",
+      "tokens": 228,
+      "nll": 0.8614997863769531
+    },
+    {
+      "id": "plabdab_candidate:f92a3b6d8b8236f8",
+      "group_id": "plabdab_candidate:6e158af186794b34",
+      "tokens": 225,
+      "nll": 0.9290016004774305
+    }
+  ]
+}

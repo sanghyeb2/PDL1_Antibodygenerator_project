@@ -1,0 +1,19 @@
+{
+  "python": "3.11.6 (tags/v3.11.6:8b6ee5b, Oct  2 2023, 14:57:12) [MSC v.1935 64 bit (AMD64)]",
+  "packages": {
+    "torch": "2.7.1+cu128",
+    "transformers": "4.32.1",
+    "peft": "0.5.0",
+    "rapidfuzz": "3.10.1",
+    "accelerate": "0.23.0",
+    "numpy": "1.26.4",
+    "tokenizers": "0.13.3",
+    "safetensors": "0.4.5"
+  },
+  "cuda": "12.8",
+  "cudnn": 90701,
+  "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "hash_seed": "42",
+  "nvidia_smi": "Sun Nov  8 09:06:11 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 595.95                 Driver Version: 595.95         CUDA Version: 13.2     |\n+-----------------------------------------+------------------------+----------------------+\n| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA GeForce RTX 5060 ...  WDDM  |   00000000:01:00.0 Off |                  N/A |\n| N/A   35C    P4              6W /   55W |       0MiB /   8151MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n\n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|  No running processes found                                                             |\n+-----------------------------------------------------------------------------------------+\n",
+  "progen_commit": "9b4d4fb5ec19c9e55c4bb06305c0e613e46c1cf5"
+}

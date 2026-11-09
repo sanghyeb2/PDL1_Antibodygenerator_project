@@ -1,0 +1,11 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.json -text
+# Preserve original CSV bytes (BOM/CRLF) used by recorded SHA-256 checks.
+*.csv -text
+*.svg text eol=lf
+*.png binary
+*.safetensors binary
+# Historical experiment artifacts retain their exact recorded bytes.
+항체실험/학습결과/** -text

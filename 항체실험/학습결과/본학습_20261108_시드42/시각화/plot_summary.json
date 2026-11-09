@@ -1,0 +1,24 @@
+{
+  "pairs": 21,
+  "groups": 7,
+  "tokens": 4803,
+  "baseline_nll": 0.803422958434385,
+  "lora_nll": 0.6587138321904522,
+  "baseline_perplexity": 2.23317191540944,
+  "lora_perplexity": 1.9323054663909756,
+  "improved_pairs": 21,
+  "worsened_pairs": 0,
+  "unchanged_pairs": 0,
+  "delta_nll": -0.14470912624393284,
+  "nll_reduction_percent": 18.011574691109743,
+  "best_epoch": 3,
+  "train_seed": 42,
+  "matplotlib_version": "3.9.2",
+  "source_files": [
+    "baseline_validation.json",
+    "best_validation_per_sequence.json",
+    "history.csv",
+    "result.json"
+  ],
+  "interpretation": "Descriptive paired validation comparison; checkpoint selected on same validation set; no independent test, p-value or binding claim"
+}

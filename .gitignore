@@ -1,0 +1,35 @@
+# Local upstream checkout, model weights and Python environment
+/MAGE_ab_generation/
+/항체실험/외부코드/
+/항체실험/캐시/
+**/__pycache__/
+*.py[cod]
+.venv*/
+venv/
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local archives, generated candidates, agent planning records
+/항체실험/이전코드/
+/항체실험/생성결과/
+/docs/
+/정리기록_*.json
+*.zip
+*.log
+*.pt
+*.pth
+*.bin
+
+# Share the fixed split and selected experiment, not preliminary/repeated runs
+/항체실험/학습결과/*
+!/항체실험/학습결과/데이터분할_시드42/
+!/항체실험/학습결과/본학습_20261108_시드42/
+**/마지막어댑터/
+**/토크나이저/
+*.safetensors
+!/항체실험/학습결과/본학습_20261108_시드42/최적어댑터/adapter_model.safetensors

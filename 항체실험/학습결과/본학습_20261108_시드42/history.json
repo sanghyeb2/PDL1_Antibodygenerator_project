@@ -1,0 +1,79 @@
+[
+  {
+    "epoch": 1,
+    "optimizer_step": 11,
+    "train_nll": 0.6440275732530928,
+    "train_tokens": 19477,
+    "validation_nll": 0.7362978663415728,
+    "validation_perplexity": 2.088190426601596,
+    "best_epoch": 1,
+    "patience_counter": 0,
+    "seconds": 31.301568700000644
+  },
+  {
+    "epoch": 2,
+    "optimizer_step": 22,
+    "train_nll": 0.5147632056941988,
+    "train_tokens": 19477,
+    "validation_nll": 0.6646477014055953,
+    "validation_perplexity": 1.9438056007147009,
+    "best_epoch": 2,
+    "patience_counter": 0,
+    "seconds": 31.119845600042026
+  },
+  {
+    "epoch": 3,
+    "optimizer_step": 33,
+    "train_nll": 0.42496675161412717,
+    "train_tokens": 19477,
+    "validation_nll": 0.6587138321904522,
+    "validation_perplexity": 1.9323054663909756,
+    "best_epoch": 3,
+    "patience_counter": 0,
+    "seconds": 34.11939220002387
+  },
+  {
+    "epoch": 4,
+    "optimizer_step": 44,
+    "train_nll": 0.36601867701242596,
+    "train_tokens": 19477,
+    "validation_nll": 0.6799196874303617,
+    "validation_perplexity": 1.973719211403313,
+    "best_epoch": 3,
+    "patience_counter": 1,
+    "seconds": 40.06892659998266
+  },
+  {
+    "epoch": 5,
+    "optimizer_step": 55,
+    "train_nll": 0.3146860324217014,
+    "train_tokens": 19477,
+    "validation_nll": 0.7168991403383139,
+    "validation_perplexity": 2.048072568399492,
+    "best_epoch": 3,
+    "patience_counter": 2,
+    "seconds": 45.46447489998536
+  },
+  {
+    "epoch": 6,
+    "optimizer_step": 66,
+    "train_nll": 0.27003488373192097,
+    "train_tokens": 19477,
+    "validation_nll": 0.7506707147983072,
+    "validation_perplexity": 2.118420396133368,
+    "best_epoch": 3,
+    "patience_counter": 3,
+    "seconds": 40.563522699987516
+  },
+  {
+    "epoch": 7,
+    "optimizer_step": 77,
+    "train_nll": 0.22570911419368986,
+    "train_tokens": 19477,
+    "validation_nll": 0.7913892238854419,
+    "validation_perplexity": 2.2064595644000855,
+    "best_epoch": 3,
+    "patience_counter": 4,
+    "seconds": 39.162099799956195
+  }
+]
