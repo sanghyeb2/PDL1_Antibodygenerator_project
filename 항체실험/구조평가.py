@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import csv
+import gzip
 import json
 import os
 import re
@@ -209,6 +210,7 @@ def fold(limit=None, ids=None):
             'XLA_FLAGS': '--xla_gpu_autotune_level=0',
             'TF_ENABLE_ONEDNN_OPTS': '0',
             'PYTHONFAULTHANDLER': '1',
+            'MPLBACKEND': 'Agg',
             'PATH': str(executable.parent) + ':' + os.environ.get('PATH', '')}, monitor_gpu=True)
         ranked = list(destination.glob('*_relaxed_rank_001*.pdb'))
         if not ranked or not list(destination.glob('*_scores_rank_001*.json')):
@@ -281,7 +283,7 @@ def fold_batch(ids=None):
     run_logged(command, batch / 'execution.log', extra_env={
         'PATH': str(executable.parent) + ':' + os.environ.get('PATH', ''),
         'XLA_PYTHON_CLIENT_PREALLOCATE': 'false', 'XLA_FLAGS': '--xla_gpu_autotune_level=0',
-        'TF_ENABLE_ONEDNN_OPTS': '0', 'PYTHONFAULTHANDLER': '1'}, monitor_gpu=True, on_poll=collect)
+        'TF_ENABLE_ONEDNN_OPTS': '0', 'PYTHONFAULTHANDLER': '1', 'MPLBACKEND': 'Agg'}, monitor_gpu=True, on_poll=collect)
     collect()
     missing = [r['id'] for r, _ in pending if not (OUTPUT / 'folding' / r['id'] / 'completed.json').exists()]
     if missing:
@@ -410,6 +412,7 @@ def prepare_docking(row, sampling, refine, profile, native_reference=False):
     write_json(root / 'residue_map.json', maps | {'cdr_positions': cdrs_global,
                                                 'exposed_cdr': active, 'exposed_antigen': accessible_ag})
     settings = {'candidate': row['id'], 'profile': profile, 'seed': 42,
+                'restraint_body_tool_default_seed': 917,
                 'sampling': sampling, 'refine': refine, 'ncores': 6,
                 'native_reference': native_reference,
                 'antibody_sha256': digest(antibody), 'antigen_sha256': digest(antigen),
@@ -471,7 +474,9 @@ global_rmsd = false
 def restore_pose_chains(source, destination, heavy_length):
     """Restore the biological H/L labels after docking; coordinates are unchanged."""
     lines = []
-    for line in Path(source).read_text().splitlines():
+    source = Path(source)
+    text = gzip.open(source, 'rt').read() if source.suffix == '.gz' else source.read_text()
+    for line in text.splitlines():
         if line.startswith(('ATOM', 'HETATM')):
             chain = line[21]
             if chain == 'B':
@@ -658,7 +663,8 @@ def analyze(profile):
     summary, excluded = [], []
     destination = OUTPUT / 'analysis' / profile
     destination.mkdir(parents=True, exist_ok=True)
-    for row in manifest['candidates']:
+    expected_rows = [r for r in manifest['candidates'] if not profile.startswith('reference-pilot') or r['group'] == 'control']
+    for row in expected_rows:
         root = ENV / 'runs' / profile / row['id']
         if not (root / 'completed.json').exists():
             excluded.append({'id': row['id'], 'reason': 'docking not completed'})
@@ -673,7 +679,7 @@ def analyze(profile):
             raise ValueError(f'Unexpected output columns: {table_path}: {list(table)}')
         top = table[pd.to_numeric(table['cluster_ranking'], errors='coerce') == 1].sort_values('score').head(4)
         if top.empty:
-            excluded.append({'id': row['id'], 'reason': 'no cluster with >=4 members; no silent fallback'})
+            excluded.append({'id': row['id'], 'reason': 'no cluster available; no silent fallback'})
             continue
         metrics = []
         maps = read_json(root / 'residue_map.json')
@@ -683,9 +689,21 @@ def analyze(profile):
         cluster_population = None
         if cluster_tables:
             clustered = pd.read_csv(cluster_tables[-1], sep='\t', comment='#')
-            cluster_population = int((clustered['cluster_id'].astype(str) == str(top.iloc[0]['cluster_id'])).sum())
+            cluster_population = int((pd.to_numeric(clustered['cluster_id'], errors='coerce') ==
+                                       float(top.iloc[0]['cluster_id'])).sum())
+        if profile == 'main' and (cluster_population is None or cluster_population < 4):
+            excluded.append({'id': row['id'], 'reason': 'cluster has fewer than four refined poses'})
+            continue
+        analysis_signature = {'version': 2, 'settings_sha256': digest(root / 'settings.json'),
+                              'capri_sha256': digest(table_path), 'residue_map_sha256': digest(root / 'residue_map.json')}
+        cached_metrics = candidate_dir / 'metrics.json'
+        if cached_metrics.exists() and read_json(cached_metrics).get('analysis_signature') == analysis_signature:
+            summary.append(read_json(cached_metrics))
+            continue
         for rank, (_, pose) in enumerate(top.iterrows(), 1):
             pdb = (table_path.parent / str(pose['model'])).resolve()
+            if not pdb.exists() and pdb.with_suffix(pdb.suffix + '.gz').exists():
+                pdb = pdb.with_suffix(pdb.suffix + '.gz')
             if not pdb.exists():
                 raise FileNotFoundError(pdb)
             local = candidate_dir / f'pose_{rank}.pdb'
@@ -709,15 +727,25 @@ def analyze(profile):
                 prediction = {'signature': signature, 'deltaG_kcal_mol': float(affinity[1]),
                               'estimated_Kd_M': float(kd[1])}
                 write_json(cache, prediction)
+            interface = interface_metrics(local, maps)
+            if row['group'] == 'control':
+                reference = read_json(OUTPUT / 'references' / row['id'] / 'reference_metrics.json')['interface']
+                native_pairs = set(tuple(x) for x in reference['contact_pairs'])
+                predicted_pairs = set(tuple(x) for x in interface['contact_pairs'])
+                interface['reference_contact_recall_4A'] = len(native_pairs & predicted_pairs) / len(native_pairs) if native_pairs else None
+                interface['reference_contact_precision_4A'] = len(native_pairs & predicted_pairs) / len(predicted_pairs) if predicted_pairs else None
+                interface['reference_contact_Jaccard_4A'] = len(native_pairs & predicted_pairs) / len(native_pairs | predicted_pairs) if native_pairs | predicted_pairs else None
             metrics.append({'pose': rank, 'score': float(pose['score']),
                             'prodigy_deltaG_kcal_mol': prediction['deltaG_kcal_mol'],
                             'prodigy_estimated_Kd_M': prediction['estimated_Kd_M'],
-                            'interface': interface_metrics(local, maps)})
+                            'interface': interface})
         frequencies = Counter(i for m in metrics for i in m['interface']['antigen_contact_residues_uniprot'])
         result = {'id': row['id'], 'group': row['group'], 'profile': profile,
+                  'analysis_signature': analysis_signature,
                   'cluster_id': str(top.iloc[0]['cluster_id']),
                   'cluster_top4_n': len(metrics),
                   'cluster_population': cluster_population,
+                  'underpopulated_cluster': cluster_population is None or cluster_population < 4,
                   'refined_pose_count': read_json(root / 'settings.json')['refine'],
                   'cluster_top4_score_mean': float(top['score'].mean()),
                   'cluster_top4_score_sd': float(np.std(top['score'])),
@@ -734,7 +762,7 @@ def analyze(profile):
             'select interface, byres ((chain H+L within 4 of chain A) or (chain A within 4 of chain H+L))\n'
             'show sticks, interface\nset cartoon_transparency, 0.1\nbg_color white\nzoom complex\n', encoding='ascii')
     write_json(destination / 'all_results.json', {'results': summary, 'excluded': excluded,
-               'expected_candidates': 42, 'interpretation': 'Computational pose-based estimates; no experimental affinity claim.'})
+               'expected_candidates': len(expected_rows), 'interpretation': 'Computational pose-based estimates; no experimental affinity claim.'})
     fields = ['id', 'group', 'cluster_top4_score_mean', 'cluster_top4_score_sd', 'prodigy_top4_deltaG_mean', 'pilot_only']
     with (destination / 'candidate_summary.csv').open('w', encoding='utf-8-sig', newline='') as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
@@ -742,7 +770,8 @@ def analyze(profile):
         writer.writerows({k: r[k] for k in fields} for r in summary)
     if summary:
         plot_results(summary, destination, profile, excluded)
-    print(f'Analyzed {len(summary)}/42; pending/unclustered {len(excluded)}; profile={profile}', flush=True)
+        shortlist(summary, destination)
+    print(f'Analyzed {len(summary)}/{len(expected_rows)}; pending/unclustered {len(excluded)}; profile={profile}', flush=True)
 
 
 def plot_results(rows, destination, profile, excluded):
@@ -762,6 +791,7 @@ def plot_results(rows, destination, profile, excluded):
                              color=colors[group], edgecolor='white', s=38, zorder=3)
                 axis.plot([index - .2, index + .2], [np.median(values)] * 2, color='black', lw=2)
         axis.set(xticks=range(3), xticklabels=list(colors), title=title, ylabel=label)
+        axis.set_xlim(-.5, 2.5)
         axis.grid(axis='y', alpha=.18)
     for group, color in colors.items():
         group_rows = [r for r in rows if r['group'] == group]
@@ -771,11 +801,95 @@ def plot_results(rows, destination, profile, excluded):
             axes[2].plot(positions, values, label=f'{group} (n={len(group_rows)})', color=color)
     axes[2].set(xlabel='PD-L1 residue (UniProt numbering)', ylabel='Mean top-cluster contact frequency', title='Antigen interface contacts (4 A)')
     axes[2].legend(frameon=False, fontsize=8)
-    fig.suptitle(f'PD-L1 structural screening | {profile} | {len(rows)}/42 analyzed')
-    fig.supxlabel(f'One point per antibody; cluster top four poses. Missing/unclustered: {len(excluded)}. Predictions do not establish binding.', fontsize=9)
+    fig.suptitle(f'PD-L1 structural screening | {profile} | {len(rows)}/{len(rows)+len(excluded)} analyzed')
+    fig.supxlabel(f'One point per antibody; up to four cluster poses. Missing/unclustered: {len(excluded)}. Predictions do not establish binding.', fontsize=9)
     for suffix in ('png', 'svg'):
         fig.savefig(destination / f'docking_summary.{suffix}', dpi=200)
     plt.close(fig)
+
+
+def shortlist(rows, destination):
+    """Descriptive ranking; flags remain visible and no experimental affinity is inferred."""
+    ranked = []
+    for group in ('MAGE', 'LoRA', 'control'):
+        selected = sorted([r for r in rows if r['group'] == group], key=lambda r:r['cluster_top4_score_mean'])
+        for rank, row in enumerate(selected, 1):
+            poses = row['poses']
+            ranked.append({'id': row['id'], 'group': group, 'rank_within_group': rank,
+                           'HADDOCK_cluster_score_mean': row['cluster_top4_score_mean'],
+                           'HADDOCK_cluster_score_sd': row['cluster_top4_score_sd'],
+                           'cluster_population': row['cluster_population'],
+                           'scored_poses': row['cluster_top4_n'],
+                           'PRODIGY_deltaG_mean_kcal_mol': row['prodigy_top4_deltaG_mean'],
+                           'interface_area_A2_mean': sum(p['interface']['interface_area_half_buried_SASA_A2'] for p in poses)/len(poses),
+                           'CDR_contact_fraction_mean': sum(p['interface']['cdr_contact_residue_fraction'] or 0 for p in poses)/len(poses),
+                           'glycan_proximity_flag': any(p['interface']['glycan_proximity_flag_8A'] for p in poses),
+                           'ECD_terminal_proximity_flag': any(p['interface']['membrane_proximity_surrogate_flag_8A'] for p in poses),
+                           'underpopulated_cluster': row['underpopulated_cluster'],
+                           'pilot_only': row['pilot_only'],
+                           'representative': f"{row['id']}/pose_1.pdb"})
+    for filename, values in [('ranking_all.csv', ranked),
+                             ('shortlist_top5_per_group.csv', [r for r in ranked if r['rank_within_group'] <= 5])]:
+        with (destination / filename).open('w', encoding='utf-8-sig', newline='') as handle:
+            writer = csv.DictWriter(handle, fieldnames=list(ranked[0]))
+            writer.writeheader()
+            writer.writerows(values)
+
+
+def import_colab(archive_path):
+    """Import a Colab result archive only after checking the fixed biological inputs/settings."""
+    import zipfile
+    archive_path = Path(archive_path).resolve()
+    expected = read_json(OUTPUT / 'manifest.json')
+    with zipfile.ZipFile(archive_path) as archive:
+        incoming = json.loads(archive.read('manifest.json'))
+        for key in ('input_hashes', 'antigen', 'candidates'):
+            if incoming[key] != expected[key]:
+                raise ValueError(f'Colab input mismatch: {key}')
+        if incoming['settings']['fold'] != expected['settings']['fold']:
+            raise ValueError('Colab folding settings do not match')
+        for entry in archive.infolist():
+            relative = Path(entry.filename)
+            target = (OUTPUT / relative).resolve()
+            if not target.is_relative_to(OUTPUT.resolve()) or relative.is_absolute():
+                raise ValueError(f'Unsafe archive path: {entry.filename}')
+            if relative.parts and relative.parts[0] in {'references', 'analysis', 'docking'}:
+                raise ValueError('Folding archive cannot overwrite local docking/analysis')
+        local_target = OUTPUT / 'folding/PDL1_ECD'
+        backup = OUTPUT / 'local_before_colab/PDL1_ECD'
+        if local_target.exists() and not backup.exists():
+            shutil.copytree(local_target, backup)
+        archive.extractall(OUTPUT)
+    write_json(OUTPUT / 'colab_import.json', {'archive': str(archive_path), 'sha256': digest(archive_path),
+               'imported_utc': datetime.now(timezone.utc).isoformat()})
+    status()
+    folding_summary()
+
+
+def run_main(sampling, refine):
+    """Run the common docking budget, reusing exact completed candidates, with balanced order."""
+    manifest = read_json(OUTPUT / 'manifest.json')
+    controls = [r['id'] for r in manifest['candidates'] if r['group'] == 'control']
+    mage = [r['id'] for r in manifest['candidates'] if r['group'] == 'MAGE']
+    lora = [r['id'] for r in manifest['candidates'] if r['group'] == 'LoRA']
+    order = controls + [x for pair in zip(mage, lora) for x in pair]
+    missing = [x for x in ['PDL1_ECD'] + order if not (OUTPUT / 'folding' / x / 'completed.json').exists()]
+    if missing:
+        raise RuntimeError(f'Collect completed Colab structures before docking: {missing}')
+    settings = {'seed': 42, 'sampling': sampling, 'refine': refine, 'order': order,
+                'epitope': 'all accessible PD-L1 ECD surface', 'status': 'running'}
+    saved = OUTPUT / 'main_settings.json'
+    if saved.exists():
+        previous = read_json(saved)
+        if any(previous[k] != settings[k] for k in ('seed', 'sampling', 'refine', 'order')):
+            raise ValueError('Cannot mix main docking sampling budgets')
+    write_json(saved, settings)
+    for candidate in order:
+        dock(ids=[candidate], profile='main', sampling=sampling, refine=refine)
+        analyze('main')
+        status()
+    settings['status'] = 'completed'
+    write_json(saved, settings)
 
 
 def status():
@@ -822,8 +936,7 @@ def folding_summary():
 
 
 def make_colab():
-    """Export a self-contained notebook with this exact runner, fixed inputs and cached MSA."""
-    import base64
+    """Export a small notebook and a hash-verified bundle of exact code/inputs/cached MSA."""
     import io
     import zipfile
     payload = io.BytesIO()
@@ -834,8 +947,9 @@ def make_colab():
             archive.write(path, 'results/inputs/' + path.name)
         for path in (OUTPUT / 'folding').rglob('*.a3m'):
             archive.write(path, 'results/' + str(path.relative_to(OUTPUT)))
-    encoded = base64.b64encode(payload.getvalue()).decode('ascii')
     payload_sha = hashlib.sha256(payload.getvalue()).hexdigest()
+    bundle = HERE / '구조평가_환경/colab_inputs.zip'
+    bundle.write_bytes(payload.getvalue())
     def cell(kind, source):
         result = {'cell_type': kind, 'metadata': {}, 'source': source.splitlines(keepends=True)}
         if kind == 'code':
@@ -843,17 +957,25 @@ def make_colab():
         return result
     setup = '''import os, sys, subprocess, pathlib, json, time
 from pathlib import Path
+os.environ['MPLBACKEND'] = 'Agg'
 gpu = subprocess.run(['nvidia-smi'], capture_output=True, text=True)
 print(gpu.stdout)
 assert gpu.returncode == 0, '런타임 유형을 GPU로 변경한 후 실행하세요. CPU로 계산하지 않습니다.'
 ENV = Path('/content/pdl1-env')
-subprocess.run([sys.executable, '-m', 'venv', str(ENV/'colabfold')], check=True)
 python = ENV/'colabfold/bin/python'
-subprocess.run([str(python), '-m', 'pip', 'install', 'colabfold[alphafold,openmm]==1.6.3', 'jax[cuda12]==0.10.1'], check=True)
-subprocess.run([str(python), '-c', 'import jax; print(jax.devices()); assert jax.default_backend()=="gpu"'], check=True)
+def checked(args):
+    result = subprocess.run([str(x) for x in args], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    print(result.stdout[-8000:])
+    result.check_returncode()
+if not python.exists():
+    checked([sys.executable, '-m', 'pip', 'install', '-q', 'virtualenv'])
+    checked([sys.executable, '-m', 'virtualenv', str(ENV/'colabfold')])
+checked([python, '-m', 'pip', 'install', 'colabfold[alphafold,openmm]==1.6.3', 'jax[cuda12]==0.10.1'])
+checked([python, '-c', 'import jax; print(jax.devices()); assert jax.default_backend()=="gpu"'])
 '''
-    unpack = f'''import base64, io, zipfile, hashlib
-payload = base64.b64decode({encoded!r})
+    unpack = f'''import io, zipfile, hashlib, urllib.request, urllib.parse, shutil
+url = 'https://raw.githubusercontent.com/sanghyeb2/PDL1_Antibodygenerator_project/MAGE_ROLA/' + urllib.parse.quote('항체실험/구조평가_환경/colab_inputs.zip')
+payload = urllib.request.urlopen(url).read()
 assert hashlib.sha256(payload).hexdigest() == {payload_sha!r}
 ROOT = Path('/content/pdl1-project')
 ROOT.mkdir(exist_ok=True)
@@ -862,15 +984,38 @@ with zipfile.ZipFile(io.BytesIO(payload)) as archive:
 OUTPUT = ROOT/'results'
 os.environ['PDL1_STRUCTURE_OUTPUT'] = str(OUTPUT)
 os.environ['PDL1_STRUCTURE_ENV'] = str(ENV)
+shutil.copy2(ROOT/'구조평가.py', OUTPUT/'execution_runner.py')
 (OUTPUT/'colab_gpu.txt').write_text(gpu.stdout)
 with (OUTPUT/'colab_requirements_lock.txt').open('w') as handle:
     subprocess.run([str(python), '-m', 'pip', 'freeze'], stdout=handle, check=True)
 print('고정 입력: Fv 42쌍 + 공통 PD-L1, 시드 42; 정확한 코드 SHA256:', hashlib.sha256((ROOT/'구조평가.py').read_bytes()).hexdigest())
 '''
-    predict = '''# 같은 셀을 재실행해도 완료된 구조는 건너뜁니다. 먼저 1개씩 실제 속도를 확인합니다.
-subprocess.run([str(python), str(ROOT/'구조평가.py'), 'fold', '--ids', 'PDL1_ECD'], check=True)
-subprocess.run([str(python), str(ROOT/'구조평가.py'), 'fold-batch'], check=True)
-subprocess.run([str(python), str(ROOT/'구조평가.py'), 'fold-summary'], check=True)
+    predict = '''# 완료된 구조는 재사용하고 실제 예측의 최신 로그를 표시합니다.
+os.environ['MPLBACKEND'] = 'Agg'
+def run_stage(mode, *args):
+    command = [str(python), str(ROOT/'구조평가.py'), mode, *args]
+    log = OUTPUT / (mode + '_driver.log')
+    previous = None
+    with log.open('w') as handle:
+        process = subprocess.Popen(command, stdout=handle, stderr=subprocess.STDOUT)
+        print('시작:', mode, 'PID:', process.pid, flush=True)
+        while process.poll() is None:
+            logs = list((OUTPUT/'folding').glob('*/log.txt'))
+            if logs:
+                latest = max(logs, key=lambda p:p.stat().st_mtime)
+                lines = latest.read_text(errors='replace').splitlines()
+                message = lines[-1] if lines else '모델 준비 중'
+                if message != previous:
+                    print(latest.parent.name, message, flush=True)
+                    previous = message
+            time.sleep(20)
+        if process.returncode:
+            print(log.read_text()[-6000:])
+            raise RuntimeError('Stage failed: ' + mode)
+    print('완료:', mode, flush=True)
+run_stage('fold', '--ids', 'PDL1_ECD')
+run_stage('fold-batch')
+run_stage('fold-summary')
 '''
     export = '''# 모든 결과/로그를 로컬로 내려받아 HADDOCK3 단계에서 재사용합니다.
 import shutil
@@ -883,7 +1028,7 @@ files.download(archive)
                 'metadata': {'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
                              'colab': {'name': 'PDL1_ColabFold_42Fv_seed42.ipynb'}, 'accelerator': 'GPU'},
                 'cells': [cell('markdown', '# PD-L1: MAGE 20 + LoRA 20 + 양성 대조군 2쌍\n'
-                               '런타임 → 런타임 유형 변경 → GPU를 선택합니다. 모든 서열·시드·코드는 이 노트북에 고정돼 있습니다.\n'
+                               '런타임 → 런타임 유형 변경 → GPU를 선택합니다. 입력·코드는 우리 GitHub의 SHA256 검증 묶음으로 고정합니다.\n'
                                'Colab/공식 MMseqs2로 서열 전송은 사용자가 2026-11-14 승인했습니다. 유료 상품 가입·구매는 하지 않습니다.\n'
                                '출력은 결합 예측이 아닌 Fv/표적 구조이며, 이후 HADDOCK3 및 PRODIGY 단계가 필요합니다.\n'),
                           cell('code', setup), cell('code', unpack), cell('code', predict), cell('code', export)]}
@@ -894,13 +1039,14 @@ files.download(archive)
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'make-colab'])
+    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'make-colab', 'import-colab', 'run-main'])
     parser.add_argument('--limit', type=int)
     parser.add_argument('--ids', nargs='+')
     parser.add_argument('--profile', default='pilot')
     parser.add_argument('--sampling', type=int, default=64)
     parser.add_argument('--refine', type=int, default=8)
     parser.add_argument('--native-reference', action='store_true')
+    parser.add_argument('--archive', type=Path)
     args = parser.parse_args()
     if args.mode == 'prepare':
         prepare()
@@ -918,6 +1064,14 @@ def main():
         reference_controls()
     elif args.mode == 'make-colab':
         make_colab()
+    elif args.mode == 'import-colab':
+        if args.archive is None:
+            parser.error('--archive is required for import-colab')
+        import_colab(args.archive)
+    elif args.mode == 'run-main':
+        if args.sampling < 1000 or args.refine < 100:
+            parser.error('Main docking requires explicit --sampling >=1000 --refine >=100; pilot defaults cannot be used.')
+        run_main(args.sampling, args.refine)
     else:
         status()
 

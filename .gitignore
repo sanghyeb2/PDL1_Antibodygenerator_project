@@ -28,6 +28,7 @@ Thumbs.db
 
 # Completed result bundle: small source snapshot archive, not model/database caches.
 !/항체실험/공유결과/PDL1_MAGE_LoRA_20261114/실행코드_원본기록.zip
+!/항체실험/구조평가_환경/colab_inputs.zip
 
 # Share the fixed split and selected experiment, not preliminary/repeated runs
 /항체실험/학습결과/*
