@@ -17,6 +17,7 @@ Thumbs.db
 # Local archives, generated candidates, agent planning records
 /항체실험/이전코드/
 /항체실험/생성결과/
+/항체실험/구조결과/
 /docs/
 /정리기록_*.json
 *.zip
