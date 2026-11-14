@@ -1,0 +1,15 @@
+{
+  "python": "3.11.6 (tags/v3.11.6:8b6ee5b, Oct  2 2023, 14:57:12) [MSC v.1935 64 bit (AMD64)]",
+  "packages": {
+    "torch": "2.7.1+cu128",
+    "transformers": "4.32.1",
+    "tokenizers": "0.13.3",
+    "peft": "0.5.0",
+    "numpy": "1.26.4"
+  },
+  "seed": 42,
+  "torch_deterministic": true,
+  "cublas_workspace_config": ":4096:8",
+  "source_recorded_at": "during generation; snapshot SHA describes current source, not a launch snapshot",
+  "code_sha256": "5cc3f0616b7565bca724c66c937a7e85112597d4fee729e0c965e3d8b2dbcc61"
+}

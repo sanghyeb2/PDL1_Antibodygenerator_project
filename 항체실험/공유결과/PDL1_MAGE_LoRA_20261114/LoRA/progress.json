@@ -1,0 +1,9 @@
+{
+  "status": "generated",
+  "model": "LoRA",
+  "total": 1000,
+  "basic_pass": 997,
+  "unique_pairs": 997,
+  "elapsed_seconds": 751.8273460000055,
+  "peak_allocated_gib": 2.4429931640625
+}

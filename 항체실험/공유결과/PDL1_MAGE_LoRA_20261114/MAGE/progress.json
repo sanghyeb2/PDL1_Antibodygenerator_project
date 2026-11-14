@@ -1,0 +1,9 @@
+{
+  "status": "generated",
+  "model": "MAGE",
+  "total": 1000,
+  "basic_pass": 991,
+  "unique_pairs": 991,
+  "elapsed_seconds": 4357.382934699999,
+  "peak_allocated_gib": 2.456178665161133
+}

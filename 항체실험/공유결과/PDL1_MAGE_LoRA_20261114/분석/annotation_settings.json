@@ -1,0 +1,12 @@
+{
+  "scheme": "imgt",
+  "cdr_definition": "imgt",
+  "allowed_species": [
+    "human"
+  ],
+  "assign_germline": true,
+  "versions": {
+    "abnumber": "0.3.2",
+    "anarci": "2020.04.23"
+  }
+}

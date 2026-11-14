@@ -1,0 +1,56 @@
+{
+  "seed": 42,
+  "python": "3.11.18 (main, Oct 26 2026, 11:35:17) [GCC 15.3.0]",
+  "analysis_code_sha256": "c73110634a3b29731ea3ba5296977e2c746ded7b8b7c963d12b1c110dd359c7b",
+  "scheme": "IMGT",
+  "allowed_species": [
+    "human"
+  ],
+  "min_fraction_subjects": 0.1,
+  "humanness_gate": 0.7,
+  "oasis_workers": 4,
+  "packages": {
+    "abnumber": "0.3.2",
+    "anarci": "2020.04.23",
+    "hmmer": "3.3.2",
+    "biophi": "1.0.9",
+    "numpy": "1.26.4",
+    "pandas": "1.5.3",
+    "SQLAlchemy": "1.4.54",
+    "rapidfuzz": "3.10.1",
+    "matplotlib": "3.9.4"
+  },
+  "oasis_db": "/mnt/c/5학년 2학기/생성형AI/프로젝트/항체실험/캐시/분석도구/OASis_9mers_v1.db",
+  "oasis_db_bytes": 23114940416,
+  "original_data_sha256": "103d1c1c1c3d3ae550ceab782c54550ec4a14348e37eec6289d0ba42cd425c7f",
+  "reference_counts": {
+    "train85": 85,
+    "known106": 106,
+    "original": 18507
+  },
+  "known_annotation_failures": [],
+  "original_reference_available_counts": {
+    "VH_AA": 18507,
+    "VL_AA": 18507,
+    "FWR1.H": 18505,
+    "CDR1.H": 18506,
+    "FWR2.H": 18506,
+    "CDR2.H": 18506,
+    "FWR3.H": 18507,
+    "CDR3.H": 18507,
+    "FWR4.H": 18500,
+    "FWR1.L": 18504,
+    "CDR1.L": 18505,
+    "FWR2.L": 18507,
+    "CDR2.L": 18507,
+    "FWR3.L": 18507,
+    "CDR3.L": 18507,
+    "FWR4.L": 18496
+  },
+  "metrics": "Full-chain/raw-region minimum Levenshtein and maximum 1-distance/max_length computed independently; figure F uses region distances to the SAME nearest full-chain reference (per VH/VL), lexicographic sequence tie break",
+  "selection_adaptations": [
+    "PD-L1 known106 replaces RBD SAbDab/CoV-AbDab",
+    "Exclude exact HCDR3 in original data AND LoRA train85",
+    "Deduplicate VH/VL pairs; no replacement for missing strata slots"
+  ]
+}

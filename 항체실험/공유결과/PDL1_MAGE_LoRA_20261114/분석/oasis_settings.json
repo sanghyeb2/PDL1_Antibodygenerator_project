@@ -1,0 +1,13 @@
+{
+  "biophi_version": "1.0.9",
+  "min_fraction_subjects": 0.1,
+  "database": {
+    "compressed_md5": "28fa18135b3ef1710970f72b5953cbc5",
+    "compressed_bytes": 6484781782,
+    "db_bytes": 23114940416,
+    "source": "https://zenodo.org/records/5164685/files/OASis_9mers_v1.db.gz?download=1"
+  },
+  "database_path": "/mnt/c/5학년 2학기/생성형AI/프로젝트/항체실험/캐시/분석도구/OASis_9mers_v1.db",
+  "database_bytes": 23114940416,
+  "database_mtime_ns": 1794409990993253900
+}

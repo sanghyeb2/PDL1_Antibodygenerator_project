@@ -1,0 +1,117 @@
+{
+  "MAGE": {
+    "attempts": 1000,
+    "basic_pass": 991,
+    "annotation_pass": 991,
+    "oas70_pass": 735,
+    "unique_post_pairs": 735,
+    "duplicate_post_attempts": 0,
+    "basic_failure_reasons": {
+      "missing_termination": 7,
+      "invalid_lc_count": 6,
+      "nonstandard_or_missing_chain": 7
+    },
+    "triage_pass_attempts": 672,
+    "triage_unique_pairs": 672,
+    "selected_pairs": 20,
+    "triage_reasons": {
+      "preselection_not_passed": 265,
+      "VH_germline_identity_100": 51,
+      "VH_germline_identity_below_85": 11,
+      "exact_HCDR3_original": 1
+    },
+    "annotation_failure_reasons": {},
+    "selection": {
+      "target": 20,
+      "selected": 20,
+      "shortage": 0,
+      "eligible_unique_pairs": 672,
+      "stratified_selected": 10,
+      "top_v_genes": [
+        [
+          "IGHV3-7",
+          191
+        ],
+        [
+          "IGHV3-23",
+          150
+        ],
+        [
+          "IGHV3-30",
+          93
+        ],
+        [
+          "IGHV3-48",
+          72
+        ],
+        [
+          "IGHV3-21",
+          38
+        ]
+      ],
+      "low_n_quantile_rule": "int(n*p)-1; duplicate pair slots not filled"
+    },
+    "median_oasis_before_threshold": 0.8060769230769234,
+    "mean_HCDR3_identity_train85": 0.5264115777221932,
+    "post_exact_pairs_train85": 0,
+    "post_exact_HCDR3_train85": 0,
+    "post_VH_identity_train85_ge90": 157
+  },
+  "LoRA": {
+    "attempts": 1000,
+    "basic_pass": 997,
+    "annotation_pass": 997,
+    "oas70_pass": 849,
+    "unique_post_pairs": 849,
+    "duplicate_post_attempts": 0,
+    "basic_failure_reasons": {
+      "missing_termination": 2,
+      "invalid_lc_count": 3,
+      "nonstandard_or_missing_chain": 3
+    },
+    "triage_pass_attempts": 747,
+    "triage_unique_pairs": 747,
+    "selected_pairs": 20,
+    "triage_reasons": {
+      "preselection_not_passed": 151,
+      "VH_germline_identity_100": 92,
+      "VH_germline_identity_below_85": 10
+    },
+    "annotation_failure_reasons": {},
+    "selection": {
+      "target": 20,
+      "selected": 20,
+      "shortage": 0,
+      "eligible_unique_pairs": 747,
+      "stratified_selected": 10,
+      "top_v_genes": [
+        [
+          "IGHV1-69",
+          155
+        ],
+        [
+          "IGHV3-7",
+          120
+        ],
+        [
+          "IGHV3-23",
+          76
+        ],
+        [
+          "IGHV1-46",
+          63
+        ],
+        [
+          "IGHV4-31",
+          35
+        ]
+      ],
+      "low_n_quantile_rule": "int(n*p)-1; duplicate pair slots not filled"
+    },
+    "median_oasis_before_threshold": 0.8596635514018691,
+    "mean_HCDR3_identity_train85": 0.5421502067245882,
+    "post_exact_pairs_train85": 0,
+    "post_exact_HCDR3_train85": 0,
+    "post_VH_identity_train85_ge90": 179
+  }
+}

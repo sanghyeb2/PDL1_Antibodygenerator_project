@@ -1,0 +1,15 @@
+{
+  "python": "3.11.6 (tags/v3.11.6:8b6ee5b, Oct  2 2023, 14:57:12) [MSC v.1935 64 bit (AMD64)]",
+  "packages": {
+    "torch": "2.7.1+cu128",
+    "transformers": "4.32.1",
+    "tokenizers": "0.13.3",
+    "peft": "0.5.0",
+    "numpy": "1.26.4"
+  },
+  "code_sha256": "c73110634a3b29731ea3ba5296977e2c746ded7b8b7c963d12b1c110dd359c7b",
+  "source_recorded_at": "process launch",
+  "seed": 42,
+  "torch_deterministic": true,
+  "cublas_workspace_config": ":4096:8"
+}

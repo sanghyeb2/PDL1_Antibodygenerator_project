@@ -1,0 +1,99 @@
+LoRA_0853 | Vgene_IGHV1-69_p20 | known: pdl1:7834c30cb3a346b0 | identity=0.500
+target            0 ARRSWLHGSWYFDL 14
+                  0 |||.|..|---||. 14
+query             0 ARRHWPGG---FDY 11
+
+LoRA_0009 | Vgene_IGHV1-69_p80 | known: pdl1:7834c30cb3a346b0 | identity=0.692
+target            0 ARRRWFGSGSFDY 13
+                  0 |||.|.|-|-||| 13
+query             0 ARRHWPG-G-FDY 11
+
+LoRA_0655 | Vgene_IGHV3-7_p20 | known: plabdab_candidate:194e41239e9b3736 | identity=0.500
+target            0 ARADSSGY--YYGFY 13
+                  0 ||-||||.--||... 15
+query             0 AR-DSSGWSRYYMDV 14
+
+LoRA_0202 | Vgene_IGHV3-7_p80 | known: plabdab_candidate:b9f97516948cc285 | identity=0.333
+target            0 ARYLARYYDSSA 12
+                  0 ||.-|..|.--- 12
+query             0 ARQ-AWGYP---  8
+
+LoRA_0762 | Vgene_IGHV3-23_p20 | known: pdl1:9ea2c226592d9f42 | identity=0.389
+target            0 ARELVALPPTAMDWVFYS 18
+                  0 ||.|.....-|||---|- 18
+query             0 ARLLWYDIH-AMD---Y- 13
+
+LoRA_0725 | Vgene_IGHV3-23_p80 | known: plabdab_candidate:524f6f97e8d06224 | identity=0.412
+target            0 AKTTAMIVGVPNYFFDY 17
+                  0 |..-|..|.---||-|| 17
+query             0 ARG-AGTVD---YF-DY 12
+
+LoRA_0662 | Vgene_IGHV1-46_p20 | known: plabdab_candidate:fe0a660f612c28de | identity=0.600
+target            0 ARD-FRGGFDV 10
+                  0 |||-|.|.-|| 11
+query             0 ARDYFYGM-DV 10
+
+LoRA_0797 | Vgene_IGHV1-46_p80 | known: plabdab_candidate:23729e7605e7411e | identity=0.467
+target            0 ARVEERWLGYSSPAY 15
+                  0 ||-|.|..|..--|| 15
+query             0 AR-EGRSYGGF--AY 12
+
+LoRA_0242 | Vgene_IGHV4-31_p20 | known: pdl1:ee9a794b2fb73b08 | identity=0.667
+target            0 A-SNGGAFDY  9
+                  0 |-|.|-|||| 10
+query             0 AKSYG-AFDY  9
+
+LoRA_0820 | Vgene_IGHV4-31_p80 | known: plabdab_candidate:194e41239e9b3736 | identity=0.429
+target            0 ARDYCTGGSCYSSFFYYGLDV 21
+                  0 |||..-|.|.|----|.--|| 21
+query             0 ARDSS-GWSRY----YM--DV 14
+
+LoRA_0868 | known_CDRH3 | known: plabdab_candidate:fe0a660f612c28de | identity=0.818
+target            0 ARDDYHYGMDV 11
+                  0 |||-|.||||| 11
+query             0 ARD-YFYGMDV 10
+
+LoRA_0920 | known_CDRH3 | known: plabdab_candidate:fe0a660f612c28de | identity=0.818
+target            0 ARDRFYSGMDV 11
+                  0 |||.||-|||| 11
+query             0 ARDYFY-GMDV 10
+
+LoRA_0014 | known_CDRH3 | known: plabdab_candidate:8355b94bda323f51 | identity=0.800
+target            0 AREYWYGSSPPYFDY 15
+                  0 ||.|-|||||.|||| 15
+query             0 ARSY-YGSSPYYFDY 14
+
+LoRA_0109 | known_CDRH3 | known: plabdab_candidate:fe0a660f612c28de | identity=0.800
+target            0 ARDY--GMDV  8
+                  0 ||||--|||| 10
+query             0 ARDYFYGMDV 10
+
+LoRA_0164 | known_CDRH3 | known: plabdab_candidate:fe0a660f612c28de | identity=0.800
+target            0 ARDY--GMDV  8
+                  0 ||||--|||| 10
+query             0 ARDYFYGMDV 10
+
+LoRA_0064 | known_VH | known: pdl1:9395a55ba7301288 | identity=0.643
+target            0 AR-GGV-GTTAFDY 12
+                  0 ||-||.-|..|||| 14
+query             0 AREGGWFGELAFDY 14
+
+LoRA_0993 | known_VH | known: pdl1:ee9a794b2fb73b08 | identity=0.583
+target            0 ARDPYGDLAFDY 12
+                  0 |..-||--|||| 12
+query             0 AKS-YG--AFDY  9
+
+LoRA_0527 | known_VH | known: pdl1:6ce462aa4d56d345 | identity=0.615
+target            0 AR-EV-AGA-FDY 10
+                  0 ||-||-|..-||| 13
+query             0 ARSEVYAFYGFDY 13
+
+LoRA_0742 | known_VH | known: plabdab_candidate:6cfa4c2e30099688 | identity=0.500
+target            0 AKDGEL-YVFDY 11
+                  0 ||.|..-|.||. 12
+query             0 AKPGDYGYDFDC 12
+
+LoRA_0671 | known_VH | known: plabdab_candidate:0085725d56404b62 | identity=0.615
+target            0 AKD-RY--YAMDY 10
+                  0 |.|-|.--||||| 13
+query             0 ARDYRKGLYAMDY 13

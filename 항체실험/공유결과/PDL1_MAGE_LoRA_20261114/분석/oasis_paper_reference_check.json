@@ -1,0 +1,16 @@
+{
+  "reference_file": "RBD_1K_sequences_24-03-16.csv",
+  "reference_id": "RBD_0",
+  "expected": [
+    0.83273913,
+    1.0,
+    0.881767442
+  ],
+  "observed": [
+    0.8327391304347826,
+    1.0,
+    0.8817674418604651
+  ],
+  "max_abs_difference": 4.347826543238398e-10,
+  "scope": "one published RBD reference checks exact OASis calibration; not a new generation experiment"
+}

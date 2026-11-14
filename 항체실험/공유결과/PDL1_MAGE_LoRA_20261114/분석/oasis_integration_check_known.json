@@ -1,0 +1,9 @@
+{
+  "id": "plabdab_candidate:0085725d56404b62",
+  "paired_percentile": 0.43718957345971554,
+  "paired_identity": 0.7630331753554502,
+  "VH_percentile": 0.24771428571428583,
+  "VL_percentile": 0.5917272727272727,
+  "seconds": 1.9479703630000005,
+  "scope": "official API integration check on one known positive; not a binding evaluation"
+}

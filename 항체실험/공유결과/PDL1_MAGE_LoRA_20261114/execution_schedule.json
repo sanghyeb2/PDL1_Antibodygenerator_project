@@ -1,0 +1,13 @@
+{
+  "recorded_at": "2026-11-12T00:07:43.458449",
+  "execution": "separate overlapping GPU processes",
+  "reason": "reduce idle GPU time without changing candidates, per-batch seeds, or batch size",
+  "batch_size": 4,
+  "seed": 42,
+  "seed_rule": "42 + zero-based batch start index",
+  "observed_total_gpu_memory_mib": 5741,
+  "observed_base_peak_allocated_gib": 2.456178665161133,
+  "observed_lora_peak_allocated_gib": 2.421220302581787,
+  "duplicate_writer_prevention": "OS file lock in LoRA output folder; later sequential launcher skips if active",
+  "initial_base_process_predates_lock": true
+}

@@ -1,0 +1,99 @@
+MAGE_0749 | Vgene_IGHV3-7_p20 | known: plabdab_candidate:524f6f97e8d06224 | identity=0.583
+target            0 ARVVG---YFDY  9
+                  0 ||..|---|||| 12
+query             0 ARGAGTVDYFDY 12
+
+MAGE_0910 | Vgene_IGHV3-7_p80 | known: plabdab_candidate:95d7ce02efd1c3b4 | identity=0.625
+target            0 AREGVFDY 8
+                  0 ||..-||| 8
+query             0 ARWH-FDY 7
+
+MAGE_0333 | Vgene_IGHV3-23_p20 | known: plabdab_candidate:0143eea039e6b091 | identity=0.500
+target            0 ARAWELGLVAAGTFDY 16
+                  0 ||..-||.|.--|.|| 16
+query             0 ARIK-LGTVT--TVDY 13
+
+MAGE_0513 | Vgene_IGHV3-23_p80 | known: plabdab_candidate:8b80cba502decb93 | identity=0.400
+target            0 AKSSFRTPTNNWF-DP 15
+                  0 ||..||...--||-|. 16
+query             0 AKGRFRYFD--WFLDY 14
+
+MAGE_0828 | Vgene_IGHV3-30_p20 | known: plabdab_candidate:8355b94bda323f51 | identity=0.571
+target            0 ARLSYFYGST-Y-FDF 14
+                  0 ||-||-|||.-|-||. 16
+query             0 AR-SY-YGSSPYYFDY 14
+
+MAGE_0065 | Vgene_IGHV3-30_p80 | known: plabdab_candidate:1b25a87862a69c38 | identity=0.615
+target            0 ARDLIFVAAAMDY 13
+                  0 ||-|.|.|--||| 13
+query             0 AR-LGFYA--MDY 10
+
+MAGE_0787 | Vgene_IGHV3-48_p20 | known: plabdab_candidate:913413e2c14c6c8b | identity=0.600
+target            0 ARDGVYYYDSSAYYPDAFDI 20
+                  0 ||||.----|.-|-|||||| 20
+query             0 ARDGR----SW-Y-PDAFDI 14
+
+MAGE_0024 | Vgene_IGHV3-48_p80 | known: plabdab_candidate:0085725d56404b62 | identity=0.476
+target            0 ARDGIFYDSSGYYLGAPAMDY 21
+                  0 |||---|..-|.|--|--||| 21
+query             0 ARD---YRK-GLY--A--MDY 13
+
+MAGE_0642 | Vgene_IGHV3-21_p20 | known: pdl1:9395a55ba7301288 | identity=0.500
+target            0 AR-GVRFG-LDF-- 10
+                  0 ||-|..||-|.|-- 14
+query             0 AREGGWFGELAFDY 14
+
+MAGE_0565 | Vgene_IGHV3-21_p80 | known: pdl1:a849856325d94727 | identity=0.538
+target            0 AR-GGYSSTWFDA 12
+                  0 ||-|||....||. 13
+query             0 ARWGGYDHFAFDY 13
+
+MAGE_0237 | known_CDRH3 | known: plabdab_candidate:fe0a660f612c28de | identity=0.818
+target            0 ARDLYFGGMDV 11
+                  0 |||-||.|||| 11
+query             0 ARD-YFYGMDV 10
+
+MAGE_0714 | known_CDRH3 | known: plabdab_candidate:1b25a87862a69c38 | identity=0.818
+target            0 ARVLGGYAMDY 11
+                  0 ||-||.||||| 11
+query             0 AR-LGFYAMDY 10
+
+MAGE_0835 | known_CDRH3 | known: plabdab_candidate:1b25a87862a69c38 | identity=0.800
+target            0 ARGGDYAMDY 10
+                  0 ||.|.||||| 10
+query             0 ARLGFYAMDY 10
+
+MAGE_0331 | known_CDRH3 | known: plabdab_candidate:8355b94bda323f51 | identity=0.786
+target            0 ARDYYGSG-YYFDY 13
+                  0 ||.||||.-||||| 14
+query             0 ARSYYGSSPYYFDY 14
+
+MAGE_0542 | known_CDRH3 | known: pdl1:ee9a794b2fb73b08 | identity=0.778
+target            0 A-S-GAFDY 7
+                  0 |-|-||||| 9
+query             0 AKSYGAFDY 9
+
+MAGE_0937 | known_VH | known: pdl1:9395a55ba7301288 | identity=0.733
+target            0 AREVLWFGELGVFDY 15
+                  0 |||..|||||.-||| 15
+query             0 AREGGWFGELA-FDY 14
+
+MAGE_0364 | known_VH | known: pdl1:9395a55ba7301288 | identity=0.571
+target            0 AREGI-FGILTILDY 14
+                  0 ||||.-||.|..-|| 15
+query             0 AREGGWFGELAF-DY 14
+
+MAGE_0394 | known_VH | known: plabdab_candidate:524f6f97e8d06224 | identity=0.583
+target            0 ARGGGRR--FDY 10
+                  0 |||.|..--||| 12
+query             0 ARGAGTVDYFDY 12
+
+MAGE_0301 | known_VH | known: pdl1:ee9a794b2fb73b08 | identity=0.583
+target            0 AKDMGGVPAFDY 12
+                  0 ||..|---|||| 12
+query             0 AKSYG---AFDY  9
+
+MAGE_0633 | known_VH | known: plabdab_candidate:8355b94bda323f51 | identity=0.600
+target            0 ARGGYYFYGS--YYFDY 15
+                  0 ||.-||--||--||||| 17
+query             0 ARS-YY--GSSPYYFDY 14

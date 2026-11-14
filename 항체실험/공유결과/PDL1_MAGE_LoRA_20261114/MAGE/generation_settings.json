@@ -1,0 +1,19 @@
+{
+  "model": "MAGE",
+  "count": 1000,
+  "batch_size": 4,
+  "seed": 42,
+  "batch_seed_rule": "seed + zero-based batch start index",
+  "top_p": 0.9,
+  "temperature": 1.0,
+  "max_new_tokens": 250,
+  "antigen": "FTVTVPKDLYVVEYGSNMTIECKFPVEKQLDLAALIVYWEMEDKNIIQFVHGEEDLKVQHSSYRQRARLLKDQLSLGNAALQITDVKLQDAGVYRCMISYGGADYKRITVKVNAPYNKINQRILVVDPVTSEHELTCQAEGYPKAEVIWTSSDHQVLSGKTTTTNSKREEKLFNVTSTLRINTTTNEIFYCTFRRLDPEENHTAELVIPELPLAHPPNER",
+  "dtype": "bfloat16",
+  "use_cache": true,
+  "cache_api": "past_key_values mapped to ProGen past",
+  "data_sha256": "2ccd119cac70372e59ecf9710e9be0ed4b91f187cde2322b83a570079b60abe4",
+  "checkpoint_sha256": "4275d6b075c5cb307e8d4ba18408aef3bc8f4b107dfc170085d5bb76087609fe",
+  "progen_source_sha256": "fba21f4d90d7a0fce2366e3685cc71d26902cd18c4bc72810225738fa72b363d",
+  "tokenizer_sha256": "a48255f16389c0c3f1fd26abeafa75a6f0aff26fe62dbf4169b3adf2f11d2334",
+  "adapter_sha256": null
+}

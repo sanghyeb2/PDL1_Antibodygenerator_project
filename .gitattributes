@@ -9,3 +9,5 @@
 *.safetensors binary
 # Historical experiment artifacts retain their exact recorded bytes.
 항체실험/학습결과/** -text
+# Keep published generation artifacts byte-identical to recorded SHA-256 hashes.
+항체실험/공유결과/** -text -whitespace
