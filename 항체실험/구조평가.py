@@ -510,6 +510,112 @@ def dock(limit=None, ids=None, profile='pilot', sampling=64, refine=8, native_re
         write_json(root / 'completed.json', {'settings_sha256': digest(root / 'settings.json')})
 
 
+def complete_rigidbody_pose(path, expected_atoms):
+    """Accept only complete, finite CNS coordinates with all topology atoms and energy terms."""
+    import math
+    from haddock.gear.haddockmodel import HaddockModel
+    lines = Path(path).read_text().splitlines()
+    if not lines or lines[-1].strip() != 'END':
+        raise ValueError('Missing PDB END record')
+    atoms = [line for line in lines if line.startswith('ATOM')]
+    if sorted(line[12:27] for line in atoms) != expected_atoms:
+        raise ValueError('Incomplete or different topology atoms')
+    if not all(math.isfinite(float(line[i:i+8])) for line in atoms for i in (30, 38, 46)):
+        raise ValueError('Nonfinite coordinates')
+    energies = HaddockModel(path).energies
+    if not {'vdw', 'elec', 'desolv', 'air', 'bsa'} <= energies.keys():
+        raise ValueError('Missing HADDOCK energy terms')
+    if not all(math.isfinite(value) for value in energies.values()):
+        raise ValueError('Nonfinite HADDOCK energies')
+    return digest(path)
+
+
+def prepare_rigidbody_resume(candidate, sampling, refine):
+    """Back up verified complete poses before the official stage restart removes its folder."""
+    import inspect
+    from haddock.modules.sampling.rigidbody import HaddockModule
+    row = next(r for r in read_json(OUTPUT / 'manifest.json')['candidates'] if r['id'] == candidate)
+    root = prepare_docking(row, sampling, refine, 'main')
+    if (root / 'completed.json').exists():
+        return root
+    stage = root / 'run/1_rigidbody'
+    if not stage.is_dir() or not (root / 'run/0_topoaa/io.json').exists():
+        raise RuntimeError('Only an interrupted rigidbody stage after completed topology can be resumed here')
+    if any(p.is_dir() and re.match(r'[2-9]_', p.name) for p in (root / 'run').iterdir()):
+        raise RuntimeError('Later docking stages exist; inspect their restart point first')
+    checkpoint = read_json(OUTPUT / 'shutdown_checkpoint_20261115.json')
+    archive = OUTPUT / 'checkpoints/CTRL_atezolizumab_shutdown_20261115.tar.gz'
+    if checkpoint['current_candidate'] != candidate or digest(archive) != checkpoint['checkpoint_sha256']:
+        raise RuntimeError('Shutdown archive does not match this interrupted candidate')
+    expected_atoms = sorted(line[12:27] for path in (root / 'run/0_topoaa').glob('*.pdb')
+                            for line in path.read_text().splitlines() if line.startswith('ATOM'))
+    cache = root / 'resume_rigidbody_cache'
+    cache.mkdir(exist_ok=True)
+    reused, rejected = [], []
+    for path in sorted(stage.glob('rigidbody_*.pdb')):
+        index = int(path.stem.rsplit('_', 1)[1])
+        if not 1 <= index <= sampling:
+            raise ValueError(f'Unexpected pose number: {path}')
+        try:
+            sha = complete_rigidbody_pose(path, expected_atoms)
+        except (ValueError, OSError) as error:
+            rejected.append({'file': path.name, 'reason': str(error)})
+            continue
+        shutil.copy2(path, cache / path.name)
+        if digest(cache / path.name) != sha:
+            raise RuntimeError('Pose backup checksum mismatch')
+        reused.append({'file': path.name, 'index': index, 'seed': 42 + index, 'sha256': sha})
+    record = {'candidate': candidate, 'settings_sha256': digest(root / 'settings.json'),
+              'source_archive_sha256': checkpoint['checkpoint_sha256'], 'reused': reused,
+              'rejected': rejected, 'expected_total': sampling, 'remaining': sampling - len(reused),
+              'factory_source_sha256': hashlib.sha256(inspect.getsource(HaddockModule.make_cns_jobs).encode()).hexdigest()}
+    write_json(root / 'resume_rigidbody.json', record)
+    print(f'Resume {candidate}: reuse {len(reused)} complete poses; compute {record["remaining"]}', flush=True)
+    return root
+
+
+def resume_rigidbody_worker(candidate):
+    """Use official HADDOCK restart, retaining its original per-pose seeds and output metadata."""
+    import inspect
+    from haddock.clis.cli import main as haddock_main
+    from haddock.modules.sampling.rigidbody import HaddockModule
+    root = ENV / 'runs/main' / candidate
+    record = read_json(root / 'resume_rigidbody.json')
+    original = HaddockModule.make_cns_jobs
+    factory_sha = hashlib.sha256(inspect.getsource(original).encode()).hexdigest()
+    if factory_sha != record['factory_source_sha256'] or digest(root / 'settings.json') != record['settings_sha256']:
+        raise RuntimeError('HADDOCK API or docking settings changed since resume validation')
+    cached = {pose['index']: pose for pose in record['reused']}
+    for pose in cached.values():
+        if digest(root / 'resume_rigidbody_cache' / pose['file']) != pose['sha256']:
+            raise RuntimeError('Cached pose checksum mismatch')
+
+    def pending_jobs(module, inputs):
+        jobs = original(module, inputs)
+        if len(jobs) != record['expected_total']:
+            raise RuntimeError('Unexpected number of official CNS jobs')
+        pending = []
+        for index, job in enumerate(jobs, 1):
+            if index not in cached:
+                pending.append(job)
+                continue
+            pose = cached[index]
+            model = module.output_models[index - 1]
+            if model.seed != pose['seed'] or str(model.file_name) != pose['file']:
+                raise RuntimeError('Official CNS job identity/seed mismatch')
+            shutil.copy2(root / 'resume_rigidbody_cache' / pose['file'], Path.cwd() / pose['file'])
+        print(f'Official CNS jobs: {len(pending)} new; {len(cached)} verified outputs restored', flush=True)
+        return pending
+
+    # Patch only this worker process. The installed library and scientific protocol stay unchanged.
+    HaddockModule.make_cns_jobs = pending_jobs
+    try:
+        os.chdir(root)
+        haddock_main(root / 'workflow.cfg', restart=1)
+    finally:
+        HaddockModule.make_cns_jobs = original
+
+
 def interface_metrics(pdb, residue_map):
     """Heavy-atom intermolecular contacts only; glycan-site proximity is a risk flag."""
     import numpy as np
@@ -1111,7 +1217,7 @@ files.download(archive)
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'make-colab', 'import-colab', 'run-main'])
+    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'make-colab', 'import-colab', 'run-main', 'resume-main', 'resume-rigidbody-worker'])
     parser.add_argument('--limit', type=int)
     parser.add_argument('--ids', nargs='+')
     parser.add_argument('--profile', default='pilot')
@@ -1140,9 +1246,26 @@ def main():
         if args.archive is None:
             parser.error('--archive is required for import-colab')
         import_colab(args.archive)
-    elif args.mode == 'run-main':
+    elif args.mode == 'resume-rigidbody-worker':
+        if not args.ids or len(args.ids) != 1:
+            parser.error('Exactly one --ids candidate is required')
+        resume_rigidbody_worker(args.ids[0])
+    elif args.mode in {'run-main', 'resume-main'}:
         if args.sampling < 1000 or args.refine < 100:
             parser.error('Main docking requires explicit --sampling >=1000 --refine >=100; pilot defaults cannot be used.')
+        if args.mode == 'resume-main':
+            if not args.ids or len(args.ids) != 1:
+                parser.error('Exactly one interrupted --ids candidate is required')
+            root = prepare_rigidbody_resume(args.ids[0], args.sampling, args.refine)
+            main_state = read_json(OUTPUT / 'main_settings.json')
+            main_state['status'] = 'running'
+            write_json(OUTPUT / 'main_settings.json', main_state)
+            if not (root / 'completed.json').exists():
+                run_logged([sys.executable, Path(__file__).resolve(), 'resume-rigidbody-worker', '--ids', args.ids[0]],
+                           root / 'resume_execution.log',
+                           extra_env={'PATH': str(ENV / 'docking/bin') + ':' + os.environ.get('PATH', '')})
+                write_json(root / 'completed.json', {'settings_sha256': digest(root / 'settings.json'),
+                           'resumed': True, 'resume_metadata_sha256': digest(root / 'resume_rigidbody.json')})
         run_main(args.sampling, args.refine)
     else:
         status()
