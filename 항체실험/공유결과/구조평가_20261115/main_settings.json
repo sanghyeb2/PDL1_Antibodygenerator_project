@@ -47,5 +47,5 @@
     "LoRA_0671"
   ],
   "epitope": "all accessible PD-L1 ECD surface",
-  "status": "running"
+  "status": "paused_for_pc_shutdown"
 }
