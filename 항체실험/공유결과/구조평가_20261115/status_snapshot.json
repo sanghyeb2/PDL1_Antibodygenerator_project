@@ -1,0 +1,17 @@
+{
+  "checked_at_KST": "2026-11-16T00:36:51.701548+09:00",
+  "folding_completed": 43,
+  "folding_total": 43,
+  "main_docking_completed_ids": [
+    "CTRL_atezolizumab"
+  ],
+  "main_docking_expected": 42,
+  "current_candidate": "CTRL_durvalumab",
+  "current_stage": "rigidbody",
+  "ncores": 6,
+  "seed": 42,
+  "sampling": 1000,
+  "refine": 100,
+  "status": "running",
+  "interpretation": "Snapshot, not live status. Only the first positive control is analyzed. Native residue-contact recall for its selected poses is 0 to 0.020408; this does not establish binding-pose recovery."
+}

@@ -1,0 +1,2 @@
+﻿id,group,cluster_top4_score_mean,cluster_top4_score_sd,prodigy_top4_deltaG_mean,pilot_only
+CTRL_atezolizumab,control,-105.9005,10.212414858886214,-10.525,False
