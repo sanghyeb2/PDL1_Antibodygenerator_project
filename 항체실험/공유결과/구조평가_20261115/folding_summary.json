@@ -1,0 +1,721 @@
+{
+  "completed_Fv": 42,
+  "expected_Fv": 42,
+  "interpretation": "Fv fold confidence only; these metrics do not evaluate PD-L1 binding.",
+  "results": [
+    {
+      "id": "MAGE_0749",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 97.19112068965515,
+      "VL_mean_pLDDT": 96.41611111111112,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 97.14125,
+        "CDR2.H": 96.71000000000001,
+        "CDR3.H": 95.36,
+        "CDR1.L": 93.51714285714287,
+        "CDR2.L": 97.58666666666666,
+        "CDR3.L": 88.40444444444444
+      },
+      "pdb_sha256": "15d8a994f3dce5ffcc1548afd628e0c226ce1a64dc95f94fa57f97cae90e4ae2",
+      "H_to_L_mean_PAE_A": 3.3938928799489148,
+      "L_to_H_mean_PAE_A": 3.6696392081736913
+    },
+    {
+      "id": "MAGE_0910",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 96.95626086956523,
+      "VL_mean_pLDDT": 96.9240566037736,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 97.10125,
+        "CDR2.H": 97.47749999999999,
+        "CDR3.H": 90.9525,
+        "CDR1.L": 95.41666666666667,
+        "CDR2.L": 97.94,
+        "CDR3.L": 93.33555555555556
+      },
+      "pdb_sha256": "cf717ccf4d2ef6531273a8f2394039e88cb85a44ed88c7cfa4fa412f96f29601",
+      "H_to_L_mean_PAE_A": 3.5589023789991794,
+      "L_to_H_mean_PAE_A": 3.5715225594749795
+    },
+    {
+      "id": "MAGE_0333",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 92.57073170731708,
+      "VL_mean_pLDDT": 95.49944444444445,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 92.72625,
+        "CDR2.H": 90.39,
+        "CDR3.H": 67.954375,
+        "CDR1.L": 92.22285714285714,
+        "CDR2.L": 93.46,
+        "CDR3.L": 84.83333333333333
+      },
+      "pdb_sha256": "eb21a7b20674c10d03932c5471a17a62b0ebea76d2bb7efa7a3efe34aee03022",
+      "H_to_L_mean_PAE_A": 4.560662451068955,
+      "L_to_H_mean_PAE_A": 3.7426302318578744
+    },
+    {
+      "id": "MAGE_0513",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 95.73795081967214,
+      "VL_mean_pLDDT": 96.87084905660379,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.37375,
+        "CDR2.H": 94.01625,
+        "CDR3.H": 86.20066666666665,
+        "CDR1.L": 95.49833333333333,
+        "CDR2.L": 96.77,
+        "CDR3.L": 91.83333333333333
+      },
+      "pdb_sha256": "734dfdecec77f0be8dcb551fd2e4996ba00731ae0f7b41606a016db9ed08883a",
+      "H_to_L_mean_PAE_A": 3.7342182183730284,
+      "L_to_H_mean_PAE_A": 3.478176616145995
+    },
+    {
+      "id": "MAGE_0828",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 96.75173553719009,
+      "VL_mean_pLDDT": 97.22056074766355,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 95.16375,
+        "CDR2.H": 96.6725,
+        "CDR3.H": 90.72714285714285,
+        "CDR1.L": 97.315,
+        "CDR2.L": 97.25,
+        "CDR3.L": 94.5
+      },
+      "pdb_sha256": "f51abc4a20e611164b48d5a83a5ed1f41993c47cfa9247f9ee4a51efc90d2fdc",
+      "H_to_L_mean_PAE_A": 3.4693450220128215,
+      "L_to_H_mean_PAE_A": 3.2744126052367344
+    },
+    {
+      "id": "MAGE_0065",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 95.99724999999998,
+      "VL_mean_pLDDT": 97.16738317757009,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.025,
+        "CDR2.H": 95.52125000000001,
+        "CDR3.H": 82.76,
+        "CDR1.L": 97.205,
+        "CDR2.L": 96.5,
+        "CDR3.L": 94.80666666666667
+      },
+      "pdb_sha256": "7e00865358d49290bfb3c1ff66b5264968bc6fd4d57b5f67162e5fff72162e41",
+      "H_to_L_mean_PAE_A": 3.5711370716510906,
+      "L_to_H_mean_PAE_A": 3.1844548286604355
+    },
+    {
+      "id": "MAGE_0787",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 93.76606299212598,
+      "VL_mean_pLDDT": 96.61821428571429,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 94.8425,
+        "CDR2.H": 95.6575,
+        "CDR3.H": 73.7685,
+        "CDR1.L": 92.69363636363637,
+        "CDR2.L": 93.56333333333333,
+        "CDR3.L": 95.24444444444444
+      },
+      "pdb_sha256": "1860da7301852a75a4eb3f03d57db17750081b1d5539b648e9a7ddcab8ed7ab2",
+      "H_to_L_mean_PAE_A": 4.455673509561305,
+      "L_to_H_mean_PAE_A": 3.3445936445444318
+    },
+    {
+      "id": "MAGE_0024",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 95.937421875,
+      "VL_mean_pLDDT": 96.42844036697245,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 97.555,
+        "CDR2.H": 96.78999999999999,
+        "CDR3.H": 87.67047619047621,
+        "CDR1.L": 95.33166666666666,
+        "CDR2.L": 95.48,
+        "CDR3.L": 88.77999999999999
+      },
+      "pdb_sha256": "6388f734b006cf3ce20de474f3883414923ac9e0f4169cfe7d47c6d914914756",
+      "H_to_L_mean_PAE_A": 3.66287127293578,
+      "L_to_H_mean_PAE_A": 3.4587815366972476
+    },
+    {
+      "id": "MAGE_0642",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 95.86230769230768,
+      "VL_mean_pLDDT": 94.65654545454545,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 94.9925,
+        "CDR2.H": 95.68,
+        "CDR3.H": 87.244,
+        "CDR1.L": 89.78333333333333,
+        "CDR2.L": 94.70666666666666,
+        "CDR3.L": 87.8
+      },
+      "pdb_sha256": "95fc054cb2a3902c629f2eba0520bb9d7df5c5640351e7385144a079b5308276",
+      "H_to_L_mean_PAE_A": 3.8810225330225325,
+      "L_to_H_mean_PAE_A": 4.057606837606837
+    },
+    {
+      "id": "MAGE_0565",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 96.81386554621851,
+      "VL_mean_pLDDT": 96.67411214953272,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.7875,
+        "CDR2.H": 95.67875000000001,
+        "CDR3.H": 89.40833333333335,
+        "CDR1.L": 95.35333333333334,
+        "CDR2.L": 96.72666666666667,
+        "CDR3.L": 88.2011111111111
+      },
+      "pdb_sha256": "3fabd47469167f2d45ccc94cff951d3d579232c1d1487e4a3b04d5cdc141267a",
+      "H_to_L_mean_PAE_A": 3.29784104295924,
+      "L_to_H_mean_PAE_A": 3.377716955941255
+    },
+    {
+      "id": "MAGE_0237",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 97.08754237288137,
+      "VL_mean_pLDDT": 94.91172727272729,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 97.39875,
+        "CDR2.H": 96.20375,
+        "CDR3.H": 93.22636363636364,
+        "CDR1.L": 89.17444444444443,
+        "CDR2.L": 96.14666666666666,
+        "CDR3.L": 89.299
+      },
+      "pdb_sha256": "65589b4d44275f39c50f67d84597b1fa1aa496e949c292c916338ccebafba505",
+      "H_to_L_mean_PAE_A": 3.3951818181818183,
+      "L_to_H_mean_PAE_A": 4.071466101694916
+    },
+    {
+      "id": "MAGE_0714",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 96.30271186440679,
+      "VL_mean_pLDDT": 96.9378504672897,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.13499999999999,
+        "CDR2.H": 95.88374999999999,
+        "CDR3.H": 85.28272727272726,
+        "CDR1.L": 97.30166666666666,
+        "CDR2.L": 96.27,
+        "CDR3.L": 94.53444444444443
+      },
+      "pdb_sha256": "31e40bcfcf55f07cc0bebc2192ef0c1163268834d234f61f43368d48ea6283b6",
+      "H_to_L_mean_PAE_A": 3.5934468556945984,
+      "L_to_H_mean_PAE_A": 3.354322825914779
+    },
+    {
+      "id": "MAGE_0835",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 96.72213675213675,
+      "VL_mean_pLDDT": 95.68777777777777,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.99125000000001,
+        "CDR2.H": 95.555,
+        "CDR3.H": 90.276,
+        "CDR1.L": 96.21833333333332,
+        "CDR2.L": 97.37333333333333,
+        "CDR3.L": 79.626
+      },
+      "pdb_sha256": "2808e515f34b7d95782f48403134babf52c3adab263d99249516ed3ea5aaa749",
+      "H_to_L_mean_PAE_A": 3.2878972776195,
+      "L_to_H_mean_PAE_A": 3.8271699905033234
+    },
+    {
+      "id": "MAGE_0331",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 94.9945,
+      "VL_mean_pLDDT": 96.70130841121497,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 93.57,
+        "CDR2.H": 94.05625,
+        "CDR3.H": 80.41846153846154,
+        "CDR1.L": 97.075,
+        "CDR2.L": 96.37666666666667,
+        "CDR3.L": 92.17333333333333
+      },
+      "pdb_sha256": "f0932ee56cb11dc2d40efa60671d8692c7067a9d99df171a614cd1ad3ad27a67",
+      "H_to_L_mean_PAE_A": 4.037624610591901,
+      "L_to_H_mean_PAE_A": 3.556765576323987
+    },
+    {
+      "id": "MAGE_0542",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 94.18035087719299,
+      "VL_mean_pLDDT": 95.68271028037383,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 90.75,
+        "CDR2.H": 95.1175,
+        "CDR3.H": 78.64285714285714,
+        "CDR1.L": 96.97166666666665,
+        "CDR2.L": 96.10333333333334,
+        "CDR3.L": 91.91666666666667
+      },
+      "pdb_sha256": "783dd9483f8cedbcb575cddcfc503eb7c532f3f7f2be0f6614c4a67acf99bdec",
+      "H_to_L_mean_PAE_A": 5.00896294474504,
+      "L_to_H_mean_PAE_A": 4.393076733890802
+    },
+    {
+      "id": "MAGE_0937",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 95.5982786885246,
+      "VL_mean_pLDDT": 96.75660714285716,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.39750000000001,
+        "CDR2.H": 95.65,
+        "CDR3.H": 82.65466666666664,
+        "CDR1.L": 93.51636363636362,
+        "CDR2.L": 94.73,
+        "CDR3.L": 93.14888888888888
+      },
+      "pdb_sha256": "f50405827040a2fab7f05f890b6d9fdb4ac213798ad9aec63841779e347fb3f5",
+      "H_to_L_mean_PAE_A": 3.8018054742388756,
+      "L_to_H_mean_PAE_A": 3.2658365046838407
+    },
+    {
+      "id": "MAGE_0364",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 95.87074380165289,
+      "VL_mean_pLDDT": 93.99504587155963,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.38125,
+        "CDR2.H": 95.40625,
+        "CDR3.H": 86.30428571428573,
+        "CDR1.L": 84.61571428571428,
+        "CDR2.L": 93.04,
+        "CDR3.L": 80.011
+      },
+      "pdb_sha256": "518486d29572389c10522fa9d002fcb2767e653f7ff7a6008367b5b1174f751e",
+      "H_to_L_mean_PAE_A": 3.7133368716354536,
+      "L_to_H_mean_PAE_A": 4.394806277958905
+    },
+    {
+      "id": "MAGE_0394",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 96.24119658119659,
+      "VL_mean_pLDDT": 97.3114953271028,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.0075,
+        "CDR2.H": 95.82124999999999,
+        "CDR3.H": 83.86000000000001,
+        "CDR1.L": 97.86500000000001,
+        "CDR2.L": 97.46,
+        "CDR3.L": 94.31888888888889
+      },
+      "pdb_sha256": "4a371b2c006caef45772365f71e3a91a8941bbdfecc50d0ca19b5e0dd4587293",
+      "H_to_L_mean_PAE_A": 3.6180477673935614,
+      "L_to_H_mean_PAE_A": 3.270292355619458
+    },
+    {
+      "id": "MAGE_0301",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 96.95336134453783,
+      "VL_mean_pLDDT": 97.23224299065421,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 97.2425,
+        "CDR2.H": 96.50999999999999,
+        "CDR3.H": 91.135,
+        "CDR1.L": 97.86500000000001,
+        "CDR2.L": 97.62666666666667,
+        "CDR3.L": 94.94555555555556
+      },
+      "pdb_sha256": "d1606f31e28cfa61444d72477bd42276799fec34bd6c1e1687fc14bece94f8f6",
+      "H_to_L_mean_PAE_A": 3.3745747270870963,
+      "L_to_H_mean_PAE_A": 3.3414505615330246
+    },
+    {
+      "id": "MAGE_0633",
+      "group": "MAGE",
+      "VH_mean_pLDDT": 95.30639344262295,
+      "VL_mean_pLDDT": 95.23214953271028,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.11625000000001,
+        "CDR2.H": 93.52625,
+        "CDR3.H": 84.28733333333335,
+        "CDR1.L": 90.86333333333334,
+        "CDR2.L": 95.91666666666667,
+        "CDR3.L": 83.94399999999999
+      },
+      "pdb_sha256": "c70c2f26cc43065099a7842ad6ddfa3f8d9faefcae585549024355f85c57e0c5",
+      "H_to_L_mean_PAE_A": 3.9146797916347476,
+      "L_to_H_mean_PAE_A": 3.9335253562126553
+    },
+    {
+      "id": "LoRA_0853",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 92.39504132231404,
+      "VL_mean_pLDDT": 96.36481481481479,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 82.04625,
+        "CDR2.H": 87.79875,
+        "CDR3.H": 77.68642857142858,
+        "CDR1.L": 93.7057142857143,
+        "CDR2.L": 94.89666666666666,
+        "CDR3.L": 89.77888888888889
+      },
+      "pdb_sha256": "be7df30a3abeab3bf2cd30e3a25b337be20681bbedf1da8854bf83a0e8f80b5c",
+      "H_to_L_mean_PAE_A": 4.8725076522803805,
+      "L_to_H_mean_PAE_A": 3.62780685644322
+    },
+    {
+      "id": "LoRA_0009",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 94.39133333333334,
+      "VL_mean_pLDDT": 97.2008411214953,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 85.07,
+        "CDR2.H": 91.83625,
+        "CDR3.H": 85.2653846153846,
+        "CDR1.L": 97.75999999999999,
+        "CDR2.L": 97.27,
+        "CDR3.L": 94.32444444444444
+      },
+      "pdb_sha256": "4eff0c6581e56c4bc25e4da8a6fcdb445f93f369d1f9d05c8e1d22faf51026c3",
+      "H_to_L_mean_PAE_A": 4.397331775700935,
+      "L_to_H_mean_PAE_A": 3.3550841121495325
+    },
+    {
+      "id": "LoRA_0655",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 92.14841666666666,
+      "VL_mean_pLDDT": 95.07327102803738,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 90.0375,
+        "CDR2.H": 93.18,
+        "CDR3.H": 65.34307692307692,
+        "CDR1.L": 95.08333333333333,
+        "CDR2.L": 93.10666666666667,
+        "CDR3.L": 87.38222222222223
+      },
+      "pdb_sha256": "feb5b956ec4fd6674b562092a3e9bfc4057bce12d396163158bbb92708fa6677",
+      "H_to_L_mean_PAE_A": 5.134776479750779,
+      "L_to_H_mean_PAE_A": 4.137661214953271
+    },
+    {
+      "id": "LoRA_0202",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 93.28235294117646,
+      "VL_mean_pLDDT": 95.4076635514019,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 92.345,
+        "CDR2.H": 93.945,
+        "CDR3.H": 68.65833333333335,
+        "CDR1.L": 95.74000000000001,
+        "CDR2.L": 93.37333333333333,
+        "CDR3.L": 88.18333333333334
+      },
+      "pdb_sha256": "585a314431432cc2eb58d2e3eb30ca0e8fa32f642b0089ab012de897eaccf6f9",
+      "H_to_L_mean_PAE_A": 4.680667556742323,
+      "L_to_H_mean_PAE_A": 3.864548024817403
+    },
+    {
+      "id": "LoRA_0762",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 94.95376,
+      "VL_mean_pLDDT": 96.66345794392524,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.025,
+        "CDR2.H": 96.32,
+        "CDR3.H": 80.30888888888889,
+        "CDR1.L": 95.66666666666667,
+        "CDR2.L": 94.39666666666666,
+        "CDR3.L": 94.58444444444444
+      },
+      "pdb_sha256": "b0d69f808cc59c127f8b36e0b48dfe1e3009489853ebde350a1ad5ebca3a3345",
+      "H_to_L_mean_PAE_A": 4.206353644859813,
+      "L_to_H_mean_PAE_A": 3.3891715887850467
+    },
+    {
+      "id": "LoRA_0725",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 92.82451612903225,
+      "VL_mean_pLDDT": 96.15083333333332,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 93.64,
+        "CDR2.H": 91.08625,
+        "CDR3.H": 69.96294117647058,
+        "CDR1.L": 94.00166666666667,
+        "CDR2.L": 94.76666666666667,
+        "CDR3.L": 89.08545454545452
+      },
+      "pdb_sha256": "af02a0dd70f9d016fb9d59422dd99c76eca60ab28e459ac123f875157b1a4722",
+      "H_to_L_mean_PAE_A": 4.551125298685783,
+      "L_to_H_mean_PAE_A": 3.612031063321386
+    },
+    {
+      "id": "LoRA_0662",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 97.15188034188033,
+      "VL_mean_pLDDT": 95.99345794392522,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 97.265,
+        "CDR2.H": 96.4,
+        "CDR3.H": 92.16400000000002,
+        "CDR1.L": 95.44666666666667,
+        "CDR2.L": 96.81333333333333,
+        "CDR3.L": 81.29222222222222
+      },
+      "pdb_sha256": "7e71e585edeafabfea1a7aca293ad78861c88efe1141e387058e85dff0484074",
+      "H_to_L_mean_PAE_A": 3.3021607157121178,
+      "L_to_H_mean_PAE_A": 3.5825553159198016
+    },
+    {
+      "id": "LoRA_0797",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 94.91467213114753,
+      "VL_mean_pLDDT": 96.33707547169811,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 95.10374999999999,
+        "CDR2.H": 94.53999999999999,
+        "CDR3.H": 79.33,
+        "CDR1.L": 95.84333333333332,
+        "CDR2.L": 94.98,
+        "CDR3.L": 89.90125
+      },
+      "pdb_sha256": "9f4906365e37b12084c499071f50402375dde19e79ab90cb80fa4f91aa524a7d",
+      "H_to_L_mean_PAE_A": 4.037552582740489,
+      "L_to_H_mean_PAE_A": 3.5677536343952987
+    },
+    {
+      "id": "LoRA_0242",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 93.4151282051282,
+      "VL_mean_pLDDT": 96.0866037735849,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 81.807,
+        "CDR2.H": 92.20285714285716,
+        "CDR3.H": 87.14,
+        "CDR1.L": 96.89666666666666,
+        "CDR2.L": 97.23,
+        "CDR3.L": 91.04875
+      },
+      "pdb_sha256": "5ce8b6cdbc11bb613f1b2727c3e74f467c05c8428644f4b4dd5cae95dcd75ee0",
+      "H_to_L_mean_PAE_A": 4.802815674891146,
+      "L_to_H_mean_PAE_A": 3.8138098693759073
+    },
+    {
+      "id": "LoRA_0820",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 91.00457364341085,
+      "VL_mean_pLDDT": 95.43645454545454,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 88.407,
+        "CDR2.H": 91.9457142857143,
+        "CDR3.H": 71.37761904761906,
+        "CDR1.L": 93.5625,
+        "CDR2.L": 95.31666666666666,
+        "CDR3.L": 91.11999999999999
+      },
+      "pdb_sha256": "a7813cbfa5317c6c9f3e5c8912a57bd311e116d6927277f2fa1a155bcb2aec2c",
+      "H_to_L_mean_PAE_A": 5.424035236081748,
+      "L_to_H_mean_PAE_A": 3.78352642706131
+    },
+    {
+      "id": "LoRA_0868",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 97.36161016949153,
+      "VL_mean_pLDDT": 97.4,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 97.44749999999999,
+        "CDR2.H": 97.49875,
+        "CDR3.H": 92.00454545454545,
+        "CDR1.L": 97.77166666666666,
+        "CDR2.L": 97.81333333333333,
+        "CDR3.L": 95.20888888888888
+      },
+      "pdb_sha256": "31165fcb30ce1fc1d19729db484ec5bd9e9a15f6af6a9588e2ef52c61aac240e",
+      "H_to_L_mean_PAE_A": 3.216506415333439,
+      "L_to_H_mean_PAE_A": 3.17610090289878
+    },
+    {
+      "id": "LoRA_0920",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 97.5427966101695,
+      "VL_mean_pLDDT": 97.12869158878507,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 97.7425,
+        "CDR2.H": 97.36,
+        "CDR3.H": 93.71454545454547,
+        "CDR1.L": 97.73,
+        "CDR2.L": 98.04,
+        "CDR3.L": 94.03333333333333
+      },
+      "pdb_sha256": "4ee805f48dc59a8c18a662afa1cac31ea2a4366407869693756ab255a4bb2ae7",
+      "H_to_L_mean_PAE_A": 3.1492626326627593,
+      "L_to_H_mean_PAE_A": 3.335717566925392
+    },
+    {
+      "id": "LoRA_0014",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 95.09803278688526,
+      "VL_mean_pLDDT": 96.69467289719626,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.1875,
+        "CDR2.H": 97.81125,
+        "CDR3.H": 77.25866666666667,
+        "CDR1.L": 95.72833333333334,
+        "CDR2.L": 94.25,
+        "CDR3.L": 93.50111111111111
+      },
+      "pdb_sha256": "0abc917fc7bf134838dab724888691f643dee92d4fb7bd9747d83c16de26b677",
+      "H_to_L_mean_PAE_A": 4.017947755477248,
+      "L_to_H_mean_PAE_A": 3.3203447219243145
+    },
+    {
+      "id": "LoRA_0109",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 97.65539130434783,
+      "VL_mean_pLDDT": 97.29935185185187,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 98.03999999999999,
+        "CDR2.H": 97.4225,
+        "CDR3.H": 95.195,
+        "CDR1.L": 96.50857142857141,
+        "CDR2.L": 97.75,
+        "CDR3.L": 92.2911111111111
+      },
+      "pdb_sha256": "c4e9f195e6ce4915675702c63f3795db5f4a8823fd9c72f6d9c8a81b6836c76f",
+      "H_to_L_mean_PAE_A": 3.1494710144927542,
+      "L_to_H_mean_PAE_A": 3.2928768115942026
+    },
+    {
+      "id": "LoRA_0164",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 96.40791304347825,
+      "VL_mean_pLDDT": 94.72720720720719,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 96.85875,
+        "CDR2.H": 95.39750000000001,
+        "CDR3.H": 91.43875,
+        "CDR1.L": 94.14625000000001,
+        "CDR2.L": 97.37333333333333,
+        "CDR3.L": 82.87916666666666
+      },
+      "pdb_sha256": "7318cd2a7e215d2c3c6e4101d881248b9f869ddadf77970b7cee55b2c10c506d",
+      "H_to_L_mean_PAE_A": 3.661424206815511,
+      "L_to_H_mean_PAE_A": 4.3288241284763025
+    },
+    {
+      "id": "LoRA_0064",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 95.68806722689078,
+      "VL_mean_pLDDT": 96.34613207547169,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 95.5075,
+        "CDR2.H": 95.28875,
+        "CDR3.H": 83.21166666666666,
+        "CDR1.L": 94.11500000000001,
+        "CDR2.L": 96.02333333333333,
+        "CDR3.L": 89.86111111111111
+      },
+      "pdb_sha256": "4bf3dc90f905970c884144986b1dd99fbec5dfab4dc471f78647b111062faa04",
+      "H_to_L_mean_PAE_A": 3.8737521801173296,
+      "L_to_H_mean_PAE_A": 3.5947788171872523
+    },
+    {
+      "id": "LoRA_0993",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 95.1557142857143,
+      "VL_mean_pLDDT": 94.81688679245283,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 95.75874999999999,
+        "CDR2.H": 93.72625,
+        "CDR3.H": 83.375,
+        "CDR1.L": 92.75999999999999,
+        "CDR2.L": 94.16666666666667,
+        "CDR3.L": 79.7175
+      },
+      "pdb_sha256": "62e3ca2b0e0e776217d913bb94b265677b391ece9c75133ae86fa62a4124b23d",
+      "H_to_L_mean_PAE_A": 4.020987791342953,
+      "L_to_H_mean_PAE_A": 4.14713730775329
+    },
+    {
+      "id": "LoRA_0527",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 97.31675213675214,
+      "VL_mean_pLDDT": 96.86271028037383,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 97.9075,
+        "CDR2.H": 97.2975,
+        "CDR3.H": 93.37299999999999,
+        "CDR1.L": 97.70833333333333,
+        "CDR2.L": 97.72666666666667,
+        "CDR3.L": 92.74333333333333
+      },
+      "pdb_sha256": "a322b58e7da195cc6028adc7d640838d3457893d5a69830cbd4cb92a0611ede5",
+      "H_to_L_mean_PAE_A": 3.2345762441089545,
+      "L_to_H_mean_PAE_A": 3.4274215192906783
+    },
+    {
+      "id": "LoRA_0742",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 96.99254237288136,
+      "VL_mean_pLDDT": 97.2328971962617,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 97.125,
+        "CDR2.H": 96.0625,
+        "CDR3.H": 91.08909090909091,
+        "CDR1.L": 97.54,
+        "CDR2.L": 97.29333333333334,
+        "CDR3.L": 95.13222222222223
+      },
+      "pdb_sha256": "63d520edf4e4887f4731ec65212d4843d5811bd88b9c35a4eae64700b3334d9f",
+      "H_to_L_mean_PAE_A": 3.4300586092190715,
+      "L_to_H_mean_PAE_A": 3.3735656581656897
+    },
+    {
+      "id": "LoRA_0671",
+      "group": "LoRA",
+      "VH_mean_pLDDT": 97.37923076923077,
+      "VL_mean_pLDDT": 95.93719626168223,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 97.66499999999999,
+        "CDR2.H": 96.46875,
+        "CDR3.H": 93.33,
+        "CDR1.L": 94.105,
+        "CDR2.L": 96.37666666666667,
+        "CDR3.L": 86.46666666666667
+      },
+      "pdb_sha256": "0463eb605976dbc77097b6332b6ea84e7fe96ac746b74c3f49b287a9094fefa8",
+      "H_to_L_mean_PAE_A": 3.199421679047847,
+      "L_to_H_mean_PAE_A": 3.8129107756210563
+    },
+    {
+      "id": "CTRL_atezolizumab",
+      "group": "control",
+      "VH_mean_pLDDT": 96.12364406779659,
+      "VL_mean_pLDDT": 97.00644859813083,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 94.8375,
+        "CDR2.H": 94.57,
+        "CDR3.H": 88.39181818181818,
+        "CDR1.L": 97.50833333333333,
+        "CDR2.L": 97.17,
+        "CDR3.L": 93.71555555555557
+      },
+      "pdb_sha256": "7437793302aa18adcc135597460a222010913788e0c09edee844c0bb53e859de",
+      "H_to_L_mean_PAE_A": 3.8401987961349593,
+      "L_to_H_mean_PAE_A": 3.3692737208933945
+    },
+    {
+      "id": "CTRL_durvalumab",
+      "group": "control",
+      "VH_mean_pLDDT": 95.77735537190082,
+      "VL_mean_pLDDT": 97.06583333333332,
+      "CDR_mean_pLDDT": {
+        "CDR1.H": 95.54625,
+        "CDR2.H": 95.85,
+        "CDR3.H": 82.50285714285714,
+        "CDR1.L": 95.47142857142856,
+        "CDR2.L": 95.71,
+        "CDR3.L": 93.40222222222222
+      },
+      "pdb_sha256": "7f9898725b67833af90cb681eb439cef0eb442664559449f9b55e1b814d3fa8d",
+      "H_to_L_mean_PAE_A": 3.6720332108968474,
+      "L_to_H_mean_PAE_A": 3.2646548821548818
+    }
+  ]
+}
