@@ -1057,13 +1057,15 @@ with (OUTPUT/'colab_requirements_lock.txt').open('w') as handle:
 print('고정 입력: Fv 42쌍 + 공통 PD-L1, 시드 42; 정확한 코드 SHA256:', hashlib.sha256((ROOT/'구조평가.py').read_bytes()).hexdigest())
 '''
     predict = '''# 완료된 구조는 재사용하고 실제 예측의 최신 로그를 표시합니다.
+import asyncio
 os.environ['MPLBACKEND'] = 'Agg'
-def run_stage(mode, *args):
+async def run_stage(mode, *args):
     command = [str(python), str(ROOT/'구조평가.py'), mode, *args]
     log = OUTPUT / (mode + '_driver.log')
     previous = None
     with log.open('w') as handle:
-        process = subprocess.Popen(command, stdout=handle, stderr=subprocess.STDOUT)
+        process = subprocess.Popen(command, stdout=handle, stderr=subprocess.STDOUT, start_new_session=True)
+        (OUTPUT/(mode + '_process.json')).write_text(json.dumps({'pid': process.pid, 'command': command, 'detached_session': True}))
         print('시작:', mode, 'PID:', process.pid, flush=True)
         while process.poll() is None:
             logs = list((OUTPUT/'folding').glob('*/log.txt'))
@@ -1074,18 +1076,18 @@ def run_stage(mode, *args):
                 if message != previous:
                     print(latest.parent.name, message, flush=True)
                     previous = message
-            time.sleep(20)
+            await asyncio.sleep(20)
         if process.returncode:
             print(log.read_text()[-6000:])
             raise RuntimeError('Stage failed: ' + mode)
     print('완료:', mode, flush=True)
-run_stage('fold', '--ids', 'PDL1_ECD')
+await run_stage('fold', '--ids', 'PDL1_ECD')
 # Save the completed common target before starting the longer Fv batch.
 from google.colab import files
 target_archive = shutil.make_archive('/content/PDL1_target_checkpoint_seed42', 'zip', OUTPUT)
 files.download(target_archive)
-run_stage('fold-batch')
-run_stage('fold-summary')
+await run_stage('fold-batch')
+await run_stage('fold-summary')
 '''
     export = '''# 모든 결과/로그를 로컬로 내려받아 HADDOCK3 단계에서 재사용합니다.
 import shutil
