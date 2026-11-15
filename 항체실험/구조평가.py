@@ -244,7 +244,7 @@ def fold_batch(ids=None):
     batch = OUTPUT / 'folding' / 'Fv_batch'
     batch.mkdir(parents=True, exist_ok=True)
     settings = {'fold': manifest['settings']['fold'], 'seed': 42,
-                'model_type': 'alphafold2_multimer_v3', 'recompile_padding': 1.1}
+                'model_type': 'alphafold2_multimer_v3', 'recompile_padding': 10}
     if (batch / 'settings.json').exists() and read_json(batch / 'settings.json') != settings:
         raise RuntimeError('Batch settings differ from cached run')
     write_json(batch / 'settings.json', settings)
@@ -278,7 +278,7 @@ def fold_batch(ids=None):
     executable = ENV / 'colabfold/bin/colabfold_batch'
     command = [executable, csv_path, batch, '--model-type', 'alphafold2_multimer_v3',
                '--num-models', '5', '--num-recycle', '3', '--num-seeds', '1', '--random-seed', '42',
-               '--pair-mode', 'unpaired', '--max-msa', '256:512', '--recompile-padding', '1.1',
+               '--pair-mode', 'unpaired', '--max-msa', '256:512', '--recompile-padding', '10',
                '--amber', '--num-relax', '1']
     run_logged(command, batch / 'execution.log', extra_env={
         'PATH': str(executable.parent) + ':' + os.environ.get('PATH', ''),
@@ -555,6 +555,7 @@ def interface_metrics(pdb, residue_map):
     sasa = {name: float(freesasa.calc(structure).totalArea()) for name, structure in structures.items()}
     buried_total = sasa['antibody'] + sasa['antigen'] - sasa['complex']
     return {'heavy_atom_contact_count': sum(map(len, neighbors)), 'residue_contact_count': len(pairs),
+            'antigen_resolved_residues_uniprot': sorted(r.id[1] + 18 for r in model['A'] if r.id[0] == ' '),
             'buried_SASA_total_A2': buried_total, 'interface_area_half_buried_SASA_A2': buried_total / 2,
             'contact_pairs': sorted([list(x) for x in pairs]),
             'antigen_contact_residues_uniprot': sorted(i + 18 for i in ag_res),
@@ -694,7 +695,7 @@ def analyze(profile):
         if profile == 'main' and (cluster_population is None or cluster_population < 4):
             excluded.append({'id': row['id'], 'reason': 'cluster has fewer than four refined poses'})
             continue
-        analysis_signature = {'version': 2, 'settings_sha256': digest(root / 'settings.json'),
+        analysis_signature = {'version': 3, 'settings_sha256': digest(root / 'settings.json'),
                               'capri_sha256': digest(table_path), 'residue_map_sha256': digest(root / 'residue_map.json')}
         cached_metrics = candidate_dir / 'metrics.json'
         if cached_metrics.exists() and read_json(cached_metrics).get('analysis_signature') == analysis_signature:
@@ -771,6 +772,7 @@ def analyze(profile):
     if summary:
         plot_results(summary, destination, profile, excluded)
         shortlist(summary, destination)
+        plot_poses(summary, destination, profile)
     print(f'Analyzed {len(summary)}/{len(expected_rows)}; pending/unclustered {len(excluded)}; profile={profile}', flush=True)
 
 
@@ -797,7 +799,11 @@ def plot_results(rows, destination, profile, excluded):
         group_rows = [r for r in rows if r['group'] == group]
         if group_rows:
             positions = np.arange(19, 239)
-            values = [np.mean([r['contact_frequency_top4'].get(str(i), 0) for r in group_rows]) for i in positions]
+            values = []
+            for i in positions:
+                observed = [r['contact_frequency_top4'].get(str(i), 0) for r in group_rows
+                            if i in r['poses'][0]['interface']['antigen_resolved_residues_uniprot']]
+                values.append(np.mean(observed) if observed else np.nan)
             axes[2].plot(positions, values, label=f'{group} (n={len(group_rows)})', color=color)
     axes[2].set(xlabel='PD-L1 residue (UniProt numbering)', ylabel='Mean top-cluster contact frequency', title='Antigen interface contacts (4 A)')
     axes[2].legend(frameon=False, fontsize=8)
@@ -834,6 +840,66 @@ def shortlist(rows, destination):
             writer = csv.DictWriter(handle, fieldnames=list(ranked[0]))
             writer.writeheader()
             writer.writerows(values)
+
+
+def plot_poses(rows, destination, profile):
+    """Export comparable C-alpha traces; colors show chains, not model confidence."""
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.lines import Line2D
+    import numpy as np
+    from Bio.PDB import PDBParser
+    from Bio.SVDSuperimposer import SVDSuperimposer
+    selected = []
+    for group in ('MAGE', 'LoRA', 'control'):
+        selected.extend(sorted([r for r in rows if r['group'] == group],
+                               key=lambda r:r['cluster_top4_score_mean'])[:2])
+    if not selected:
+        return
+    colors = {'A': '#a4adb9', 'H': '#2263b2', 'L': '#0f9c96'}
+    parsed = []
+    reference = None
+    for row in selected:
+        model = PDBParser(QUIET=True).get_structure(row['id'], destination / row['id'] / 'pose_1.pdb')[0]
+        ca = {r.id[1]: r['CA'].coord for r in model['A'] if 'CA' in r}
+        if reference is None:
+            reference = ca
+        common = sorted(set(reference) & set(ca))
+        if len(common) < 3:
+            raise ValueError('Insufficient common antigen residues for structure-panel alignment')
+        fit = SVDSuperimposer()
+        fit.set(np.array([reference[i] for i in common]), np.array([ca[i] for i in common]))
+        fit.run()
+        rotation, translation = fit.get_rotran()
+        traces = {chain: np.array([r['CA'].coord for r in model[chain] if 'CA' in r]) @ rotation + translation
+                  for chain in colors}
+        parsed.append((row, traces))
+    points = np.concatenate([trace for _, traces in parsed for trace in traces.values()])
+    center = (points.max(axis=0) + points.min(axis=0)) / 2
+    radius = float(np.max(points.max(axis=0) - points.min(axis=0))) / 2 * 1.05
+    cols = min(3, len(parsed))
+    nrows = (len(parsed) + cols - 1) // cols
+    fig = plt.figure(figsize=(max(8.4, 4.2 * cols), 4.6 * nrows + 1.0))
+    for index, (row, traces) in enumerate(parsed, 1):
+        axis = fig.add_subplot(nrows, cols, index, projection='3d')
+        for chain, coords in traces.items():
+            splits = np.where(np.linalg.norm(np.diff(coords, axis=0), axis=1) > 5)[0] + 1
+            for segment in np.split(coords, splits):
+                axis.plot(*segment.T, color=colors[chain], lw=1.8)
+        axis.set(xlim=(center[0]-radius, center[0]+radius), ylim=(center[1]-radius, center[1]+radius),
+                 zlim=(center[2]-radius, center[2]+radius))
+        axis.set_box_aspect((1, 1, 1))
+        axis.view_init(elev=18, azim=35)
+        axis.set_axis_off()
+        axis.set_title(f"{row['id']}\nCluster score {row['cluster_top4_score_mean']:.1f}", fontsize=10, pad=10)
+    fig.legend([Line2D([0],[0], color=color, lw=3) for color in colors.values()],
+               ['PD-L1', 'VH', 'VL'], loc='lower center', ncol=3, frameon=False)
+    fig.suptitle(f'PD-L1 representative docking poses | {profile}\nC-alpha traces; aligned on common antigen residues', fontsize=11, y=.97)
+    fig.subplots_adjust(top=.78 if nrows == 1 else .87, bottom=.12, hspace=.15)
+    for extension in ('png', 'svg'):
+        fig.savefig(destination / f'representative_poses.{extension}', dpi=220, bbox_inches='tight')
+    plt.close(fig)
 
 
 def import_colab(archive_path):
@@ -1014,6 +1080,10 @@ def run_stage(mode, *args):
             raise RuntimeError('Stage failed: ' + mode)
     print('완료:', mode, flush=True)
 run_stage('fold', '--ids', 'PDL1_ECD')
+# Save the completed common target before starting the longer Fv batch.
+from google.colab import files
+target_archive = shutil.make_archive('/content/PDL1_target_checkpoint_seed42', 'zip', OUTPUT)
+files.download(target_archive)
 run_stage('fold-batch')
 run_stage('fold-summary')
 '''
