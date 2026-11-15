@@ -1,5 +1,5 @@
 {
-  "checked_at_KST": "2026-11-16T01:11:04.633343+09:00",
+  "checked_at_KST": "2026-11-16T07:27:11.886904+09:00",
   "folding_completed": 43,
   "folding_total": 43,
   "main_docking_completed_ids": [
@@ -12,10 +12,10 @@
   "seed": 42,
   "sampling": 1000,
   "refine": 100,
-  "status": "paused_for_pc_shutdown",
+  "status": "running",
   "interpretation": "Snapshot, not live status. Only the first positive control is analyzed. Native residue-contact recall for its selected poses is 0 to 0.020408; this does not establish binding-pose recovery.",
   "restart_step": 3,
   "current_candidate_rigidbody_outputs": 1000,
   "current_candidate_selected_for_refinement": 100,
-  "processes_terminated": true
+  "processes_terminated": false
 }
