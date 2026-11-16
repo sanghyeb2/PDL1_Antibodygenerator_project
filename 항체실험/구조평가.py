@@ -616,6 +616,106 @@ def resume_rigidbody_worker(candidate):
         HaddockModule.make_cns_jobs = original
 
 
+def prepare_flexref_resume(candidate, sampling, refine):
+    """Preserve complete partial refinement outputs with their original selected-model seeds."""
+    import inspect
+    import haddock.modules.refinement.flexref as flexref
+    from haddock.libs.libontology import ModuleIO
+    checkpoint = read_json(OUTPUT / 'shutdown_checkpoint_latest.json')
+    archive = OUTPUT / 'checkpoints' / Path(checkpoint['archive']).name
+    if checkpoint['interrupted_candidate'] != candidate or digest(archive) != checkpoint['sha256']:
+        raise RuntimeError('Latest shutdown archive does not match this candidate')
+    row = next(r for r in read_json(OUTPUT / 'manifest.json')['candidates'] if r['id'] == candidate)
+    root = prepare_docking(row, sampling, refine, 'main')
+    if (root / 'completed.json').exists():
+        return root
+    selected = root / 'run/2_seletop/io.json'
+    io = ModuleIO(); io.load(selected)
+    models = io.retrieve_models()
+    if len(models) != refine or any(model.seed is None for model in models):
+        raise RuntimeError('Missing original refinement inputs/seeds')
+    expected_atoms = sorted(line[12:27] for p in (root / 'run/0_topoaa').glob('*.pdb')
+                            for line in p.read_text().splitlines() if line.startswith('ATOM'))
+    cache = root / 'resume_flexref_cache'; cache.mkdir(exist_ok=True)
+    reused, rejected = [], []
+    for p in sorted((root / 'run/3_flexref').glob('flexref_*.pdb')):
+        index = int(p.stem.rsplit('_', 1)[1])
+        if not 1 <= index <= refine:
+            raise ValueError(f'Unexpected refinement index: {p}')
+        model = models[index - 1]
+        try:
+            sha = complete_rigidbody_pose(p, expected_atoms)
+            text = p.read_text()
+            parent = re.search(r'^REMARK initial structure 1 - (.+)$', text, re.M)
+            if not parent or Path(parent[1].strip()).name != str(model.file_name):
+                raise ValueError('Refinement input model does not match selection order')
+        except (ValueError, OSError) as error:
+            rejected.append({'file': p.name, 'reason': str(error)})
+            continue
+        shutil.copy2(p, cache / p.name)
+        if digest(cache / p.name) != sha:
+            raise RuntimeError('Refinement backup checksum mismatch')
+        reused.append({'index': index, 'file': p.name, 'sha256': sha,
+                       'source_model': str(model.file_name), 'seed': model.seed})
+    record = {'candidate': candidate, 'expected_total': refine, 'reused': reused, 'rejected': rejected,
+              'remaining': refine - len(reused), 'settings_sha256': digest(root / 'settings.json'),
+              'selection_io_sha256': digest(selected),
+              'module_source_sha256': hashlib.sha256(inspect.getsource(flexref.HaddockModule._run).encode()).hexdigest()}
+    write_json(root / 'resume_flexref.json', record)
+    print(f'Resume flexref {candidate}: reuse {len(reused)}; compute {record["remaining"]}', flush=True)
+    return root
+
+
+def resume_flexref_worker(candidate):
+    """Filter complete jobs only in this worker, leaving official output/scoring code intact."""
+    import inspect
+    import haddock.modules.refinement.flexref as flexref
+    from haddock.clis.cli import main as haddock_main
+    from haddock.libs.libcns import write_eval_line
+    from haddock.libs.libontology import ModuleIO
+    root = ENV / 'runs/main' / candidate
+    record = read_json(root / 'resume_flexref.json')
+    if digest(root / 'settings.json') != record['settings_sha256'] or digest(root / 'run/2_seletop/io.json') != record['selection_io_sha256']:
+        raise RuntimeError('Refinement settings or original selection changed')
+    if hashlib.sha256(inspect.getsource(flexref.HaddockModule._run).encode()).hexdigest() != record['module_source_sha256']:
+        raise RuntimeError('Installed refinement module changed')
+    io = ModuleIO(); io.load(root / 'run/2_seletop/io.json')
+    models = io.retrieve_models()
+    cached = {pose['index']: pose for pose in record['reused']}
+    for pose in cached.values():
+        if digest(root / 'resume_flexref_cache' / pose['file']) != pose['sha256']:
+            raise RuntimeError('Cached refinement pose changed')
+    original_engine = flexref.get_engine
+
+    def filtered_engine(mode, params):
+        if mode != 'local' or params['sampling_factor'] != 1:
+            raise RuntimeError('Partial refinement resume requires local mode and sampling_factor 1')
+        engine = original_engine(mode, params)
+        def build(jobs):
+            if len(jobs) != record['expected_total']:
+                raise RuntimeError('Unexpected number of refinement jobs')
+            pending = []
+            for index, job in enumerate(jobs, 1):
+                model = models[index - 1]
+                script = job.input_file if isinstance(job.input_file, str) else Path(job.input_file).read_text()
+                if Path(job.output_file).name != f'flexref_{index}.out' or str(model.file_name) not in script or write_eval_line('seed', model.seed) not in script:
+                    raise RuntimeError('Official refinement job identity or inherited seed mismatch')
+                if index in cached:
+                    shutil.copy2(root / 'resume_flexref_cache' / cached[index]['file'], Path.cwd() / cached[index]['file'])
+                else:
+                    pending.append(job)
+            print(f'Official flexref jobs: {len(pending)} new; {len(cached)} verified outputs restored', flush=True)
+            return engine(pending)
+        return build
+
+    flexref.get_engine = filtered_engine
+    try:
+        os.chdir(root)
+        haddock_main(root / 'workflow.cfg', restart=3)
+    finally:
+        flexref.get_engine = original_engine
+
+
 def interface_metrics(pdb, residue_map):
     """Heavy-atom intermolecular contacts only; glycan-site proximity is a risk flag."""
     import numpy as np
@@ -1217,7 +1317,7 @@ files.download(archive)
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'make-colab', 'import-colab', 'run-main', 'resume-main', 'resume-rigidbody-worker'])
+    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'make-colab', 'import-colab', 'run-main', 'resume-main', 'resume-rigidbody-worker', 'resume-flexref', 'resume-flexref-worker'])
     parser.add_argument('--limit', type=int)
     parser.add_argument('--ids', nargs='+')
     parser.add_argument('--profile', default='pilot')
@@ -1246,26 +1346,28 @@ def main():
         if args.archive is None:
             parser.error('--archive is required for import-colab')
         import_colab(args.archive)
-    elif args.mode == 'resume-rigidbody-worker':
+    elif args.mode in {'resume-rigidbody-worker', 'resume-flexref-worker'}:
         if not args.ids or len(args.ids) != 1:
             parser.error('Exactly one --ids candidate is required')
-        resume_rigidbody_worker(args.ids[0])
-    elif args.mode in {'run-main', 'resume-main'}:
+        (resume_flexref_worker if args.mode == 'resume-flexref-worker' else resume_rigidbody_worker)(args.ids[0])
+    elif args.mode in {'run-main', 'resume-main', 'resume-flexref'}:
         if args.sampling < 1000 or args.refine < 100:
             parser.error('Main docking requires explicit --sampling >=1000 --refine >=100; pilot defaults cannot be used.')
-        if args.mode == 'resume-main':
+        if args.mode in {'resume-main', 'resume-flexref'}:
             if not args.ids or len(args.ids) != 1:
                 parser.error('Exactly one interrupted --ids candidate is required')
-            root = prepare_rigidbody_resume(args.ids[0], args.sampling, args.refine)
+            is_flexref = args.mode == 'resume-flexref'
+            root = (prepare_flexref_resume if is_flexref else prepare_rigidbody_resume)(args.ids[0], args.sampling, args.refine)
             main_state = read_json(OUTPUT / 'main_settings.json')
             main_state['status'] = 'running'
+            main_state.pop('processes_terminated', None)
             write_json(OUTPUT / 'main_settings.json', main_state)
             if not (root / 'completed.json').exists():
-                run_logged([sys.executable, Path(__file__).resolve(), 'resume-rigidbody-worker', '--ids', args.ids[0]],
-                           root / 'resume_execution.log',
+                run_logged([sys.executable, Path(__file__).resolve(), 'resume-flexref-worker' if is_flexref else 'resume-rigidbody-worker', '--ids', args.ids[0]],
+                           root / ('resume_flexref_execution.log' if is_flexref else 'resume_execution.log'),
                            extra_env={'PATH': str(ENV / 'docking/bin') + ':' + os.environ.get('PATH', '')})
                 write_json(root / 'completed.json', {'settings_sha256': digest(root / 'settings.json'),
-                           'resumed': True, 'resume_metadata_sha256': digest(root / 'resume_rigidbody.json')})
+                           'resumed': True, 'resume_metadata_sha256': digest(root / ('resume_flexref.json' if is_flexref else 'resume_rigidbody.json'))})
         run_main(args.sampling, args.refine)
     else:
         status()

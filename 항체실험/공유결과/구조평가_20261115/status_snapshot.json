@@ -1,5 +1,5 @@
 {
-  "checked_at_KST": "2026-11-16T08:54:55.476762+09:00",
+  "checked_at_KST": "2026-11-16T09:50:09.912121+09:00",
   "folding_completed": 43,
   "folding_total": 43,
   "main_docking_completed_ids": [
@@ -13,14 +13,16 @@
   "seed": 42,
   "sampling": 1000,
   "refine": 100,
-  "status": "paused_for_pc_shutdown",
+  "status": "running",
   "interpretation": "Snapshot. Two positive controls analyzed; native contact recovery remains poor (atezolizumab 0-2.04%, durvalumab 0%). No completed generated-antibody docking result yet.",
   "restart_step": 3,
   "current_candidate_rigidbody_outputs": 1000,
   "current_candidate_selected_for_refinement": 100,
-  "processes_terminated": true,
+  "processes_terminated": false,
   "partial_flexref_pose_files": 42,
   "partial_flexref_validated": true,
   "partial_flexref_complete_file_count": 42,
-  "partial_flexref_job_identity_verified": false
+  "partial_flexref_job_identity_verified": true,
+  "reused_flexref_poses": 42,
+  "new_flexref_jobs": 58
 }
