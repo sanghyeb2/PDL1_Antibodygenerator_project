@@ -1,27 +1,29 @@
 {
-  "checked_at_KST": "2026-11-16T13:57:39.436420+09:00",
+  "checked_at_KST": "2026-11-16T16:53:38.139548+09:00",
   "folding_completed": 43,
   "folding_total": 43,
   "main_docking_completed_ids": [
     "MAGE_0749",
     "MAGE_0910",
+    "MAGE_0333",
     "LoRA_0853",
+    "LoRA_0009",
     "CTRL_atezolizumab",
     "CTRL_durvalumab"
   ],
   "main_docking_expected": 42,
-  "current_candidate": "LoRA_0009",
+  "current_candidate": "LoRA_0655",
   "current_stage": "1_rigidbody",
   "ncores": 6,
   "seed": 42,
   "sampling": 1000,
   "refine": 100,
-  "status": "running",
-  "interpretation": "Interim snapshot: five candidates analyzed (MAGE 2, LoRA 1, positive controls 2). Both controls have poor native contact recovery, so favorable scores do not establish binding or model superiority.",
+  "status": "paused_by_user",
+  "interpretation": "Paused snapshot: seven analyzed candidates (MAGE 3, LoRA 2, controls 2). Both controls have poor native contact recovery; interim scores do not establish binding or model superiority.",
   "restart_step": 1,
-  "current_candidate_rigidbody_outputs": 264,
+  "current_candidate_rigidbody_outputs": 460,
   "current_candidate_selected_for_refinement": 0,
-  "processes_terminated": false,
-  "reused_rigidbody_poses": 264,
-  "new_rigidbody_jobs": 736
+  "processes_terminated": true,
+  "reused_rigidbody_poses": 460,
+  "new_rigidbody_jobs": 540
 }
