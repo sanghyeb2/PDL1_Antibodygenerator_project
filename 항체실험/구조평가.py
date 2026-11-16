@@ -543,9 +543,9 @@ def prepare_rigidbody_resume(candidate, sampling, refine):
         raise RuntimeError('Only an interrupted rigidbody stage after completed topology can be resumed here')
     if any(p.is_dir() and re.match(r'[2-9]_', p.name) for p in (root / 'run').iterdir()):
         raise RuntimeError('Later docking stages exist; inspect their restart point first')
-    checkpoint = read_json(OUTPUT / 'shutdown_checkpoint_20261115.json')
-    archive = OUTPUT / 'checkpoints/CTRL_atezolizumab_shutdown_20261115.tar.gz'
-    if checkpoint['current_candidate'] != candidate or digest(archive) != checkpoint['checkpoint_sha256']:
+    checkpoint = read_json(OUTPUT / 'shutdown_checkpoint_latest.json')
+    archive = OUTPUT / 'checkpoints' / Path(checkpoint['archive']).name
+    if checkpoint['interrupted_candidate'] != candidate or checkpoint['interrupted_stage'] != '1_rigidbody' or digest(archive) != checkpoint['sha256']:
         raise RuntimeError('Shutdown archive does not match this interrupted candidate')
     expected_atoms = sorted(line[12:27] for path in (root / 'run/0_topoaa').glob('*.pdb')
                             for line in path.read_text().splitlines() if line.startswith('ATOM'))
@@ -566,7 +566,7 @@ def prepare_rigidbody_resume(candidate, sampling, refine):
             raise RuntimeError('Pose backup checksum mismatch')
         reused.append({'file': path.name, 'index': index, 'seed': 42 + index, 'sha256': sha})
     record = {'candidate': candidate, 'settings_sha256': digest(root / 'settings.json'),
-              'source_archive_sha256': checkpoint['checkpoint_sha256'], 'reused': reused,
+              'source_archive_sha256': checkpoint['sha256'], 'reused': reused,
               'rejected': rejected, 'expected_total': sampling, 'remaining': sampling - len(reused),
               'factory_source_sha256': hashlib.sha256(inspect.getsource(HaddockModule.make_cns_jobs).encode()).hexdigest()}
     write_json(root / 'resume_rigidbody.json', record)

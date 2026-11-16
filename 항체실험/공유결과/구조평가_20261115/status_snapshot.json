@@ -1,5 +1,5 @@
 {
-  "checked_at_KST": "2026-11-16T12:28:11.478560+09:00",
+  "checked_at_KST": "2026-11-16T13:57:39.436420+09:00",
   "folding_completed": 43,
   "folding_total": 43,
   "main_docking_completed_ids": [
@@ -16,10 +16,12 @@
   "seed": 42,
   "sampling": 1000,
   "refine": 100,
-  "status": "paused_by_user",
+  "status": "running",
   "interpretation": "Interim snapshot: five candidates analyzed (MAGE 2, LoRA 1, positive controls 2). Both controls have poor native contact recovery, so favorable scores do not establish binding or model superiority.",
   "restart_step": 1,
   "current_candidate_rigidbody_outputs": 264,
   "current_candidate_selected_for_refinement": 0,
-  "processes_terminated": true
+  "processes_terminated": false,
+  "reused_rigidbody_poses": 264,
+  "new_rigidbody_jobs": 736
 }
