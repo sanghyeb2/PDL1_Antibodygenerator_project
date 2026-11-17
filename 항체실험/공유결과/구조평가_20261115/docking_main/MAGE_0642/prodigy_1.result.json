@@ -1,0 +1,13 @@
+{
+  "signature": {
+    "pdb_sha256": "52bf8f3db4714f2a096c7c3934a8b6a7c6c10ede86e2d2ce0ce4fec069e7dec1",
+    "selection": [
+      "H,L",
+      "A"
+    ],
+    "temperature_C": 25,
+    "cutoff_A": 5.5
+  },
+  "deltaG_kcal_mol": -12.0,
+  "estimated_Kd_M": 1.6e-09
+}
