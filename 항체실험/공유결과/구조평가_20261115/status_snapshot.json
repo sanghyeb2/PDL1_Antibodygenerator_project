@@ -1,5 +1,5 @@
 {
-  "checked_at_KST": "2026-11-17T14:49:16.810613+09:00",
+  "checked_at_KST": "2026-11-17T16:30:27.001028+09:00",
   "folding_completed": 43,
   "folding_total": 43,
   "main_docking_completed_ids": [
@@ -26,12 +26,13 @@
   "seed": 42,
   "sampling": 1000,
   "refine": 100,
-  "status": "paused_by_user",
-  "interpretation": "Paused interim snapshot. Both controls have poor native contact recovery; favorable scores do not prove binding or model superiority.",
+  "status": "running",
+  "interpretation": "Running interim snapshot. Both controls have poor native contact recovery; favorable scores do not prove binding or model superiority.",
   "restart_step": 1,
   "current_candidate_rigidbody_outputs": 421,
   "current_candidate_selected_for_refinement": 0,
-  "processes_terminated": true,
+  "processes_terminated": false,
   "reused_rigidbody_poses": 421,
-  "new_rigidbody_jobs": 579
+  "new_rigidbody_jobs": 579,
+  "process_group": 378
 }
