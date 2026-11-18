@@ -1,0 +1,62 @@
+[
+  {
+    "candidate": "CTRL_atezolizumab",
+    "profile": "reference-pilot-validation-20261119-experimental",
+    "seed": 42,
+    "restraint_body_tool_default_seed": 917,
+    "sampling": 1000,
+    "refine": 100,
+    "ncores": 6,
+    "native_reference": true,
+    "antibody_sha256": "954584490e413f76f307f4d3c97c51fc60b9cd04bcc67e7fbe1c5522a6d71ad0",
+    "antigen_sha256": "f3a363fab9405aa1d1e3686107ab7d832a4149d8a2024edee7858b2bdcf44b12",
+    "ambig_sha256": "a87315f9b8b88689075868508d8b9c3506cc775ffe8e1b5ae0bb2852eb7fad11",
+    "unambig_sha256": "b14238d2458c705b34a30766b0ac50a2d05b25b2a6027493aeae5343e8e8c618",
+    "config_sha256": "1887f18aa588caa1734a3ecd1467a7d1c392b731c963d15063059d494e7a990a"
+  },
+  {
+    "candidate": "CTRL_durvalumab",
+    "profile": "reference-pilot-validation-20261119-experimental",
+    "seed": 42,
+    "restraint_body_tool_default_seed": 917,
+    "sampling": 1000,
+    "refine": 100,
+    "ncores": 6,
+    "native_reference": true,
+    "antibody_sha256": "0013ea247b8d0fe8f259f9f8f7667ddbdf930e8bd91f6da4c37f0378d3104048",
+    "antigen_sha256": "d759af58a1f95e6d965b123f76bd247aa8aa3e5062641c65039ca8524009cf09",
+    "ambig_sha256": "e0a7e49a0abdca53e32d3ccd7979f792a804da91dabe08772717abc99a055153",
+    "unambig_sha256": "718493a0f4c29594c288751149f9ef0adc823ecada0c8898771498317893b33b",
+    "config_sha256": "1887f18aa588caa1734a3ecd1467a7d1c392b731c963d15063059d494e7a990a"
+  },
+  {
+    "candidate": "CTRL_atezolizumab",
+    "profile": "reference-pilot-validation-20261119-predicted_matched",
+    "seed": 42,
+    "restraint_body_tool_default_seed": 917,
+    "sampling": 1000,
+    "refine": 100,
+    "ncores": 6,
+    "native_reference": false,
+    "antibody_sha256": "d2f053e16294373a2035ba94161713dfff7f63f6b664b85e398a4f3bdb70b3c2",
+    "antigen_sha256": "3096ca4d6a8026aca8c0cc57ad8dfe5a8710dc59bc8e35e5a4bc075d1b3f9576",
+    "ambig_sha256": "c1f318f649e8ccefe97b516469a8c1baad66cf663883be3f1d1906ed6d8ebd82",
+    "unambig_sha256": "cfb10fba3ed8330722cd4be1d997d2fd800af23c1ffc9c5b60721f34a604aaa5",
+    "config_sha256": "1887f18aa588caa1734a3ecd1467a7d1c392b731c963d15063059d494e7a990a"
+  },
+  {
+    "candidate": "CTRL_durvalumab",
+    "profile": "reference-pilot-validation-20261119-predicted_matched",
+    "seed": 42,
+    "restraint_body_tool_default_seed": 917,
+    "sampling": 1000,
+    "refine": 100,
+    "ncores": 6,
+    "native_reference": false,
+    "antibody_sha256": "0e0a05c16fec111605bfe3034f05d9c88c2fad88f8b50443b377efcce7d0cde0",
+    "antigen_sha256": "ede544e43ac2355dce76418d40ff25142f84dae052175cbfe4abcd3ef69636ea",
+    "ambig_sha256": "985496181daa51053b473ab3ac6546fec812366a7e1fd5b250fdd3274f9ef81d",
+    "unambig_sha256": "ec608cfb57e87b28c5a8db3e511363e766e70afd046d8f5723d4ea8e2b1c8e1e",
+    "config_sha256": "1887f18aa588caa1734a3ecd1467a7d1c392b731c963d15063059d494e7a990a"
+  }
+]

@@ -347,7 +347,7 @@ def write_partner(source, sequences, destination):
     return mapping
 
 
-def prepare_docking(row, sampling, refine, profile, native_reference=False):
+def prepare_docking(row, sampling, refine, profile, native_reference=False, reference_source=None):
     from haddock.clis.restraints.calc_accessibility import get_accessibility, apply_cutoff
     root = ENV / 'runs' / profile / row['id']
     root.mkdir(parents=True, exist_ok=True)
@@ -357,7 +357,7 @@ def prepare_docking(row, sampling, refine, profile, native_reference=False):
         if row['group'] != 'control' or not profile.startswith('reference-pilot'):
             raise ValueError('Native reference inputs are reserved for the separate reference-pilot profile')
         from Bio.PDB import PDBParser, PDBIO, Select
-        source = OUTPUT / 'references' / row['id'] / 'resolved_Fv_PDL1.pdb'
+        source = Path(reference_source) if reference_source else OUTPUT / 'references' / row['id'] / 'resolved_Fv_PDL1.pdb'
         model = PDBParser(QUIET=True).get_structure('native', source)
         class Chains(Select):
             def __init__(self, names):
@@ -370,6 +370,8 @@ def prepare_docking(row, sampling, refine, profile, native_reference=False):
         writer.save(str(antigen), Chains({'A'}))
         maps = {'input_scope': 'Resolved experimental Fv/IgV only; separate redocking pilot',
                 'source': str(source)}
+        if reference_source:
+            maps['input_scope'] = 'ColabFold coordinates cropped to experimental resolved residue IDs; validation only'
     else:
         maps = {'antibody': write_partner(predicted_structure(row['id']),
                                          {'H': row['VH_AA'], 'L': row['VL_AA']}, antibody),
@@ -414,7 +416,7 @@ def prepare_docking(row, sampling, refine, profile, native_reference=False):
     settings = {'candidate': row['id'], 'profile': profile, 'seed': 42,
                 'restraint_body_tool_default_seed': 917,
                 'sampling': sampling, 'refine': refine, 'ncores': 6,
-                'native_reference': native_reference,
+                'native_reference': native_reference and reference_source is None,
                 'antibody_sha256': digest(antibody), 'antigen_sha256': digest(antigen),
                 'ambig_sha256': digest(root / 'ambig.tbl'), 'unambig_sha256': digest(root / 'unambig.tbl')}
     config = f'''run_dir = "run"
@@ -469,6 +471,206 @@ global_rmsd = false
     write_json(OUTPUT / 'docking' / profile / row['id'] / 'location.json',
                {'raw_results': str(root), 'settings': settings})
     return root
+
+
+def matched_validation_structure(row, destination):
+    """Match resolved residue IDs without borrowing any experimental coordinates."""
+    destination = Path(destination)
+    destination.mkdir(parents=True, exist_ok=True)
+    native = OUTPUT / 'references' / row['id'] / 'resolved_Fv_PDL1.pdb'
+    fv, antigen = destination / 'predicted_Fv.pdb', destination / 'predicted_antigen.pdb'
+    write_partner(predicted_structure(row['id']), {'H': row['VH_AA'], 'L': row['VL_AA']}, fv)
+    write_partner(predicted_structure('PDL1_ECD'), {'A': read_json(OUTPUT / 'manifest.json')['antigen']}, antigen)
+    def residues(lines):
+        return {(line[21], line[22:27]): line[17:20] for line in lines if line.startswith('ATOM')}
+    expected = residues(native.read_text().splitlines())
+    predicted_lines = fv.read_text().splitlines() + antigen.read_text().splitlines()
+    observed = residues(predicted_lines)
+    missing = set(expected) - set(observed)
+    if missing:
+        raise ValueError(f'Missing matched predicted residues: {sorted(missing)}')
+    kept = [line for line in predicted_lines if line.startswith('ATOM') and (line[21], line[22:27]) in expected]
+    result = destination / 'predicted_matched_Fv_PDL1.pdb'
+    result.write_text('\n'.join(kept) + '\nEND\n', encoding='ascii')
+    write_json(destination / 'matched_input.json', {
+        'candidate': row['id'], 'reference_sha256': digest(native),
+        'predicted_fv_sha256': digest(fv), 'predicted_antigen_sha256': digest(antigen),
+        'matched_sha256': digest(result), 'matched_residue_count': len(expected),
+        'sequence_differences': [{'chain': k[0], 'residue': k[1].strip(),
+                                  'experimental': expected[k], 'predicted': observed[k]}
+                                 for k in sorted(expected) if expected[k] != observed[k]],
+        'scope': 'Predicted coordinates only; same resolved residue IDs as experimental input. No template coordinates.'})
+    return result
+
+
+def capri_quality(model, reference, destination):
+    """Official HADDOCK CAPRI; merge H/L into B to exclude internal H-L contacts."""
+    import math
+    import yaml
+    import haddock.modules.analysis.caprieval as caprieval
+    from haddock.libs.libcapri import CAPRI
+    destination = Path(destination)
+    destination.mkdir(parents=True, exist_ok=True)
+    def merged(source, name):
+        source = Path(source)
+        text = gzip.open(source, 'rt').read() if source.suffix == '.gz' else source.read_text()
+        lines = []
+        for line in text.splitlines():
+            if line.startswith('ATOM'):
+                chain = 'B' if line[21] in 'HLB' else line[21]
+                if chain not in 'AB':
+                    raise ValueError(f'Unexpected CAPRI chain {chain}')
+                lines.append(line[:21] + chain + line[22:72].ljust(50) + chain.ljust(4) + line[76:])
+        path = destination / name
+        path.write_text('\n'.join(lines) + '\nEND\n', encoding='ascii')
+        return path
+    # B uses globally unique VH/VL residue numbers, not overlapping chain numbering.
+    mod, ref = merged(model, 'model_AB.pdb'), merged(reference, 'reference_AB.pdb')
+    defaults = yaml.safe_load((Path(caprieval.__file__).parent / 'defaults.yaml').read_text())
+    params = {key: value['default'] for key, value in defaults.items()}
+    params.update(receptor_chain='A', ligand_chains=['B'], global_rmsd=False, ilrmsd=False)
+    value = CAPRI(1, mod, destination, ref, params).run()
+    if value is None:
+        raise ValueError('CAPRI sequence alignment failed')
+    metrics = {key: float(getattr(value, key)) for key in ('fnat', 'irmsd', 'lrmsd', 'dockq')}
+    if not all(math.isfinite(v) for v in metrics.values()):
+        raise ValueError(f'Nonfinite CAPRI metrics: {metrics}')
+    return metrics
+
+
+def selected_control_models(root):
+    """Cluster selection renames files; ori_name retains the minimized pose identity."""
+    from haddock.libs.libontology import ModuleIO
+    io = ModuleIO(); io.load(Path(root) / 'run/6_seletopclusts/io.json')
+    models = [model for model in io.retrieve_models() if model.clt_rank == 1]
+    models.sort(key=lambda model: model.clt_model_rank)
+    return [str(model.ori_name) for model in models[:4]]
+
+
+def evaluate_control_poses(row, profile, condition):
+    """Evaluate every minimized pose, separating score ranking from oracle quality."""
+    import inspect
+    from haddock.libs.libontology import ModuleIO
+    root = ENV / 'runs' / profile / row['id']
+    reference = OUTPUT / 'references' / row['id'] / 'resolved_Fv_PDL1.pdb'
+    directory = OUTPUT / 'control_validation' / condition / row['id']
+    directory.mkdir(parents=True, exist_ok=True)
+    io_path = root / 'run/4_emref/io.json'
+    signature = {'version': 1, 'settings_sha256': digest(root / 'settings.json'),
+                 'io_sha256': digest(io_path), 'reference_sha256': digest(reference),
+                 'evaluator_sha256': hashlib.sha256(inspect.getsource(capri_quality).encode()).hexdigest()}
+    io = ModuleIO(); io.load(io_path)
+    models = sorted(io.retrieve_models(), key=lambda model: float(model.score))
+    if len(models) != 100:
+        raise ValueError(f'Expected 100 minimized models; found {len(models)}')
+    def source_path(model):
+        path = root / 'run/4_emref' / str(model.file_name)
+        return path if path.exists() else path.with_suffix(path.suffix + '.gz')
+    aggregate_signature = signature | {
+        'pose_sha256': [digest(source_path(model)) for model in models],
+        'selected_io_sha256': digest(root / 'run/6_seletopclusts/io.json'),
+        'restoration_sha256': hashlib.sha256(inspect.getsource(restore_pose_chains).encode()).hexdigest(),
+        'selection_mapper_sha256': hashlib.sha256(inspect.getsource(selected_control_models).encode()).hexdigest(),
+        'VH_length': len(row['VH_AA'])}
+    cached = directory / 'quality.json'
+    if cached.exists() and read_json(cached)['signature'] == aggregate_signature:
+        return read_json(cached)
+    poses = []
+    for rank, model in enumerate(models, 1):
+        source = source_path(model)
+        work = directory / f'pose_{rank:03d}'
+        work.mkdir(exist_ok=True)
+        restored = work / 'model_HL.pdb'
+        restore_pose_chains(source, restored, len(row['VH_AA']))
+        pose_signature = signature | {'source_sha256': digest(source)}
+        pose_cache = work / 'quality.json'
+        if pose_cache.exists() and read_json(pose_cache)['signature'] == pose_signature:
+            quality = read_json(pose_cache)['metrics']
+        else:
+            quality = capri_quality(restored, reference, work)
+            write_json(pose_cache, {'signature': pose_signature, 'metrics': quality})
+        poses.append({'score_rank': rank, 'model': str(model.file_name), 'score': float(model.score), **quality})
+    selected_names = set(selected_control_models(root))
+    selected_poses = sorted((p for p in poses if p['model'] in selected_names), key=lambda p: p['score'])[:4]
+    result = {'id': row['id'], 'condition': condition, 'profile': profile,
+              'signature': aggregate_signature, 'poses': poses, 'model_count': len(poses),
+              'best_dockq_in_score_top': {str(k): max(p['dockq'] for p in poses[:k]) for k in (1, 5, 10, 100)},
+              'selected_cluster_top4': selected_poses,
+              'best_dockq_selected_cluster_top4': max((p['dockq'] for p in selected_poses), default=None),
+              'best_quality_score_rank': max(poses, key=lambda p: p['dockq'])['score_rank'],
+              'scope': 'Fnat uses 5A contacts, iRMSD uses 10A interface; internal H-L contacts excluded. Top100 best is oracle diagnostic, not prospective selection.'}
+    write_json(cached, result)
+    return result
+
+
+def plot_control_validation(results):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    colors = {'experimental': '#168373', 'predicted_matched': '#db872b', 'predicted_fullECD': '#657b98'}
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.4), constrained_layout=True)
+    for axis, candidate in zip(axes, ('CTRL_atezolizumab', 'CTRL_durvalumab')):
+        for result in results:
+            if result['id'] != candidate:
+                continue
+            axis.plot((1, 5, 10, 100), [result['best_dockq_in_score_top'][str(k)] for k in (1, 5, 10, 100)],
+                      marker='o', label=result['condition'], color=colors[result['condition']])
+        axis.set(xscale='log', xticks=[1, 5, 10, 100], xticklabels=['1', '5', '10', '100'],
+                 ylim=(0, 1.02), xlabel='Number of score-ranked poses inspected', ylabel='Best DockQ',
+                 title=candidate.removeprefix('CTRL_'))
+        axis.grid(alpha=.2); axis.legend(fontsize=8)
+    fig.suptitle('Control validation: pose recovery versus score ranking\nExperimental / matched predicted / original full ECD inputs')
+    folder = OUTPUT / 'control_validation'
+    for suffix in ('png', 'svg'):
+        fig.savefig(folder / f'control_validation.{suffix}', dpi=180)
+    plt.close(fig)
+
+
+def validate_controls():
+    """Frozen four-run diagnostic; original main results and inputs are untouched."""
+    controls = [r for r in read_json(OUTPUT / 'manifest.json')['candidates'] if r['group'] == 'control']
+    directory = OUTPUT / 'control_validation'
+    directory.mkdir(exist_ok=True)
+    results = []
+    tasks = [(kind, row) for kind in ('experimental', 'predicted_matched') for row in controls]
+    state = {'status': 'running', 'seed': 42, 'ncores': 6, 'sampling': 1000, 'refine': 100,
+             'task_count': 4, 'completed_tasks': [], 'main_results_preserved': True,
+             'runner_sha256': digest(Path(__file__)),
+             'scope': 'Bound-extracted redocking and residue-matched predicted docking; evaluation-only native reference, no native-epitope restraints. Single seed; not a generative generalization test.'}
+    write_json(directory / 'state.json', state)
+    try:
+        for kind, row in tasks:
+            profile = 'reference-pilot-validation-20261119-' + kind
+            state.update(current_candidate=row['id'], current_condition=kind, current_profile=profile)
+            write_json(directory / 'state.json', state)
+            root = ENV / 'runs' / profile / row['id']
+            if (root / 'run').exists() and not (root / 'completed.json').exists():
+                raise RuntimeError(f'Interrupted validation: {root}; preserve outputs and inspect restart stage')
+            source = matched_validation_structure(row, directory / 'inputs' / row['id']) if kind == 'predicted_matched' else None
+            root = prepare_docking(row, 1000, 100, profile, True, reference_source=source)
+            if not (root / 'completed.json').exists():
+                run_logged([ENV / 'docking/bin/haddock3', 'workflow.cfg'], root / 'execution.log', cwd=root,
+                           extra_env={'PATH': str(ENV / 'docking/bin') + ':' + os.environ.get('PATH', '')})
+                write_json(root / 'completed.json', {'settings_sha256': digest(root / 'settings.json')})
+            elif read_json(root / 'completed.json')['settings_sha256'] != digest(root / 'settings.json'):
+                raise RuntimeError(f'Completed validation settings mismatch: {root}')
+            results.append(evaluate_control_poses(row, profile, kind))
+            analyze(profile)
+            state['completed_tasks'].append({'condition': kind, 'id': row['id']})
+            write_json(directory / 'comparison.json', results)
+            plot_control_validation(results)
+            write_json(directory / 'state.json', state)
+        for row in controls:
+            results.append(evaluate_control_poses(row, 'main', 'predicted_fullECD'))
+        write_json(directory / 'comparison.json', results)
+        plot_control_validation(results)
+        state.update(status='completed', current_candidate=None, current_condition=None,
+                     completed_utc=datetime.now(timezone.utc).isoformat())
+        write_json(directory / 'state.json', state)
+    except BaseException as error:
+        state.update(status='failed', error=str(error))
+        write_json(directory / 'state.json', state)
+        raise
 
 
 def restore_pose_chains(source, destination, heavy_length):
@@ -1317,7 +1519,7 @@ files.download(archive)
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'make-colab', 'import-colab', 'run-main', 'resume-main', 'resume-rigidbody-worker', 'resume-flexref', 'resume-flexref-worker'])
+    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'validate-controls', 'make-colab', 'import-colab', 'run-main', 'resume-main', 'resume-rigidbody-worker', 'resume-flexref', 'resume-flexref-worker'])
     parser.add_argument('--limit', type=int)
     parser.add_argument('--ids', nargs='+')
     parser.add_argument('--profile', default='pilot')
@@ -1340,6 +1542,8 @@ def main():
         folding_summary()
     elif args.mode == 'reference-controls':
         reference_controls()
+    elif args.mode == 'validate-controls':
+        validate_controls()
     elif args.mode == 'make-colab':
         make_colab()
     elif args.mode == 'import-colab':

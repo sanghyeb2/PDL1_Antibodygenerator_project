@@ -1,0 +1,17 @@
+{
+  "status": "running",
+  "seed": 42,
+  "ncores": 6,
+  "sampling": 1000,
+  "refine": 100,
+  "task_count": 4,
+  "completed_tasks": [],
+  "main_results_preserved": true,
+  "runner_sha256": "41c53cec95d0a9d32a069874bb02ad87d1d0a60465676b6f2d6e321f316328be",
+  "scope": "Bound-extracted redocking and residue-matched predicted docking; evaluation-only native reference, no native-epitope restraints. Single seed; not a generative generalization test.",
+  "current_candidate": "CTRL_atezolizumab",
+  "current_condition": "experimental",
+  "current_profile": "reference-pilot-validation-20261119-experimental",
+  "started_KST": "2026-11-19T08:24:58.882551+09:00",
+  "snapshot_only": true
+}
