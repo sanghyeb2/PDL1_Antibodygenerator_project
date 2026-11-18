@@ -47,8 +47,7 @@
     "LoRA_0671"
   ],
   "epitope": "all accessible PD-L1 ECD surface",
-  "status": "paused_by_user",
-  "processes_terminated": true,
+  "status": "completed",
   "last_observed_compute_running": false,
-  "last_checked_KST": "2026-11-18T15:59:43.461487+09:00"
+  "completed_verified_KST": "2026-11-19T08:10:32.863521+09:00"
 }
