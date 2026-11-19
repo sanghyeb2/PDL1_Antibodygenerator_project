@@ -1,17 +1,39 @@
 {
-  "status": "running",
+  "status": "completed",
   "seed": 42,
   "ncores": 6,
   "sampling": 1000,
   "refine": 100,
   "task_count": 4,
-  "completed_tasks": [],
+  "completed_tasks": [
+    {
+      "condition": "experimental",
+      "id": "CTRL_atezolizumab"
+    },
+    {
+      "condition": "experimental",
+      "id": "CTRL_durvalumab"
+    },
+    {
+      "condition": "predicted_matched",
+      "id": "CTRL_atezolizumab"
+    },
+    {
+      "condition": "predicted_matched",
+      "id": "CTRL_durvalumab"
+    }
+  ],
   "main_results_preserved": true,
-  "runner_sha256": "41c53cec95d0a9d32a069874bb02ad87d1d0a60465676b6f2d6e321f316328be",
+  "runner_sha256": "cf2e5fd859cee0495baf10e6ef383c96217f5da07c4305cdf61df45cfd2f8353",
   "scope": "Bound-extracted redocking and residue-matched predicted docking; evaluation-only native reference, no native-epitope restraints. Single seed; not a generative generalization test.",
-  "current_candidate": "CTRL_atezolizumab",
-  "current_condition": "experimental",
-  "current_profile": "reference-pilot-validation-20261119-experimental",
-  "started_KST": "2026-11-19T08:24:58.882551+09:00",
-  "snapshot_only": true
+  "current_candidate": null,
+  "current_condition": null,
+  "current_profile": "reference-pilot-validation-20261119-predicted_matched",
+  "completed_utc": "2026-11-19T17:49:33.697357+00:00",
+  "checked_at_KST": "2026-11-20T08:38:50.126745+09:00",
+  "snapshot_only": true,
+  "evaluation_conditions": 6,
+  "total_evaluated_poses": 600,
+  "last_observed_compute_running": false,
+  "completed_KST": "2026-11-20T02:49:33.697357+09:00"
 }

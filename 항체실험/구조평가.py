@@ -776,12 +776,12 @@ def prepare_rigidbody_resume(candidate, sampling, refine):
     return root
 
 
-def resume_rigidbody_worker(candidate):
+def resume_rigidbody_worker(candidate, profile='main'):
     """Use official HADDOCK restart, retaining its original per-pose seeds and output metadata."""
     import inspect
     from haddock.clis.cli import main as haddock_main
     from haddock.modules.sampling.rigidbody import HaddockModule
-    root = ENV / 'runs/main' / candidate
+    root = ENV / 'runs' / profile / candidate
     record = read_json(root / 'resume_rigidbody.json')
     original = HaddockModule.make_cns_jobs
     factory_sha = hashlib.sha256(inspect.getsource(original).encode()).hexdigest()

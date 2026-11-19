@@ -1,0 +1,1068 @@
+{
+  "id": "CTRL_atezolizumab",
+  "condition": "predicted_fullECD",
+  "profile": "main",
+  "signature": {
+    "version": 1,
+    "settings_sha256": "ef2d902df70083427fc9a71a0368933de59b60842d5650dbd517c0fe9b0d1c37",
+    "io_sha256": "846ccee15ab7163b8a0a6c859e4776230152b17f487055628a85ebdaf21a1c7e",
+    "reference_sha256": "b5f33e3ab7d57e9aefb44848d8f97350f6ff46e901e6bec48e1cf6d8016ff1bf",
+    "evaluator_sha256": "62bb0d22529967f41ee3895b010c21950af5c003fc2714739861e039078eba52",
+    "pose_sha256": [
+      "0007870e7b6b77c9dab82dcfe7c7d51edce298ead2776167626137373944a865",
+      "d33fea0797da97f564ca4a1c5f7f921c7a548f299b5c5723f55d1080a467ad4e",
+      "7c87db2fa0b96a454c83d8dd6c1629209daf8f72ca44353e0cc170b40561f6db",
+      "aa7bdcc6d4ddfa67838efed1f71494f705dc6ee767412eb57305f7f1d3f368b7",
+      "a4cd70e65cb96a96c563da0d1b9931c0ab3a22519afd18f03d69aa2e54e03f87",
+      "be0221a60181d7e880a2436fe53610699e5e49420e239c868237915a6e8f3e44",
+      "b218fdae1203130caf03dd92c056658c0b3d446dc604b18029cdf1bdf59a1f84",
+      "02fd8dd16d6c365d93a49b595294f005cbbaa8642929681c0cce28c9daadef78",
+      "635d5f53d2d66bf040385b731f40008fc521ab55bcfda83dcc64a280af83f1b0",
+      "274fb4e8429ff64a4bd156d9c548c7f509b4a15db00dd73083d4316a82032ebd",
+      "0b676a8f69206635886b894b75d5883acbe5a6e56af6b85b9ad1843afd284894",
+      "889999f6a411161ac5be73e5b88df03dd596e98492b8ae72dd1b4e8053226c14",
+      "cb79b4da1931ba3a58fdc36f0e1c2c21bb8bc078b3495379abb7044a978d9b46",
+      "040e25b337d157c48de9fa881190149b0f23b538edf7d5c0968667dafd5a9544",
+      "2155e720fb477d905884d43e10a7c55fe7f07caa20674bed8ec34388a59502cf",
+      "82fecc5f1e03cbf1cf9311fe39c179aeb526a2f02c4f89bbb35c11c97556bf09",
+      "6f378e84a5dee6c21ea91a7a11dad133a9632e70f4245485b10db4cf4e4a49ac",
+      "c085ac6172eb6a61709c12283855a0c2b55934ba5131e6468c23006aadcba478",
+      "8c29aaf9b6546952e664ec6ab793156071c79093050cf8c68b9bc01515a7e34b",
+      "ba79537a94cc74bd355a4ecffe0753a56fed56c782ba10f3fbfa0c9eb4240bc8",
+      "fa99f2da22571c8a4294544c42fc31069fa5ad3bb3492e2b12f734688bfddb0d",
+      "ad81390bee8ccfce86971f586b3491e05d9c3e569f61ee5d7fe17b150602ab62",
+      "3523eb81a2753c7533b39b07929d8c4042c86eb490ad8eec7d45470c2da69bf4",
+      "29086902cf8d6d9db46538848d87ee3059f0b6187e3df338766bc366d2efc3ca",
+      "eba41e213016ad9a3ff0322c084beb2515fd701324cf527876bbf3c3d2047e3d",
+      "2b986af46559e2d558e0f9e5b5e6ca75f0aa7c402d6cb4c56aa8131bff3ef753",
+      "56f2ab40b2ce1c1f16d5cc02a39b6f14af8f11316908f229c8320770a0bd08e3",
+      "ec7f6389038a9bb73236e1bcf82db86fc637215d93ca766f1108bb0266536894",
+      "a24b546dd926624c595827c0ea85965a76eba01968d906a6aae0f299a4438632",
+      "38a58e389ed4feef62f0abae5eb1d100c87bf46570824711b465b398ab86f9be",
+      "d91a30b89f7600ef6631c855c791b1c97e4ac01345041112c9bf75d5424aef35",
+      "be8345f1e73ca3f65cce44f7dfa5c2babd705e9ce5b21885811f35c20eecc60b",
+      "41a381653ff566f6c46224a0e1348a3b6e6247d9f33fe5690e20a145760cbb57",
+      "1e2e76edfaada48b670b980f2431303977825b26d85d4fee9ba927f4442748ab",
+      "ef37d1bb493a000e3a88cbb9923880e5e2a7c5ac8980260066e9fc864c8abfc2",
+      "e4203413d312f499623d32bf845a7c34a5e335b2a7647595c93dfcfcd2150878",
+      "9e9f74241d9eaea70efc967d4b31a63b3b9131765b29d4a44295ed526d041045",
+      "82220bff274304cf7cba9610df0fb57da7398f207effe24d851ad65ad81a41b4",
+      "6a63ffbbe66fef277b2d2cecfd3cac0766fd0046e3a63e8ca33baceb85926bb9",
+      "364ac7fd447fdc162807ac65f060aba18cce6bc23d0a08bd86ae559400dd8ada",
+      "178876aa04816fb3fe3d4fbbc85e5990dee016b83187863995fafaac26ab93f8",
+      "560287381c41f3363ee6425635354e91b85d64a025d1ceaac5daa610da257424",
+      "fb4563b7ba506867c964dff450ebcc9d312141772bc82ebf860d6339fb6d4905",
+      "0e45605249b927137fb4e701b20621790da04fb0235b80670499778ea9a8fea1",
+      "bb932bf8678ac07c134cdaca08009e040435426f0ad4914d4763c04794dbc777",
+      "9f0a7db56572d1731e9d667a68417cd9b189cc2a9d875c928e30eb90b0ee8ecb",
+      "8fe3e9e4ed3c65c0090b26bde6a72bd0221b08275140d059c41f868a19dfe426",
+      "a2fcc13368aa0bc904a0c04b50984226627fd87e305ee993305f0c2cc155f57a",
+      "8997fa450a7289e2d6da45d6d7318279e411c581a31000b5ce5063d7c719a517",
+      "5526e5e6becdfa604d054c34a6084cec3e9c17713e858dd976981fbe6f9be014",
+      "e4d1101752c45e704845f46e645dc57fc6c5a3e3824e34fb00cb6c77c160184e",
+      "092aeb2b9736d1471318b456111a18c79ed8949b7a9bf35daa2e4700ee1d63eb",
+      "9160d71227b0bb7251681ae5307a54d7a508a43e352100d58ed21e6e65f02451",
+      "59207e54f7ced87e92dafb50c300e2c134dd30516c8379deb05471206b173301",
+      "1ca80f6889e2e6090b73d49084ca51d88e2f634a754a6d0086f4214c000c30ed",
+      "739b4b8bba5f3b8db35b2affa6f9b3b66621b0775fd1f09166225a8bda4e803a",
+      "64dcf641b2d9d7dd2a23d2776b6b3c11129905df460f64b4642e83c3446643f3",
+      "2978b156b16266aaba729348a86d641c02a07b8737b1f1589b9107489caf8761",
+      "9bdac883d5ce27752671242a642e09e4033173e1840b6bf595a45ffcbce10dc6",
+      "d406fee8b59651158a7f9b298a5f3d39227c4d9c3da5b9ca1243c4d2f796144b",
+      "2e690ca67eee37fc87d405a57ec64a2b005ae019d43b75d6cf1185f97336434f",
+      "433807dbbfef7a0aa9b1766ff023a4c03b9efa46e0014faf2e99488d154daae8",
+      "3712cc270b6d369e1ea7be0246ae07340f3ec0760835f6265f19a755374e0ef8",
+      "b52d790fbc9430fe90867d9e67077457e565dba7e58b652382a50836def5a6a4",
+      "d805fab7fd6f02ae91d1e78831ede4c07d190148a6220031a5babee0d371c5df",
+      "0adbfd76031d60e5352510215368961b4e43d15387221dc7b40d48653b208859",
+      "f121d77ead99cf9367ce6b36f9d9ea64c948fc158cdb5de4464e1c5a9d4877d1",
+      "b08b6b387758fe1e6c9b056845d09beed8204d5c502dc1c6b2f18bfb45e4087a",
+      "6d3a90c1fac07428ca2fc3478d580313d7077677149ae09f3e09457385cee4dd",
+      "bcd0f899e98831329c44426ed8c76ad678a5fb2bf1163c964a3675fac93c28d4",
+      "02feca9e85db0a84f48e2b5707a935179326054f698b6c65be3dfa138527fb12",
+      "a58358817bbaa305f840a572cfc4c1f909ec64bd2a8c8bb92f8ea0839e4ccd77",
+      "fd90e36e94004810dd5de51c569332002ec42a784d45992086f6d1538c30fb67",
+      "8ab4405f0530a883ae87a1d64614c0e12dd2dc24cee9eea1cbee77e73958533a",
+      "42d3c151e974625851b01ef4026c44a1b881260f75d3c03c87fa41bb3c64543d",
+      "eef529ecfc8580f876fc0d575fa2920bc9df97cda35b9842c6d57b790e5ad7a9",
+      "dde8cfd2cd8f06c05c54d9a51e04e261724717124b90823fd7994b805fae8a99",
+      "e3926324f16d47a57f605563e33ef5881d646542f0b7d99efb7e0f1397b3830a",
+      "fdcd1637a7dce6d60211a80a1290f3db2a9c6794c5e94a76c4d141f6d883031d",
+      "88a4cab274d3cfdc0fd48fb5b53fa7a4ccb9b63c0529ed53f7df8990ce8a79c0",
+      "985ed240f93e46cc8e2ad70cbb015e4e17f4e2a311d86fe773e45b7c6e560178",
+      "37374f6d195c3bf7eb3496ed9a905848dc6ccd210a6b47d2bd460ed91e69ba21",
+      "bc4cb52bf83ec7c1d2295838ef63b7959b0274ff66e0b337a8558b9123f7a738",
+      "1423946d47a1b3b7224dd8a9f22c1decdf1b5d3c2a512f9fa1112941ebcf1df8",
+      "dbaad9be5b1b87fd7f4c6daa06b7412c6601d01b9ee2f9d327431086a3397163",
+      "39bdf4951b77a2e74a878ed6938d3615bd9296382f111b55c15d9f4e5c7a2db2",
+      "c91c88b52e8e954be24e5799834617b3fdcd1f20fb15a7ab8f6e0608ff5cd57c",
+      "3f48e4f13975f6a01503d4a460fddafcd7be90ce5138e1ba21772d573115fb6d",
+      "b799d29305268cbd0c68c5964f871e8561a0099b818bebc78f378edfc65e1a9b",
+      "eacabf4d1513ca7717af0f47795744f0cd41358104f46902f40f018a5e5fc7d1",
+      "409f8584ee354836a111f1957c85ffca4859d6011087fe393c6aa0dc33c94d41",
+      "6753b63dab7cedd32c2e16af57fe534530680e657b9bfa6414cbd5cccfc67ecd",
+      "dab1bb9394cf71d9268b1e59087b60ef59580fd6c8c9fc2360d173b1c4c4a4b4",
+      "c26e6d7b578c5364049f5f7547b1d74f75515d2be8e8affad4e61401fb8c3db2",
+      "9c3ddfc71f9b9adf31c00e260ef728375b78145d89ccac247b4e072872dc7e38",
+      "3cc2265ec051dbfe9a995a3dda7781736070fe1bc4ff573bb4c4ee3eedb4ebeb",
+      "cd0d728d4775b210e68a4405f66df22ca5587a6a3b0898088d763a8bc49a151a",
+      "e2fe4d95596221b3e908c36b9c47332f58f0360c1bdda429b74e6c82433a8617",
+      "20ab54aeb3d45e58bcd182852927122501edc10ab9921d30899db157ea693640",
+      "e1638c4a2629091c966702aae7c940208eaf1b7f215135b80b153c90a1a0ecf7"
+    ],
+    "selected_io_sha256": "fa7195bfb91ba928dc3e8ddca08b06e58a42beedae2337ba405efa0967ecb31a",
+    "restoration_sha256": "06da4e61088ed85f317d280ae092f1d09bf2a3feb3f79f198b55798d04e0aadf",
+    "selection_mapper_sha256": "16e63e832fc6ee78dc42371f59a1b695aaa7d6587cd0b9d7f1a7414b7077eb37",
+    "VH_length": 118
+  },
+  "poses": [
+    {
+      "score_rank": 1,
+      "model": "emref_15.pdb",
+      "score": -132.11419999999998,
+      "fnat": 0.04,
+      "irmsd": 12.509493021037576,
+      "lrmsd": 30.00026516567612,
+      "dockq": 0.042828432815298884
+    },
+    {
+      "score_rank": 2,
+      "model": "emref_33.pdb",
+      "score": -121.2339,
+      "fnat": 0.02666666666666667,
+      "irmsd": 5.463455654714632,
+      "lrmsd": 20.895713758360092,
+      "dockq": 0.07957992446851309
+    },
+    {
+      "score_rank": 3,
+      "model": "emref_60.pdb",
+      "score": -113.57220000000001,
+      "fnat": 0.26666666666666666,
+      "irmsd": 6.6537936090151755,
+      "lrmsd": 16.07883481863606,
+      "dockq": 0.17781790064261407
+    },
+    {
+      "score_rank": 4,
+      "model": "emref_1.pdb",
+      "score": -112.7102,
+      "fnat": 0.0,
+      "irmsd": 31.517851656577967,
+      "lrmsd": 94.14415919759814,
+      "dockq": 0.003448575909725262
+    },
+    {
+      "score_rank": 5,
+      "model": "emref_30.pdb",
+      "score": -111.1089,
+      "fnat": 0.04,
+      "irmsd": 12.000743109412031,
+      "lrmsd": 29.52844677209603,
+      "dockq": 0.04396807760900436
+    },
+    {
+      "score_rank": 6,
+      "model": "emref_81.pdb",
+      "score": -109.94322,
+      "fnat": 0.0,
+      "irmsd": 29.648558369364554,
+      "lrmsd": 100.93433161234213,
+      "dockq": 0.003198333977971649
+    },
+    {
+      "score_rank": 7,
+      "model": "emref_12.pdb",
+      "score": -108.28680000000001,
+      "fnat": 0.04,
+      "irmsd": 7.368963577377586,
+      "lrmsd": 26.989971253083425,
+      "dockq": 0.0566730793337712
+    },
+    {
+      "score_rank": 8,
+      "model": "emref_14.pdb",
+      "score": -106.551,
+      "fnat": 0.013333333333333334,
+      "irmsd": 14.401896190988527,
+      "lrmsd": 34.619246189682386,
+      "dockq": 0.026973764645511926
+    },
+    {
+      "score_rank": 9,
+      "model": "emref_90.pdb",
+      "score": -103.16161,
+      "fnat": 0.013333333333333334,
+      "irmsd": 11.740341217770071,
+      "lrmsd": 30.212892232423194,
+      "dockq": 0.03424668886094376
+    },
+    {
+      "score_rank": 10,
+      "model": "emref_13.pdb",
+      "score": -100.1519,
+      "fnat": 0.04,
+      "irmsd": 6.757819274514378,
+      "lrmsd": 25.090536962593,
+      "dockq": 0.06330228278941981
+    },
+    {
+      "score_rank": 11,
+      "model": "emref_62.pdb",
+      "score": -96.886,
+      "fnat": 0.013333333333333334,
+      "irmsd": 11.777162683227857,
+      "lrmsd": 29.387766416387887,
+      "dockq": 0.03549848010813966
+    },
+    {
+      "score_rank": 12,
+      "model": "emref_75.pdb",
+      "score": -96.5403,
+      "fnat": 0.02666666666666667,
+      "irmsd": 11.901966597888208,
+      "lrmsd": 29.78443416621796,
+      "dockq": 0.03920407037796731
+    },
+    {
+      "score_rank": 13,
+      "model": "emref_27.pdb",
+      "score": -96.02799999999999,
+      "fnat": 0.0,
+      "irmsd": 21.36951746518129,
+      "lrmsd": 64.2205361721395,
+      "dockq": 0.007373192761401481
+    },
+    {
+      "score_rank": 14,
+      "model": "emref_2.pdb",
+      "score": -95.0477,
+      "fnat": 0.12,
+      "irmsd": 8.440114616929627,
+      "lrmsd": 19.917632276038283,
+      "dockq": 0.10156063381397881
+    },
+    {
+      "score_rank": 15,
+      "model": "emref_9.pdb",
+      "score": -93.9289,
+      "fnat": 0.02666666666666667,
+      "irmsd": 6.386551044773712,
+      "lrmsd": 25.32284143404026,
+      "dockq": 0.06006930632009835
+    },
+    {
+      "score_rank": 16,
+      "model": "emref_8.pdb",
+      "score": -93.69971000000001,
+      "fnat": 0.0,
+      "irmsd": 6.045517392547135,
+      "lrmsd": 22.469456488826477,
+      "dockq": 0.06106048592280543
+    },
+    {
+      "score_rank": 17,
+      "model": "emref_23.pdb",
+      "score": -93.0668,
+      "fnat": 0.0,
+      "irmsd": 38.296204600248416,
+      "lrmsd": 108.92612185936,
+      "dockq": 0.0025281149365046864
+    },
+    {
+      "score_rank": 18,
+      "model": "emref_28.pdb",
+      "score": -92.6749,
+      "fnat": 0.05333333333333334,
+      "irmsd": 6.53039683834213,
+      "lrmsd": 24.105475959585476,
+      "dockq": 0.07134579448808075
+    },
+    {
+      "score_rank": 19,
+      "model": "emref_77.pdb",
+      "score": -92.42280000000001,
+      "fnat": 0.0,
+      "irmsd": 36.09757409733842,
+      "lrmsd": 109.37581316009297,
+      "dockq": 0.0025756421448244952
+    },
+    {
+      "score_rank": 20,
+      "model": "emref_17.pdb",
+      "score": -92.17252,
+      "fnat": 0.0,
+      "irmsd": 35.63853132095626,
+      "lrmsd": 108.3388405588923,
+      "dockq": 0.0026287674085113304
+    },
+    {
+      "score_rank": 21,
+      "model": "emref_31.pdb",
+      "score": -92.15720000000002,
+      "fnat": 0.0,
+      "irmsd": 6.564005698212936,
+      "lrmsd": 24.31198368737014,
+      "dockq": 0.052850205031346256
+    },
+    {
+      "score_rank": 22,
+      "model": "emref_4.pdb",
+      "score": -91.43070999999999,
+      "fnat": 0.0,
+      "irmsd": 36.37580229223818,
+      "lrmsd": 108.03660007152043,
+      "dockq": 0.002616511137740851
+    },
+    {
+      "score_rank": 23,
+      "model": "emref_83.pdb",
+      "score": -91.35499999999999,
+      "fnat": 0.0,
+      "irmsd": 31.538761893000906,
+      "lrmsd": 106.2905115298931,
+      "dockq": 0.002870460946924712
+    },
+    {
+      "score_rank": 24,
+      "model": "emref_87.pdb",
+      "score": -90.9996,
+      "fnat": 0.013333333333333334,
+      "irmsd": 6.4710359584381,
+      "lrmsd": 24.12666594230469,
+      "dockq": 0.05824707508404228
+    },
+    {
+      "score_rank": 25,
+      "model": "emref_91.pdb",
+      "score": -90.26389999999999,
+      "fnat": 0.05333333333333334,
+      "irmsd": 9.756972033066479,
+      "lrmsd": 24.42037380225366,
+      "dockq": 0.06149444003664632
+    },
+    {
+      "score_rank": 26,
+      "model": "emref_94.pdb",
+      "score": -90.02100000000002,
+      "fnat": 0.013333333333333334,
+      "irmsd": 11.871638694239378,
+      "lrmsd": 30.52949836808522,
+      "dockq": 0.033662605757077024
+    },
+    {
+      "score_rank": 27,
+      "model": "emref_97.pdb",
+      "score": -89.67643000000001,
+      "fnat": 0.0,
+      "irmsd": 30.928258994940883,
+      "lrmsd": 101.78523108176547,
+      "dockq": 0.0030907167034286997
+    },
+    {
+      "score_rank": 28,
+      "model": "emref_65.pdb",
+      "score": -89.3202,
+      "fnat": 0.02666666666666667,
+      "irmsd": 12.65976789539142,
+      "lrmsd": 30.62067586881846,
+      "dockq": 0.037351530669763745
+    },
+    {
+      "score_rank": 29,
+      "model": "emref_21.pdb",
+      "score": -89.30966000000001,
+      "fnat": 0.0,
+      "irmsd": 35.95298583374127,
+      "lrmsd": 107.89211646664693,
+      "dockq": 0.0026353371941939393
+    },
+    {
+      "score_rank": 30,
+      "model": "emref_80.pdb",
+      "score": -88.97627000000001,
+      "fnat": 0.0,
+      "irmsd": 36.458432525608046,
+      "lrmsd": 109.41251995842912,
+      "dockq": 0.0025630088685650886
+    },
+    {
+      "score_rank": 31,
+      "model": "emref_26.pdb",
+      "score": -87.80648000000001,
+      "fnat": 0.0,
+      "irmsd": 32.63686673451051,
+      "lrmsd": 108.47774946044596,
+      "dockq": 0.0027367536574470696
+    },
+    {
+      "score_rank": 32,
+      "model": "emref_34.pdb",
+      "score": -87.7239,
+      "fnat": 0.02666666666666667,
+      "irmsd": 11.635088813223234,
+      "lrmsd": 30.220475239567175,
+      "dockq": 0.0387754757336522
+    },
+    {
+      "score_rank": 33,
+      "model": "emref_88.pdb",
+      "score": -87.33279999999998,
+      "fnat": 0.013333333333333334,
+      "irmsd": 11.723296284297971,
+      "lrmsd": 29.871459090389507,
+      "dockq": 0.03478200220327021
+    },
+    {
+      "score_rank": 34,
+      "model": "emref_99.pdb",
+      "score": -87.1242,
+      "fnat": 0.0,
+      "irmsd": 34.631642193202026,
+      "lrmsd": 108.03499048596319,
+      "dockq": 0.0026748933182302176
+    },
+    {
+      "score_rank": 35,
+      "model": "emref_85.pdb",
+      "score": -86.229268,
+      "fnat": 0.0,
+      "irmsd": 35.169253926571024,
+      "lrmsd": 107.94305087484044,
+      "dockq": 0.0026594643212689614
+    },
+    {
+      "score_rank": 36,
+      "model": "emref_48.pdb",
+      "score": -85.58383,
+      "fnat": 0.0,
+      "irmsd": 35.84722013719459,
+      "lrmsd": 108.90594229185122,
+      "dockq": 0.0026008812691909727
+    },
+    {
+      "score_rank": 37,
+      "model": "emref_25.pdb",
+      "score": -85.47438,
+      "fnat": 0.0,
+      "irmsd": 35.847947154700115,
+      "lrmsd": 107.91212901086432,
+      "dockq": 0.002637972677760057
+    },
+    {
+      "score_rank": 38,
+      "model": "emref_19.pdb",
+      "score": -85.14492,
+      "fnat": 0.02666666666666667,
+      "irmsd": 11.71949507892207,
+      "lrmsd": 30.424522076757306,
+      "dockq": 0.03839549136088647
+    },
+    {
+      "score_rank": 39,
+      "model": "emref_67.pdb",
+      "score": -85.12819999999999,
+      "fnat": 0.0,
+      "irmsd": 37.24552614752474,
+      "lrmsd": 109.7732532257573,
+      "dockq": 0.002526448076556816
+    },
+    {
+      "score_rank": 40,
+      "model": "emref_20.pdb",
+      "score": -84.86231,
+      "fnat": 0.013333333333333334,
+      "irmsd": 11.77832308445289,
+      "lrmsd": 30.049181039570374,
+      "dockq": 0.034460095493614604
+    },
+    {
+      "score_rank": 41,
+      "model": "emref_53.pdb",
+      "score": -84.66062000000001,
+      "fnat": 0.02666666666666667,
+      "irmsd": 11.80507032335006,
+      "lrmsd": 31.013530258970444,
+      "dockq": 0.037474555752448846
+    },
+    {
+      "score_rank": 42,
+      "model": "emref_69.pdb",
+      "score": -84.5373,
+      "fnat": 0.04,
+      "irmsd": 10.04236883218419,
+      "lrmsd": 27.140448479797957,
+      "dockq": 0.05038252051501932
+    },
+    {
+      "score_rank": 43,
+      "model": "emref_40.pdb",
+      "score": -83.4776,
+      "fnat": 0.04,
+      "irmsd": 6.808557570726047,
+      "lrmsd": 24.259460999966574,
+      "dockq": 0.06521067949665663
+    },
+    {
+      "score_rank": 44,
+      "model": "emref_38.pdb",
+      "score": -83.1507,
+      "fnat": 0.02666666666666667,
+      "irmsd": 11.819349381313902,
+      "lrmsd": 30.24843283627025,
+      "dockq": 0.038567710216151796
+    },
+    {
+      "score_rank": 45,
+      "model": "emref_49.pdb",
+      "score": -82.9424,
+      "fnat": 0.0,
+      "irmsd": 35.87021115162528,
+      "lrmsd": 107.88683652290982,
+      "dockq": 0.002638208811098148
+    },
+    {
+      "score_rank": 46,
+      "model": "emref_98.pdb",
+      "score": -82.86840000000002,
+      "fnat": 0.02666666666666667,
+      "irmsd": 11.835083255160058,
+      "lrmsd": 30.382973580416348,
+      "dockq": 0.03835396744414746
+    },
+    {
+      "score_rank": 47,
+      "model": "emref_50.pdb",
+      "score": -82.81712,
+      "fnat": 0.0,
+      "irmsd": 29.849038044089074,
+      "lrmsd": 88.76824057423018,
+      "dockq": 0.003868232344458952
+    },
+    {
+      "score_rank": 48,
+      "model": "emref_41.pdb",
+      "score": -82.77636,
+      "fnat": 0.0,
+      "irmsd": 30.58861634840006,
+      "lrmsd": 102.36821982723471,
+      "dockq": 0.003082102709936717
+    },
+    {
+      "score_rank": 49,
+      "model": "emref_56.pdb",
+      "score": -82.26281100000001,
+      "fnat": 0.0,
+      "irmsd": 36.882536769607405,
+      "lrmsd": 110.01943409344184,
+      "dockq": 0.0025282791353622284
+    },
+    {
+      "score_rank": 50,
+      "model": "emref_74.pdb",
+      "score": -82.09386,
+      "fnat": 0.0,
+      "irmsd": 33.84943457143505,
+      "lrmsd": 107.50265571077828,
+      "dockq": 0.0027242499844514307
+    },
+    {
+      "score_rank": 51,
+      "model": "emref_29.pdb",
+      "score": -81.83989,
+      "fnat": 0.0,
+      "irmsd": 36.51133660721238,
+      "lrmsd": 109.42711775823597,
+      "dockq": 0.0025608501179462517
+    },
+    {
+      "score_rank": 52,
+      "model": "emref_18.pdb",
+      "score": -81.6449,
+      "fnat": 0.0,
+      "irmsd": 31.019456013933603,
+      "lrmsd": 105.0923232748885,
+      "dockq": 0.002944060665986764
+    },
+    {
+      "score_rank": 53,
+      "model": "emref_61.pdb",
+      "score": -81.08114,
+      "fnat": 0.0,
+      "irmsd": 36.50310332540832,
+      "lrmsd": 110.1551174089942,
+      "dockq": 0.002534921561682449
+    },
+    {
+      "score_rank": 54,
+      "model": "emref_68.pdb",
+      "score": -80.66014000000001,
+      "fnat": 0.0,
+      "irmsd": 36.69132840104861,
+      "lrmsd": 110.00621976460964,
+      "dockq": 0.002534493742372324
+    },
+    {
+      "score_rank": 55,
+      "model": "emref_35.pdb",
+      "score": -80.65274,
+      "fnat": 0.0,
+      "irmsd": 35.62120290606076,
+      "lrmsd": 107.41291600057615,
+      "dockq": 0.002664430476954447
+    },
+    {
+      "score_rank": 56,
+      "model": "emref_32.pdb",
+      "score": -80.40758,
+      "fnat": 0.0,
+      "irmsd": 35.88959956557586,
+      "lrmsd": 106.79852625964315,
+      "dockq": 0.0026794390049586195
+    },
+    {
+      "score_rank": 57,
+      "model": "emref_39.pdb",
+      "score": -79.70606000000001,
+      "fnat": 0.0,
+      "irmsd": 35.89297443130531,
+      "lrmsd": 107.81587410615896,
+      "dockq": 0.002640163312329341
+    },
+    {
+      "score_rank": 58,
+      "model": "emref_37.pdb",
+      "score": -78.13666,
+      "fnat": 0.02666666666666667,
+      "irmsd": 11.931362470549532,
+      "lrmsd": 30.784854866753832,
+      "dockq": 0.03768744491633279
+    },
+    {
+      "score_rank": 59,
+      "model": "emref_7.pdb",
+      "score": -77.5269,
+      "fnat": 0.0,
+      "irmsd": 33.39856300061988,
+      "lrmsd": 106.66320912971246,
+      "dockq": 0.002774490725149553
+    },
+    {
+      "score_rank": 60,
+      "model": "emref_54.pdb",
+      "score": -77.4295,
+      "fnat": 0.013333333333333334,
+      "irmsd": 12.10795043360256,
+      "lrmsd": 31.975280768511375,
+      "dockq": 0.031483561096097554
+    },
+    {
+      "score_rank": 61,
+      "model": "emref_96.pdb",
+      "score": -75.29239999999999,
+      "fnat": 0.013333333333333334,
+      "irmsd": 11.506762827191912,
+      "lrmsd": 30.734460373336773,
+      "dockq": 0.033698298820409665
+    },
+    {
+      "score_rank": 62,
+      "model": "emref_45.pdb",
+      "score": -75.1134,
+      "fnat": 0.0,
+      "irmsd": 30.58960282158972,
+      "lrmsd": 102.26267031133911,
+      "dockq": 0.0030867329782711876
+    },
+    {
+      "score_rank": 63,
+      "model": "emref_6.pdb",
+      "score": -74.98016000000001,
+      "fnat": 0.0,
+      "irmsd": 34.178318629884295,
+      "lrmsd": 107.99206037124733,
+      "dockq": 0.0026931490845789954
+    },
+    {
+      "score_rank": 64,
+      "model": "emref_16.pdb",
+      "score": -74.91601,
+      "fnat": 0.0,
+      "irmsd": 33.96057303244081,
+      "lrmsd": 106.69952676189797,
+      "dockq": 0.002751085684175579
+    },
+    {
+      "score_rank": 65,
+      "model": "emref_86.pdb",
+      "score": -74.17393,
+      "fnat": 0.0,
+      "irmsd": 36.596333043360055,
+      "lrmsd": 109.94933241415252,
+      "dockq": 0.002539415536908602
+    },
+    {
+      "score_rank": 66,
+      "model": "emref_82.pdb",
+      "score": -74.155,
+      "fnat": 0.02666666666666667,
+      "irmsd": 12.137775948093594,
+      "lrmsd": 31.77903162186607,
+      "dockq": 0.03615801326212632
+    },
+    {
+      "score_rank": 67,
+      "model": "emref_71.pdb",
+      "score": -73.9678,
+      "fnat": 0.013333333333333334,
+      "irmsd": 11.060356489387148,
+      "lrmsd": 28.952110114886832,
+      "dockq": 0.03691600432971706
+    },
+    {
+      "score_rank": 68,
+      "model": "emref_73.pdb",
+      "score": -73.89912,
+      "fnat": 0.0,
+      "irmsd": 15.854932283659181,
+      "lrmsd": 38.373471872839616,
+      "dockq": 0.018547281671444628
+    },
+    {
+      "score_rank": 69,
+      "model": "emref_79.pdb",
+      "score": -73.85090000000001,
+      "fnat": 0.0,
+      "irmsd": 6.064395529497687,
+      "lrmsd": 19.713240266075026,
+      "dockq": 0.071474682506341
+    },
+    {
+      "score_rank": 70,
+      "model": "emref_22.pdb",
+      "score": -73.68663000000001,
+      "fnat": 0.0,
+      "irmsd": 28.227912584183443,
+      "lrmsd": 91.1457995935108,
+      "dockq": 0.0038125693183000573
+    },
+    {
+      "score_rank": 71,
+      "model": "emref_52.pdb",
+      "score": -73.68441,
+      "fnat": 0.0,
+      "irmsd": 36.70290145596625,
+      "lrmsd": 110.67882511919159,
+      "dockq": 0.0025103123766671833
+    },
+    {
+      "score_rank": 72,
+      "model": "emref_93.pdb",
+      "score": -72.68933,
+      "fnat": 0.0,
+      "irmsd": 36.26617054039126,
+      "lrmsd": 110.49036408172309,
+      "dockq": 0.0025303907072926498
+    },
+    {
+      "score_rank": 73,
+      "model": "emref_63.pdb",
+      "score": -72.63579999999999,
+      "fnat": 0.013333333333333334,
+      "irmsd": 11.765248022416788,
+      "lrmsd": 30.39604528844266,
+      "dockq": 0.03395196903245909
+    },
+    {
+      "score_rank": 74,
+      "model": "emref_3.pdb",
+      "score": -72.45497,
+      "fnat": 0.0,
+      "irmsd": 34.159339967542806,
+      "lrmsd": 108.11188777790534,
+      "dockq": 0.0026893409195311267
+    },
+    {
+      "score_rank": 75,
+      "model": "emref_100.pdb",
+      "score": -72.26064,
+      "fnat": 0.0,
+      "irmsd": 36.92822208200575,
+      "lrmsd": 111.13197023717271,
+      "dockq": 0.0024877474010442436
+    },
+    {
+      "score_rank": 76,
+      "model": "emref_70.pdb",
+      "score": -70.99210000000001,
+      "fnat": 0.013333333333333334,
+      "irmsd": 11.671143656452422,
+      "lrmsd": 30.33253790904499,
+      "dockq": 0.03413085199774912
+    },
+    {
+      "score_rank": 77,
+      "model": "emref_57.pdb",
+      "score": -69.88548,
+      "fnat": 0.0,
+      "irmsd": 37.11826752328445,
+      "lrmsd": 110.51175294369659,
+      "dockq": 0.002503841773892124
+    },
+    {
+      "score_rank": 78,
+      "model": "emref_11.pdb",
+      "score": -69.28232,
+      "fnat": 0.0,
+      "irmsd": 35.40237873169558,
+      "lrmsd": 107.05986779559885,
+      "dockq": 0.002685352028661431
+    },
+    {
+      "score_rank": 79,
+      "model": "emref_89.pdb",
+      "score": -68.67726,
+      "fnat": 0.04,
+      "irmsd": 11.797003941511285,
+      "lrmsd": 30.6089576081888,
+      "dockq": 0.04250148414834108
+    },
+    {
+      "score_rank": 80,
+      "model": "emref_66.pdb",
+      "score": -68.54162,
+      "fnat": 0.0,
+      "irmsd": 35.135834598940534,
+      "lrmsd": 108.2263883385065,
+      "dockq": 0.0026499382806050337
+    },
+    {
+      "score_rank": 81,
+      "model": "emref_46.pdb",
+      "score": -68.53646,
+      "fnat": 0.0,
+      "irmsd": 36.830313492898284,
+      "lrmsd": 109.85966226215882,
+      "dockq": 0.002535561413739269
+    },
+    {
+      "score_rank": 82,
+      "model": "emref_42.pdb",
+      "score": -68.44873999999999,
+      "fnat": 0.0,
+      "irmsd": 37.5363276001278,
+      "lrmsd": 111.28855706628792,
+      "dockq": 0.0024647091320386238
+    },
+    {
+      "score_rank": 83,
+      "model": "emref_51.pdb",
+      "score": -68.41046,
+      "fnat": 0.0,
+      "irmsd": 35.60873206752678,
+      "lrmsd": 108.06477139026856,
+      "dockq": 0.0026400460996436966
+    },
+    {
+      "score_rank": 84,
+      "model": "emref_44.pdb",
+      "score": -67.00318,
+      "fnat": 0.0,
+      "irmsd": 34.166858216357724,
+      "lrmsd": 107.27952429065452,
+      "dockq": 0.00272076092020295
+    },
+    {
+      "score_rank": 85,
+      "model": "emref_92.pdb",
+      "score": -66.89369999999998,
+      "fnat": 0.013333333333333334,
+      "irmsd": 11.559486499824187,
+      "lrmsd": 30.515563197945458,
+      "dockq": 0.03396489770410889
+    },
+    {
+      "score_rank": 86,
+      "model": "emref_10.pdb",
+      "score": -66.44778000000001,
+      "fnat": 0.0,
+      "irmsd": 34.02545878689951,
+      "lrmsd": 108.10937483951666,
+      "dockq": 0.002694484028020778
+    },
+    {
+      "score_rank": 87,
+      "model": "emref_36.pdb",
+      "score": -66.42753,
+      "fnat": 0.0,
+      "irmsd": 33.668117904975276,
+      "lrmsd": 106.70650264068607,
+      "dockq": 0.0027621146069848664
+    },
+    {
+      "score_rank": 88,
+      "model": "emref_64.pdb",
+      "score": -66.21057,
+      "fnat": 0.0,
+      "irmsd": 37.22122845783745,
+      "lrmsd": 109.5540433567624,
+      "dockq": 0.0025350626131530785
+    },
+    {
+      "score_rank": 89,
+      "model": "emref_76.pdb",
+      "score": -65.84944,
+      "fnat": 0.0,
+      "irmsd": 37.38473976761677,
+      "lrmsd": 111.17852768858688,
+      "dockq": 0.002472826997639767
+    },
+    {
+      "score_rank": 90,
+      "model": "emref_24.pdb",
+      "score": -64.26777,
+      "fnat": 0.0,
+      "irmsd": 33.62956443590117,
+      "lrmsd": 101.25391404636133,
+      "dockq": 0.002994459413126914
+    },
+    {
+      "score_rank": 91,
+      "model": "emref_55.pdb",
+      "score": -63.73249000000001,
+      "fnat": 0.013333333333333334,
+      "irmsd": 12.077394108401368,
+      "lrmsd": 30.947763736831696,
+      "dockq": 0.032889687867979876
+    },
+    {
+      "score_rank": 92,
+      "model": "emref_58.pdb",
+      "score": -63.20834,
+      "fnat": 0.0,
+      "irmsd": 37.13803838843907,
+      "lrmsd": 110.6029990768439,
+      "dockq": 0.0025000499783317063
+    },
+    {
+      "score_rank": 93,
+      "model": "emref_95.pdb",
+      "score": -58.91553,
+      "fnat": 0.0,
+      "irmsd": 37.33149424431372,
+      "lrmsd": 110.74989620353533,
+      "dockq": 0.0024892888658657494
+    },
+    {
+      "score_rank": 94,
+      "model": "emref_84.pdb",
+      "score": -58.25712,
+      "fnat": 0.0,
+      "irmsd": 31.897874697886266,
+      "lrmsd": 102.58864398916029,
+      "dockq": 0.003008217277292102
+    },
+    {
+      "score_rank": 95,
+      "model": "emref_5.pdb",
+      "score": -56.44867,
+      "fnat": 0.0,
+      "irmsd": 34.230834821181645,
+      "lrmsd": 108.03873385755912,
+      "dockq": 0.0026894261814255334
+    },
+    {
+      "score_rank": 96,
+      "model": "emref_72.pdb",
+      "score": -53.39010000000001,
+      "fnat": 0.0,
+      "irmsd": 33.67983626928108,
+      "lrmsd": 107.2955581295386,
+      "dockq": 0.002738785290371537
+    },
+    {
+      "score_rank": 97,
+      "model": "emref_47.pdb",
+      "score": -52.41383,
+      "fnat": 0.0,
+      "irmsd": 34.85509811294407,
+      "lrmsd": 108.35683477456283,
+      "dockq": 0.0026548408965187415
+    },
+    {
+      "score_rank": 98,
+      "model": "emref_59.pdb",
+      "score": -50.10861,
+      "fnat": 0.0,
+      "irmsd": 35.46288796448084,
+      "lrmsd": 110.31211082687514,
+      "dockq": 0.0025627311642372175
+    },
+    {
+      "score_rank": 99,
+      "model": "emref_78.pdb",
+      "score": -47.253765,
+      "fnat": 0.0,
+      "irmsd": 38.267147739502015,
+      "lrmsd": 112.06964596195132,
+      "dockq": 0.002417933778601801
+    },
+    {
+      "score_rank": 100,
+      "model": "emref_43.pdb",
+      "score": -37.93264,
+      "fnat": 0.0,
+      "irmsd": 36.860581110192776,
+      "lrmsd": 109.95602189257289,
+      "dockq": 0.002531202336978185
+    }
+  ],
+  "model_count": 100,
+  "best_dockq_in_score_top": {
+    "1": 0.042828432815298884,
+    "5": 0.17781790064261407,
+    "10": 0.17781790064261407,
+    "100": 0.17781790064261407
+  },
+  "selected_cluster_top4": [
+    {
+      "score_rank": 2,
+      "model": "emref_33.pdb",
+      "score": -121.2339,
+      "fnat": 0.02666666666666667,
+      "irmsd": 5.463455654714632,
+      "lrmsd": 20.895713758360092,
+      "dockq": 0.07957992446851309
+    },
+    {
+      "score_rank": 7,
+      "model": "emref_12.pdb",
+      "score": -108.28680000000001,
+      "fnat": 0.04,
+      "irmsd": 7.368963577377586,
+      "lrmsd": 26.989971253083425,
+      "dockq": 0.0566730793337712
+    },
+    {
+      "score_rank": 10,
+      "model": "emref_13.pdb",
+      "score": -100.1519,
+      "fnat": 0.04,
+      "irmsd": 6.757819274514378,
+      "lrmsd": 25.090536962593,
+      "dockq": 0.06330228278941981
+    },
+    {
+      "score_rank": 15,
+      "model": "emref_9.pdb",
+      "score": -93.9289,
+      "fnat": 0.02666666666666667,
+      "irmsd": 6.386551044773712,
+      "lrmsd": 25.32284143404026,
+      "dockq": 0.06006930632009835
+    }
+  ],
+  "best_dockq_selected_cluster_top4": 0.07957992446851309,
+  "best_quality_score_rank": 3,
+  "scope": "Fnat uses 5A contacts, iRMSD uses 10A interface; internal H-L contacts excluded. Top100 best is oracle diagnostic, not prospective selection."
+}
