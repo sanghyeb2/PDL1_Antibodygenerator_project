@@ -1,0 +1,17 @@
+{
+  "status": "completed",
+  "checked_at_KST": "2026-11-20T10:25:01.934084+09:00",
+  "steps_completed": [
+    1,
+    2
+  ],
+  "step3_started": false,
+  "new_docking_runs": 0,
+  "new_structure_predictions": 0,
+  "processed_poses": 600,
+  "structure_pairs": 2,
+  "main42_preserved": true,
+  "validation_results_preserved": true,
+  "source_sha256": "53d4d83bf9b20f854c9ab1acfef439dd15227b34ff7757fc7a15cd91b97b6488",
+  "runner_sha256": "78c27864beb3e543bd38090b77f5b9e96fa4656857d6a11a5ba9371a22885117"
+}

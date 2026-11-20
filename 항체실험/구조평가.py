@@ -603,6 +603,333 @@ def evaluate_control_poses(row, profile, condition):
     return result
 
 
+def control_selection_orders(poses, cluster_order, cluster_representatives):
+    """Fixed prospective orders: never inspect DockQ/native contacts to select a pose."""
+    global_order = [p['model'] for p in sorted(poses, key=lambda p: p['score_rank'])]
+    hybrid = []
+    for index in range(5):
+        for source in (global_order[:5], cluster_representatives[:5]):
+            if index < len(source) and source[index] not in hybrid:
+                hybrid.append(source[index])
+    return {'cluster_first': list(cluster_order), 'global_score': global_order, 'diversity_rescue': hybrid}
+
+
+def fit_control_coordinates(predicted, reference):
+    """Proper Kabsch rotation for row vectors; no scaling or reflection."""
+    import numpy as np
+    predicted, reference = np.asarray(predicted, dtype=float), np.asarray(reference, dtype=float)
+    if predicted.shape != reference.shape or predicted.ndim != 2 or predicted.shape[1] != 3 or len(predicted) < 3:
+        raise ValueError('At least three paired 3D coordinates are required')
+    u, _, vt = np.linalg.svd((predicted - predicted.mean(0)).T @ (reference - reference.mean(0)))
+    if np.linalg.det(u @ vt) < 0:
+        u[:, -1] *= -1
+    rotation = u @ vt
+    return rotation, reference.mean(0) - predicted.mean(0) @ rotation
+
+
+def audit_control_structure(row, destination):
+    import numpy as np
+    import io
+    from Bio.PDB import PDBParser, PDBIO, Select
+    destination = Path(destination); destination.mkdir(parents=True, exist_ok=True)
+    source = OUTPUT / 'control_validation'
+    native_file = OUTPUT / 'references' / row['id'] / 'resolved_Fv_PDL1.pdb'
+    predicted_file = source / 'inputs' / row['id'] / 'predicted_matched_Fv_PDL1.pdb'
+    parser = PDBParser(QUIET=True)
+    native = parser.get_structure('native', native_file)[0]
+    predicted = parser.get_structure('predicted', predicted_file)[0]
+    def coordinates(model):
+        return {(c.id, r.id[1], a.name): np.array(a.coord, dtype=float)
+                for c in model for r in c if r.id[0] == ' ' for a in r if a.element not in {'H', 'D'}}
+    ref, pred = coordinates(native), coordinates(predicted)
+    common = sorted(set(ref) & set(pred)); backbone = {'N', 'CA', 'C', 'O'}
+    cdr = cdr_positions(row)
+    cdr = {name: {i + (len(row['VH_AA']) if name.endswith('.L') else 0) for i in ids}
+           for name, ids in cdr.items()}
+    def fit(keys):
+        return fit_control_coordinates([pred[k] for k in keys], [ref[k] for k in keys])
+    def rmsd(keys, rotation, translation):
+        return float(np.sqrt(np.mean([np.sum((pred[k] @ rotation + translation - ref[k])**2) for k in keys]))) if keys else None
+    fits, metrics = {}, []
+    for chain in ('H', 'L', 'A'):
+        keys = [k for k in common if k[0] == chain and k[2] in backbone]
+        rotation, translation = fit(keys)
+        metrics.append({'region': chain + '_backbone_self_fit', 'n_atoms': len(keys), 'rmsd_A': rmsd(keys, rotation, translation)})
+        if chain in 'HL':
+            excluded = set().union(*(ids for name, ids in cdr.items() if name.endswith('.' + chain)))
+            framework = [k for k in keys if k[1] not in excluded]
+            fr_rot, fr_trans = fit(framework)
+            fits[chain] = (fr_rot, fr_trans)
+            metrics.append({'region': chain + '_framework_self_fit', 'n_atoms': len(framework),
+                            'rmsd_A': rmsd(framework, fr_rot, fr_trans)})
+            for name, ids in cdr.items():
+                if name.endswith('.' + chain):
+                    region = [k for k in keys if k[1] in ids]
+                    metrics.append({'region': name + '_after_framework_fit', 'n_atoms': len(region),
+                                    'expected_residues': len(ids), 'observed_residues': len({k[1] for k in region}),
+                                    'rmsd_A': rmsd(region, fr_rot, fr_trans)})
+        else:
+            fits['A'] = (rotation, translation)
+    h_rot, h_trans = fits['H']
+    light = [k for k in common if k[0] == 'L' and k[2] in backbone]
+    metrics.append({'region': 'VL_backbone_after_VH_framework_fit', 'n_atoms': len(light),
+                    'rmsd_A': rmsd(light, h_rot, h_trans)})
+    reference_metrics = read_json(OUTPUT / 'references' / row['id'] / 'reference_metrics.json')
+    interface_residues = {p[2] for p in reference_metrics['interface']['contact_pairs']}
+    a_rot, a_trans = fits['A']
+    interface_bb = [k for k in common if k[0] == 'A' and k[1] in interface_residues and k[2] in backbone]
+    same_residue = {r.id[1] for r in native['A'] if r.id in predicted['A'] and r.resname == predicted['A'][r.id].resname}
+    interface_sc = [k for k in common if k[0] == 'A' and k[1] in interface_residues & same_residue and k[2] not in backbone]
+    for name, keys in [('antigen_interface_backbone_after_A_fit', interface_bb),
+                       ('antigen_interface_sidechain_identical_residues_after_A_fit', interface_sc)]:
+        metrics.append({'region': name, 'n_atoms': len(keys), 'rmsd_A': rmsd(keys, a_rot, a_trans)})
+    per_residue = []
+    for key in common:
+        if key[2] == 'CA':
+            rotation, translation = fits['A'] if key[0] == 'A' else fits['H']
+            per_residue.append({'chain': key[0], 'residue': key[1],
+                                'CA_displacement_A': float(np.linalg.norm(pred[key] @ rotation + translation - ref[key])),
+                                'predicted_pLDDT': float(predicted[key[0]][key[1]]['CA'].bfactor)})
+    conditions, processed_atoms = {}, {}
+    for kind in ('experimental', 'predicted_matched'):
+        root = ENV / 'runs' / ('reference-pilot-validation-20261119-' + kind) / row['id']
+        maps = read_json(root / 'residue_map.json')
+        atom_counts = {'heavy': 0, 'hydrogen': 0}
+        for path in (root / 'run/0_topoaa').glob('*.pdb*'):
+            if not (path.name.endswith('.pdb') or path.name.endswith('.pdb.gz')):
+                continue
+            text = gzip.open(path, 'rt').read() if path.suffix == '.gz' else path.read_text()
+            model = parser.get_structure('topology', io.StringIO(text))[0]
+            for atom in model.get_atoms():
+                atom_counts['hydrogen' if atom.element in {'H', 'D'} else 'heavy'] += 1
+        from Bio.PDB.MMCIF2Dict import MMCIF2Dict
+        atoms, psf_hashes = {}, {}
+        for path in (root / 'run/0_topoaa').glob('*.psf*'):
+            if not (path.name.endswith('.psf') or path.name.endswith('.psf.gz')):
+                continue
+            text = gzip.open(path, 'rt').read() if path.suffix == '.gz' else path.read_text()
+            data = MMCIF2Dict(io.StringIO(text))
+            columns = ['id', 'segment_id', 'residue_id', 'residue_name', 'atom_name', 'chemical_type', 'charge']
+            for atom_id, segment, resid, resname, name, chemical, charge in zip(*(data['_cns_mtf_atom.' + key] for key in columns)):
+                if atom_id == '-1':  # CNS loop terminator, not an atom
+                    continue
+                index = int(resid)
+                chain = ('H' if index <= len(row['VH_AA']) else 'L') if segment == 'B' else segment
+                key = f'{chain}:{index}:{name}'
+                if key in atoms: raise ValueError(f'Duplicate processed atom: {key}')
+                atoms[key] = {'chain': chain, 'residue': index, 'resname': resname, 'atom': name,
+                              'chemical_type': chemical, 'charge_e': float(charge)}
+            psf_hashes[path.name] = digest(path)
+        if len(atoms) != sum(atom_counts.values()):
+            raise ValueError('Processed PSF and PDB atom counts differ')
+        processed_atoms[kind] = atoms
+        conditions[kind] = {'exposed_cdr': maps['exposed_cdr'], 'exposed_antigen': maps['exposed_antigen'],
+                            'post_topology_atom_counts': atom_counts, 'processed_PSF_sha256': psf_hashes,
+                            'total_topology_charge_e': sum(v['charge_e'] for v in atoms.values()),
+                            'settings_sha256': digest(root / 'settings.json')}
+    post_differences = [{'key': key, 'experimental': processed_atoms['experimental'].get(key),
+                         'predicted_matched': processed_atoms['predicted_matched'].get(key)}
+                        for key in sorted(set(processed_atoms['experimental']) | set(processed_atoms['predicted_matched']))
+                        if processed_atoms['experimental'].get(key) != processed_atoms['predicted_matched'].get(key)]
+    with (destination / 'processed_atoms.csv').open('w', newline='') as stream:
+        writer = csv.DictWriter(stream, fieldnames=['condition', 'chain', 'residue', 'resname', 'atom', 'chemical_type', 'charge_e'])
+        writer.writeheader()
+        for kind, atoms in processed_atoms.items():
+            for atom in atoms.values(): writer.writerow({'condition': kind, **atom})
+    air = {}
+    for chain in ('H', 'L', 'A'):
+        def exposed(kind):
+            return set(conditions[kind]['exposed_antigen'] if chain == 'A' else conditions[kind]['exposed_cdr'][chain])
+        first, second = exposed('experimental'), exposed('predicted_matched')
+        air[chain] = {'experimental_n': len(first), 'predicted_n': len(second),
+                      'common': sorted(first & second), 'experimental_only': sorted(first - second),
+                      'predicted_only': sorted(second - first),
+                      'jaccard': len(first & second) / len(first | second) if first | second else None}
+    confidence = next(r for r in read_json(OUTPUT / 'folding_summary.json')['results'] if r['id'] == row['id'])
+    result = {'id': row['id'], 'metrics': metrics, 'per_residue': per_residue,
+              'native_sha256': digest(native_file), 'predicted_sha256': digest(predicted_file),
+              'sequence_differences': read_json(source / 'inputs' / row['id'] / 'matched_input.json')['sequence_differences'],
+              'native_only_heavy_atom_keys': [list(k) for k in sorted(set(ref) - set(pred))],
+              'predicted_only_heavy_atom_keys': [list(k) for k in sorted(set(pred) - set(ref))],
+              'native_resolved_residues': {c.id: len(c) for c in native},
+              'predicted_resolved_residues': {c.id: len(c) for c in predicted},
+              'conditions': conditions, 'post_topology_atom_differences': post_differences,
+              'AIR_comparison': air, 'Fv_confidence': confidence,
+              'scope': 'Observed common backbone atoms. Each chain fitted independently except VL-after-VH. Interface defined from native 4A contacts for audit only. Side-chain RMSD excludes sequence mismatches and is not symmetry corrected. No causal attribution or binding prediction.'}
+    class Chains(Select):
+        def __init__(self, names): self.names = names
+        def accept_chain(self, chain): return chain.id in self.names
+    for label, chain_names, rotation, translation in [('Fv', {'H', 'L'}, h_rot, h_trans), ('antigen', {'A'}, a_rot, a_trans)]:
+        writer = PDBIO(); writer.set_structure(native)
+        writer.save(str(destination / f'native_{label}.pdb'), Chains(chain_names))
+        aligned = predicted.copy()
+        for atom in aligned.get_atoms(): atom.transform(rotation, translation)
+        writer.set_structure(aligned); writer.save(str(destination / f'predicted_{label}_aligned.pdb'), Chains(chain_names))
+    (destination / 'view.pml').write_text('''reinitialize
+load native_Fv.pdb, native_Fv
+load predicted_Fv_aligned.pdb, predicted_Fv
+load native_antigen.pdb, native_antigen
+load predicted_antigen_aligned.pdb, predicted_antigen
+hide everything
+show cartoon
+color gray70, native_Fv or native_antigen
+color teal, predicted_Fv
+color orange, predicted_antigen
+disable all
+enable native_antigen
+enable predicted_antigen
+orient native_antigen
+scene antigen_independent_fit, store
+disable all
+enable native_Fv
+enable predicted_Fv
+orient native_Fv
+scene Fv_VH_framework_fit, store
+''', encoding='ascii')
+    write_json(destination / 'structure_audit.json', result)
+    return result
+
+
+def audit_controls():
+    """Steps 1+2 only: saved pose selection audit and component structural alignment."""
+    from collections import Counter
+    from haddock.libs.libontology import ModuleIO
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.lines import Line2D
+    import numpy as np
+    source = OUTPUT / 'control_validation'
+    directory = OUTPUT / 'control_audit_20261120'; directory.mkdir(exist_ok=True)
+    results = read_json(source / 'comparison.json')
+    traces, fixed, budgets, audit_results = [], [], [], []
+    fig, axes = plt.subplots(3, 2, figsize=(12, 11), constrained_layout=True)
+    fig2, axes2 = plt.subplots(3, 2, figsize=(12, 10), constrained_layout=True)
+    for index, result in enumerate(results):
+        root = ENV / 'runs' / result['profile'] / result['id']
+        with (root / 'run/5_clustfcc/clustfcc.tsv').open() as stream:
+            clustered = {Path(r['model_name']).name: r['cluster_id'] for r in csv.DictReader(stream, delimiter='\t')}
+        sizes = Counter(v for v in clustered.values() if v not in {'-', '', 'nan'})
+        io = ModuleIO(); io.load(root / 'run/6_seletopclusts/io.json')
+        selected = sorted(io.retrieve_models(), key=lambda v: (v.clt_rank, v.clt_model_rank))
+        cluster_order = [str(v.ori_name) for v in selected]
+        representatives = [str(v.ori_name) for v in selected if v.clt_model_rank == 1]
+        orders = control_selection_orders(result['poses'], cluster_order, representatives)
+        by_name = {p['model']: p for p in result['poses']}
+        original = set(selected_control_models(root))
+        good = {p['model'] for p in result['poses'] if p['dockq'] >= .23}
+        for pose in result['poses']:
+            cluster = clustered[pose['model']]
+            traces.append({'id': result['id'], 'condition': result['condition'], **pose,
+                           'cluster_id': cluster, 'cluster_size': sizes.get(cluster, 0) if cluster != '-' else None,
+                           'selected_original_top4': pose['model'] in original,
+                           'selected_global_top5': pose['model'] in orders['global_score'][:5],
+                           'selected_diversity_rescue': pose['model'] in orders['diversity_rescue']})
+        def measure(names):
+            return {'selected_n': len(names), 'best_dockq': max((by_name[n]['dockq'] for n in names), default=None),
+                    'available_acceptable_n': len(good), 'acceptable_selected_n': len(set(names) & good),
+                    'acceptable_pose_recall': len(set(names) & good) / len(good) if good else None,
+                    'any_acceptable': bool(set(names) & good)}
+        for rule, names in [('original_cluster_top4', list(original)), ('global_top5', orders['global_score'][:5]),
+                            ('diversity_rescue', orders['diversity_rescue'])]:
+            fixed.append({'id': result['id'], 'condition': result['condition'], 'rule': rule, **measure(names)})
+        for rule, order in orders.items():
+            for k in range(1, 11):
+                if len(order) >= k:  # exact equal budgets, no silent padding/fewer candidates
+                    budgets.append({'id': result['id'], 'condition': result['condition'], 'rule': rule, 'K': k, **measure(order[:k])})
+        import tomllib
+        from haddock.modules.analysis.clustfcc import create_elements
+        parameters = tomllib.loads((root / 'run/5_clustfcc/params.cfg').read_text())['clustfcc']
+        matrix_path = root / 'run/5_clustfcc/fcc.matrix'
+        matrix = [(int(v[0]), int(v[1]), float(v[2]), float(v[3]))
+                  for v in (line.split() for line in matrix_path.read_text().splitlines())]
+        pool = create_elements(matrix, parameters['clust_cutoff'], parameters['strictness'])
+        previous = ModuleIO(); previous.load(root / 'run/4_emref/io.json')
+        input_models = previous.retrieve_models(individualize=True)
+        names = [str(model.file_name) for model in input_models]
+        leader = orders['global_score'][0]
+        element = pool[names.index(leader) + 1]
+        neighbor_names = sorted(names[n.name - 1] for n in element.neighbors)
+        audit_results.append({'id': result['id'], 'condition': result['condition'], 'orders': orders,
+                              'unclustered_n': sum(v == '-' for v in clustered.values()),
+                              'score_leader_FCC_diagnostic': {'model': leader, 'neighbors': neighbor_names,
+                                  'neighbor_count_with_self': len(neighbor_names) + 1,
+                                  'min_population': parameters['min_population'],
+                                  'cutoff': parameters['clust_cutoff'], 'strictness': parameters['strictness'],
+                                  'scope': 'Adjacency from stored rounded FCC matrix at original parameters; not reclustering or a parameter sweep.'},
+                              'FCC_matrix_sha256': digest(matrix_path),
+                              'cluster_sizes': dict(sizes), 'cluster_table_sha256': digest(root / 'run/5_clustfcc/clustfcc.tsv'),
+                              'selected_io_sha256': digest(root / 'run/6_seletopclusts/io.json')})
+        axis = axes.flat[index]; axis2 = axes2.flat[index]
+        for p in result['poses']:
+            c = clustered[p['model']]
+            axis.scatter(p['score'], p['dockq'], s=22, marker='x' if c == '-' else 'o',
+                         color='#969696' if c == '-' else plt.get_cmap('tab20')(int(c) % 20), alpha=.8)
+            if p['model'] in original:
+                axis.scatter(p['score'], p['dockq'], s=85, facecolors='none', edgecolors='black')
+        title = result['id'].removeprefix('CTRL_') + ' | ' + result['condition']
+        axis.set(title=title, xlabel='HADDOCK score (lower is better)', ylabel='DockQ', ylim=(-.02, 1.02))
+        axis.axhline(.23, color='#aaaaaa', linestyle='--', linewidth=.7); axis.grid(alpha=.15)
+        for rule, color in [('cluster_first', '#657b98'), ('global_score', '#168373'), ('diversity_rescue', '#db872b')]:
+            points = [p for p in budgets if p['id'] == result['id'] and p['condition'] == result['condition'] and p['rule'] == rule]
+            axis2.plot([p['K'] for p in points], [p['best_dockq'] for p in points], marker='.', label=rule, color=color)
+        axis2.axhline(max(p['dockq'] for p in result['poses']), color='black', linestyle=':', linewidth=.8, label='oracle all100')
+        axis2.set(title=title, xlabel='Exactly K retained poses', ylabel='Best DockQ', ylim=(-.02, 1.02), xticks=[1, 2, 4, 5, 10])
+        axis2.grid(alpha=.15)
+    axes.flat[0].legend(handles=[Line2D([], [], marker='x', linestyle='', color='gray', label='unclustered'),
+                                Line2D([], [], marker='o', linestyle='', color='black', markerfacecolor='none', label='original selected top4')], fontsize=8)
+    axes2.flat[0].legend(fontsize=7)
+    fig.suptitle('Selection audit: cluster membership and discarded high-quality poses')
+    fig2.suptitle('Equal pose budgets: quality is evaluated after selection\nTwo antibodies, six conditions; descriptive development analysis')
+    for figure, name in [(fig, 'score_quality_clusters'), (fig2, 'equal_budget_selection')]:
+        for extension in ('png', 'svg'): figure.savefig(directory / f'{name}.{extension}', dpi=180)
+        plt.close(figure)
+    structures = []
+    for row in read_json(OUTPUT / 'manifest.json')['candidates']:
+        if row['group'] == 'control': structures.append(audit_control_structure(row, directory / 'structures' / row['id']))
+    flat_structure = [{'id': r['id'], **v} for r in structures for v in r['metrics']]
+    def table(name, records):
+        fields = list(dict.fromkeys(k for r in records for k in r))
+        with (directory / name).open('w', newline='') as stream:
+            writer = csv.DictWriter(stream, fieldnames=fields); writer.writeheader(); writer.writerows(records)
+    for name, records in [('pose_trace.csv', traces), ('selection_rules.csv', fixed), ('equal_budget.csv', budgets), ('structure_metrics.csv', flat_structure)]:
+        table(name, records)
+    fig3, ax3 = plt.subplots(2, 2, figsize=(12, 7), constrained_layout=True)
+    fig4 = plt.figure(figsize=(12, 9), constrained_layout=True)
+    from Bio.PDB import PDBParser
+    for index, result in enumerate(structures):
+        folder = directory / 'structures' / result['id']
+        for column, label in enumerate(('Fv', 'antigen')):
+            axis = ax3[index, column]
+            for chain in (('H', 'L') if label == 'Fv' else ('A',)):
+                values = [r for r in result['per_residue'] if r['chain'] == chain]
+                axis.plot([r['residue'] for r in values], [r['CA_displacement_A'] for r in values], label=chain)
+            axis.set(title=result['id'].removeprefix('CTRL_') + ' | ' + label, xlabel='Mapped residue number', ylabel='CA displacement (A)')
+            axis.legend(); axis.grid(alpha=.2)
+            three = fig4.add_subplot(2, 2, index * 2 + column + 1, projection='3d')
+            native = PDBParser(QUIET=True).get_structure('native', folder / f'native_{label}.pdb')[0]
+            coords = np.array([a.coord for a in native.get_atoms() if a.name == 'CA'])
+            center = coords.mean(0); radius = max(np.ptp(coords, axis=0)) / 2 + 2
+            for kind, path, color in [('experimental', folder / f'native_{label}.pdb', '#777777'),
+                                      ('predicted', folder / f'predicted_{label}_aligned.pdb', '#168373')]:
+                model = PDBParser(QUIET=True).get_structure(kind, path)[0]
+                for chain in model:
+                    points = np.array([r['CA'].coord for r in chain if 'CA' in r])
+                    three.plot(*points.T, color=color, alpha=.8, linewidth=1.2)
+            three.set(xlim=(center[0]-radius, center[0]+radius), ylim=(center[1]-radius, center[1]+radius), zlim=(center[2]-radius, center[2]+radius), title=result['id'].removeprefix('CTRL_') + ' | ' + label)
+            three.set_box_aspect((1, 1, 1)); three.set_axis_off()
+    fig3.suptitle('Input deviation after alignment: Fv fitted on VH framework; antigen fitted independently')
+    fig4.suptitle('Independent component overlays (CA traces)\nGray experimental, green predicted; not a predicted binding complex')
+    for figure, name in [(fig3, 'input_CA_deviation'), (fig4, 'input_overlays')]:
+        for extension in ('png', 'svg'): figure.savefig(directory / f'{name}.{extension}', dpi=180)
+        plt.close(figure)
+    write_json(directory / 'audit.json', {'status': 'completed', 'source_sha256': digest(source / 'comparison.json'),
+               'runner_sha256': digest(Path(__file__)), 'conditions': audit_results, 'fixed_rules': fixed, 'equal_budgets': budgets,
+               'structures': structures, 'pose_count': len(traces), 'dockq_acceptable_threshold': .23,
+               'interpretation': 'No docking/inference rerun. Selection never uses native quality. cluster_first extends original top-cluster rule for K>4. No-acceptable-pose recall is null, not zero. Six conditions are not six independent antibodies; no significance claim. No min_population/cutoff tuning performed.'})
+    print(f'Control audit complete: {len(traces)} saved poses, {len(structures)} input structure pairs; no CNS/inference.', flush=True)
+
+
 def plot_control_validation(results):
     import matplotlib
     matplotlib.use('Agg')
@@ -1519,7 +1846,7 @@ files.download(archive)
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'validate-controls', 'make-colab', 'import-colab', 'run-main', 'resume-main', 'resume-rigidbody-worker', 'resume-flexref', 'resume-flexref-worker'])
+    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'validate-controls', 'audit-controls', 'make-colab', 'import-colab', 'run-main', 'resume-main', 'resume-rigidbody-worker', 'resume-flexref', 'resume-flexref-worker'])
     parser.add_argument('--limit', type=int)
     parser.add_argument('--ids', nargs='+')
     parser.add_argument('--profile', default='pilot')
@@ -1544,6 +1871,8 @@ def main():
         reference_controls()
     elif args.mode == 'validate-controls':
         validate_controls()
+    elif args.mode == 'audit-controls':
+        audit_controls()
     elif args.mode == 'make-colab':
         make_colab()
     elif args.mode == 'import-colab':

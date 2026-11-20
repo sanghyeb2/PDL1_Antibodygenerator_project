@@ -1,0 +1,2974 @@
+{
+  "id": "CTRL_atezolizumab",
+  "metrics": [
+    {
+      "region": "H_backbone_self_fit",
+      "n_atoms": 472,
+      "rmsd_A": 0.7304862626949284
+    },
+    {
+      "region": "H_framework_self_fit",
+      "n_atoms": 364,
+      "rmsd_A": 0.4425273459013095
+    },
+    {
+      "region": "CDR1.H_after_framework_fit",
+      "n_atoms": 32,
+      "expected_residues": 8,
+      "observed_residues": 8,
+      "rmsd_A": 0.8738324046895606
+    },
+    {
+      "region": "CDR2.H_after_framework_fit",
+      "n_atoms": 32,
+      "expected_residues": 8,
+      "observed_residues": 8,
+      "rmsd_A": 1.2006861420894015
+    },
+    {
+      "region": "CDR3.H_after_framework_fit",
+      "n_atoms": 44,
+      "expected_residues": 11,
+      "observed_residues": 11,
+      "rmsd_A": 1.63732201744792
+    },
+    {
+      "region": "L_backbone_self_fit",
+      "n_atoms": 428,
+      "rmsd_A": 0.43149782608907267
+    },
+    {
+      "region": "L_framework_self_fit",
+      "n_atoms": 356,
+      "rmsd_A": 0.42715538785067175
+    },
+    {
+      "region": "CDR1.L_after_framework_fit",
+      "n_atoms": 24,
+      "expected_residues": 6,
+      "observed_residues": 6,
+      "rmsd_A": 0.38158822471141585
+    },
+    {
+      "region": "CDR2.L_after_framework_fit",
+      "n_atoms": 12,
+      "expected_residues": 3,
+      "observed_residues": 3,
+      "rmsd_A": 0.39024955418520857
+    },
+    {
+      "region": "CDR3.L_after_framework_fit",
+      "n_atoms": 36,
+      "expected_residues": 9,
+      "observed_residues": 9,
+      "rmsd_A": 0.5458772635106719
+    },
+    {
+      "region": "A_backbone_self_fit",
+      "n_atoms": 448,
+      "rmsd_A": 0.865251520496532
+    },
+    {
+      "region": "VL_backbone_after_VH_framework_fit",
+      "n_atoms": 428,
+      "rmsd_A": 1.561129182727886
+    },
+    {
+      "region": "antigen_interface_backbone_after_A_fit",
+      "n_atoms": 92,
+      "rmsd_A": 1.0662669769878266
+    },
+    {
+      "region": "antigen_interface_sidechain_identical_residues_after_A_fit",
+      "n_atoms": 99,
+      "rmsd_A": 2.75196705900306
+    }
+  ],
+  "per_residue": [
+    {
+      "chain": "A",
+      "residue": 1,
+      "CA_displacement_A": 0.7076754408356436,
+      "predicted_pLDDT": 91.81
+    },
+    {
+      "chain": "A",
+      "residue": 2,
+      "CA_displacement_A": 0.4739740687014053,
+      "predicted_pLDDT": 96.62
+    },
+    {
+      "chain": "A",
+      "residue": 3,
+      "CA_displacement_A": 0.2791522548797835,
+      "predicted_pLDDT": 98.06
+    },
+    {
+      "chain": "A",
+      "residue": 4,
+      "CA_displacement_A": 0.1872004380107943,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "A",
+      "residue": 5,
+      "CA_displacement_A": 0.2348881795489801,
+      "predicted_pLDDT": 97.88
+    },
+    {
+      "chain": "A",
+      "residue": 6,
+      "CA_displacement_A": 0.7609513135941449,
+      "predicted_pLDDT": 96.56
+    },
+    {
+      "chain": "A",
+      "residue": 7,
+      "CA_displacement_A": 0.7551415549874406,
+      "predicted_pLDDT": 96.81
+    },
+    {
+      "chain": "A",
+      "residue": 8,
+      "CA_displacement_A": 0.6049484256145776,
+      "predicted_pLDDT": 96.81
+    },
+    {
+      "chain": "A",
+      "residue": 9,
+      "CA_displacement_A": 0.4766054508457365,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "A",
+      "residue": 10,
+      "CA_displacement_A": 0.3208364870355148,
+      "predicted_pLDDT": 97.75
+    },
+    {
+      "chain": "A",
+      "residue": 11,
+      "CA_displacement_A": 0.352837513392615,
+      "predicted_pLDDT": 96.5
+    },
+    {
+      "chain": "A",
+      "residue": 12,
+      "CA_displacement_A": 0.7507409659185253,
+      "predicted_pLDDT": 96.88
+    },
+    {
+      "chain": "A",
+      "residue": 13,
+      "CA_displacement_A": 0.9668006374352512,
+      "predicted_pLDDT": 95.38
+    },
+    {
+      "chain": "A",
+      "residue": 14,
+      "CA_displacement_A": 0.18547611199558695,
+      "predicted_pLDDT": 94.5
+    },
+    {
+      "chain": "A",
+      "residue": 15,
+      "CA_displacement_A": 0.6183922726827896,
+      "predicted_pLDDT": 94.0
+    },
+    {
+      "chain": "A",
+      "residue": 16,
+      "CA_displacement_A": 0.6581511103869251,
+      "predicted_pLDDT": 96.69
+    },
+    {
+      "chain": "A",
+      "residue": 17,
+      "CA_displacement_A": 0.83601829273416,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "A",
+      "residue": 18,
+      "CA_displacement_A": 0.7205103360147059,
+      "predicted_pLDDT": 97.44
+    },
+    {
+      "chain": "A",
+      "residue": 19,
+      "CA_displacement_A": 0.32732092951817593,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "A",
+      "residue": 20,
+      "CA_displacement_A": 0.25985981389697854,
+      "predicted_pLDDT": 98.06
+    },
+    {
+      "chain": "A",
+      "residue": 21,
+      "CA_displacement_A": 0.2954101523070525,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "A",
+      "residue": 22,
+      "CA_displacement_A": 0.35022394312869515,
+      "predicted_pLDDT": 98.25
+    },
+    {
+      "chain": "A",
+      "residue": 23,
+      "CA_displacement_A": 0.4063645295610126,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "A",
+      "residue": 24,
+      "CA_displacement_A": 0.44009917311025676,
+      "predicted_pLDDT": 97.5
+    },
+    {
+      "chain": "A",
+      "residue": 25,
+      "CA_displacement_A": 0.7022652195132515,
+      "predicted_pLDDT": 96.44
+    },
+    {
+      "chain": "A",
+      "residue": 26,
+      "CA_displacement_A": 0.376327983027092,
+      "predicted_pLDDT": 93.44
+    },
+    {
+      "chain": "A",
+      "residue": 27,
+      "CA_displacement_A": 2.272726015929657,
+      "predicted_pLDDT": 83.44
+    },
+    {
+      "chain": "A",
+      "residue": 28,
+      "CA_displacement_A": 1.6294899802998108,
+      "predicted_pLDDT": 83.56
+    },
+    {
+      "chain": "A",
+      "residue": 29,
+      "CA_displacement_A": 2.6704907597214667,
+      "predicted_pLDDT": 90.62
+    },
+    {
+      "chain": "A",
+      "residue": 30,
+      "CA_displacement_A": 1.9097540087684943,
+      "predicted_pLDDT": 94.19
+    },
+    {
+      "chain": "A",
+      "residue": 31,
+      "CA_displacement_A": 0.7989460938556271,
+      "predicted_pLDDT": 94.94
+    },
+    {
+      "chain": "A",
+      "residue": 32,
+      "CA_displacement_A": 0.8834946624893356,
+      "predicted_pLDDT": 94.81
+    },
+    {
+      "chain": "A",
+      "residue": 33,
+      "CA_displacement_A": 1.2730510621127842,
+      "predicted_pLDDT": 95.12
+    },
+    {
+      "chain": "A",
+      "residue": 34,
+      "CA_displacement_A": 0.8824719261083436,
+      "predicted_pLDDT": 95.62
+    },
+    {
+      "chain": "A",
+      "residue": 35,
+      "CA_displacement_A": 0.36518665456121563,
+      "predicted_pLDDT": 97.06
+    },
+    {
+      "chain": "A",
+      "residue": 36,
+      "CA_displacement_A": 0.4229029552409325,
+      "predicted_pLDDT": 97.81
+    },
+    {
+      "chain": "A",
+      "residue": 37,
+      "CA_displacement_A": 0.19987919572061225,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "A",
+      "residue": 38,
+      "CA_displacement_A": 0.49398726421219186,
+      "predicted_pLDDT": 98.0
+    },
+    {
+      "chain": "A",
+      "residue": 39,
+      "CA_displacement_A": 0.29699538463925684,
+      "predicted_pLDDT": 98.25
+    },
+    {
+      "chain": "A",
+      "residue": 40,
+      "CA_displacement_A": 0.379079128583201,
+      "predicted_pLDDT": 97.62
+    },
+    {
+      "chain": "A",
+      "residue": 41,
+      "CA_displacement_A": 0.5986910707151321,
+      "predicted_pLDDT": 96.75
+    },
+    {
+      "chain": "A",
+      "residue": 42,
+      "CA_displacement_A": 0.6008334094689229,
+      "predicted_pLDDT": 89.12
+    },
+    {
+      "chain": "A",
+      "residue": 43,
+      "CA_displacement_A": 0.5681781016874011,
+      "predicted_pLDDT": 90.0
+    },
+    {
+      "chain": "A",
+      "residue": 44,
+      "CA_displacement_A": 0.7368503906530204,
+      "predicted_pLDDT": 96.06
+    },
+    {
+      "chain": "A",
+      "residue": 45,
+      "CA_displacement_A": 0.4011425596299526,
+      "predicted_pLDDT": 97.0
+    },
+    {
+      "chain": "A",
+      "residue": 46,
+      "CA_displacement_A": 0.5735891137789437,
+      "predicted_pLDDT": 97.75
+    },
+    {
+      "chain": "A",
+      "residue": 47,
+      "CA_displacement_A": 0.6317885328636946,
+      "predicted_pLDDT": 97.75
+    },
+    {
+      "chain": "A",
+      "residue": 48,
+      "CA_displacement_A": 1.0543365481740905,
+      "predicted_pLDDT": 97.56
+    },
+    {
+      "chain": "A",
+      "residue": 49,
+      "CA_displacement_A": 0.5495245928351767,
+      "predicted_pLDDT": 97.62
+    },
+    {
+      "chain": "A",
+      "residue": 50,
+      "CA_displacement_A": 0.4285998574938404,
+      "predicted_pLDDT": 96.69
+    },
+    {
+      "chain": "A",
+      "residue": 51,
+      "CA_displacement_A": 1.0496921696529615,
+      "predicted_pLDDT": 93.06
+    },
+    {
+      "chain": "A",
+      "residue": 52,
+      "CA_displacement_A": 1.1355557072192763,
+      "predicted_pLDDT": 93.62
+    },
+    {
+      "chain": "A",
+      "residue": 53,
+      "CA_displacement_A": 1.122372528725133,
+      "predicted_pLDDT": 93.94
+    },
+    {
+      "chain": "A",
+      "residue": 54,
+      "CA_displacement_A": 0.45161025507986585,
+      "predicted_pLDDT": 92.88
+    },
+    {
+      "chain": "A",
+      "residue": 58,
+      "CA_displacement_A": 1.473211620341937,
+      "predicted_pLDDT": 92.06
+    },
+    {
+      "chain": "A",
+      "residue": 59,
+      "CA_displacement_A": 1.1076544446942655,
+      "predicted_pLDDT": 94.88
+    },
+    {
+      "chain": "A",
+      "residue": 60,
+      "CA_displacement_A": 0.6869844402802459,
+      "predicted_pLDDT": 96.38
+    },
+    {
+      "chain": "A",
+      "residue": 61,
+      "CA_displacement_A": 1.3375621066809231,
+      "predicted_pLDDT": 94.81
+    },
+    {
+      "chain": "A",
+      "residue": 62,
+      "CA_displacement_A": 1.0713191866049485,
+      "predicted_pLDDT": 93.5
+    },
+    {
+      "chain": "A",
+      "residue": 63,
+      "CA_displacement_A": 0.6709567877502517,
+      "predicted_pLDDT": 95.56
+    },
+    {
+      "chain": "A",
+      "residue": 64,
+      "CA_displacement_A": 1.5281183942878236,
+      "predicted_pLDDT": 93.44
+    },
+    {
+      "chain": "A",
+      "residue": 65,
+      "CA_displacement_A": 1.4824884227810091,
+      "predicted_pLDDT": 93.19
+    },
+    {
+      "chain": "A",
+      "residue": 66,
+      "CA_displacement_A": 0.5354994541291457,
+      "predicted_pLDDT": 96.12
+    },
+    {
+      "chain": "A",
+      "residue": 67,
+      "CA_displacement_A": 0.37410827668026186,
+      "predicted_pLDDT": 96.88
+    },
+    {
+      "chain": "A",
+      "residue": 68,
+      "CA_displacement_A": 0.3505577854708538,
+      "predicted_pLDDT": 95.94
+    },
+    {
+      "chain": "A",
+      "residue": 69,
+      "CA_displacement_A": 0.4415914236733461,
+      "predicted_pLDDT": 97.38
+    },
+    {
+      "chain": "A",
+      "residue": 70,
+      "CA_displacement_A": 0.3973097896345517,
+      "predicted_pLDDT": 97.25
+    },
+    {
+      "chain": "A",
+      "residue": 71,
+      "CA_displacement_A": 0.23403584549609374,
+      "predicted_pLDDT": 95.94
+    },
+    {
+      "chain": "A",
+      "residue": 72,
+      "CA_displacement_A": 0.5453534742858739,
+      "predicted_pLDDT": 95.69
+    },
+    {
+      "chain": "A",
+      "residue": 73,
+      "CA_displacement_A": 0.6859900087333366,
+      "predicted_pLDDT": 96.88
+    },
+    {
+      "chain": "A",
+      "residue": 74,
+      "CA_displacement_A": 0.47519391924507975,
+      "predicted_pLDDT": 97.12
+    },
+    {
+      "chain": "A",
+      "residue": 75,
+      "CA_displacement_A": 1.1147499840208612,
+      "predicted_pLDDT": 95.44
+    },
+    {
+      "chain": "A",
+      "residue": 76,
+      "CA_displacement_A": 1.2087314442498327,
+      "predicted_pLDDT": 96.0
+    },
+    {
+      "chain": "A",
+      "residue": 77,
+      "CA_displacement_A": 0.32979087841093124,
+      "predicted_pLDDT": 96.88
+    },
+    {
+      "chain": "A",
+      "residue": 78,
+      "CA_displacement_A": 0.08802526293495071,
+      "predicted_pLDDT": 98.0
+    },
+    {
+      "chain": "A",
+      "residue": 79,
+      "CA_displacement_A": 0.2651799883484605,
+      "predicted_pLDDT": 98.06
+    },
+    {
+      "chain": "A",
+      "residue": 80,
+      "CA_displacement_A": 0.29314794337404676,
+      "predicted_pLDDT": 98.31
+    },
+    {
+      "chain": "A",
+      "residue": 81,
+      "CA_displacement_A": 0.10566161125612154,
+      "predicted_pLDDT": 98.31
+    },
+    {
+      "chain": "A",
+      "residue": 82,
+      "CA_displacement_A": 0.2107994452645697,
+      "predicted_pLDDT": 98.25
+    },
+    {
+      "chain": "A",
+      "residue": 83,
+      "CA_displacement_A": 0.4127073927415338,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "A",
+      "residue": 84,
+      "CA_displacement_A": 0.6313966990560169,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "A",
+      "residue": 85,
+      "CA_displacement_A": 0.643480459964556,
+      "predicted_pLDDT": 95.56
+    },
+    {
+      "chain": "A",
+      "residue": 86,
+      "CA_displacement_A": 0.3676739032487848,
+      "predicted_pLDDT": 95.81
+    },
+    {
+      "chain": "A",
+      "residue": 87,
+      "CA_displacement_A": 0.5364578486779242,
+      "predicted_pLDDT": 94.25
+    },
+    {
+      "chain": "A",
+      "residue": 88,
+      "CA_displacement_A": 0.6557849576820505,
+      "predicted_pLDDT": 93.31
+    },
+    {
+      "chain": "A",
+      "residue": 89,
+      "CA_displacement_A": 1.197629802488998,
+      "predicted_pLDDT": 93.25
+    },
+    {
+      "chain": "A",
+      "residue": 90,
+      "CA_displacement_A": 0.457432983509757,
+      "predicted_pLDDT": 95.56
+    },
+    {
+      "chain": "A",
+      "residue": 91,
+      "CA_displacement_A": 0.5473243160975654,
+      "predicted_pLDDT": 95.56
+    },
+    {
+      "chain": "A",
+      "residue": 92,
+      "CA_displacement_A": 0.32217468971277274,
+      "predicted_pLDDT": 96.81
+    },
+    {
+      "chain": "A",
+      "residue": 93,
+      "CA_displacement_A": 0.12786934285163293,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "A",
+      "residue": 94,
+      "CA_displacement_A": 0.0677685212009048,
+      "predicted_pLDDT": 98.31
+    },
+    {
+      "chain": "A",
+      "residue": 95,
+      "CA_displacement_A": 0.19442813179952215,
+      "predicted_pLDDT": 98.06
+    },
+    {
+      "chain": "A",
+      "residue": 96,
+      "CA_displacement_A": 0.7272425883217116,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "A",
+      "residue": 97,
+      "CA_displacement_A": 1.1034151701453814,
+      "predicted_pLDDT": 98.06
+    },
+    {
+      "chain": "A",
+      "residue": 98,
+      "CA_displacement_A": 0.8413596479570167,
+      "predicted_pLDDT": 98.38
+    },
+    {
+      "chain": "A",
+      "residue": 99,
+      "CA_displacement_A": 0.7362590960602061,
+      "predicted_pLDDT": 97.75
+    },
+    {
+      "chain": "A",
+      "residue": 100,
+      "CA_displacement_A": 0.33948286678982986,
+      "predicted_pLDDT": 96.12
+    },
+    {
+      "chain": "A",
+      "residue": 101,
+      "CA_displacement_A": 1.0512701648756648,
+      "predicted_pLDDT": 93.19
+    },
+    {
+      "chain": "A",
+      "residue": 102,
+      "CA_displacement_A": 0.41346768781054427,
+      "predicted_pLDDT": 95.25
+    },
+    {
+      "chain": "A",
+      "residue": 103,
+      "CA_displacement_A": 0.984911593823294,
+      "predicted_pLDDT": 97.75
+    },
+    {
+      "chain": "A",
+      "residue": 104,
+      "CA_displacement_A": 0.5709984059906112,
+      "predicted_pLDDT": 98.5
+    },
+    {
+      "chain": "A",
+      "residue": 105,
+      "CA_displacement_A": 0.48395493970050596,
+      "predicted_pLDDT": 98.0
+    },
+    {
+      "chain": "A",
+      "residue": 106,
+      "CA_displacement_A": 0.26600827520314557,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "A",
+      "residue": 107,
+      "CA_displacement_A": 0.32487193639826534,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "A",
+      "residue": 108,
+      "CA_displacement_A": 0.49673514614947445,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "A",
+      "residue": 109,
+      "CA_displacement_A": 0.19881644095619622,
+      "predicted_pLDDT": 98.25
+    },
+    {
+      "chain": "A",
+      "residue": 110,
+      "CA_displacement_A": 0.2638164056045692,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "A",
+      "residue": 111,
+      "CA_displacement_A": 0.5810284542674673,
+      "predicted_pLDDT": 96.69
+    },
+    {
+      "chain": "A",
+      "residue": 112,
+      "CA_displacement_A": 0.20135157914257948,
+      "predicted_pLDDT": 95.62
+    },
+    {
+      "chain": "A",
+      "residue": 113,
+      "CA_displacement_A": 1.352012599334395,
+      "predicted_pLDDT": 94.75
+    },
+    {
+      "chain": "A",
+      "residue": 114,
+      "CA_displacement_A": 0.9738235444038312,
+      "predicted_pLDDT": 94.62
+    },
+    {
+      "chain": "A",
+      "residue": 115,
+      "CA_displacement_A": 2.2450652055011813,
+      "predicted_pLDDT": 94.81
+    },
+    {
+      "chain": "H",
+      "residue": 1,
+      "CA_displacement_A": 0.7903310805780267,
+      "predicted_pLDDT": 90.69
+    },
+    {
+      "chain": "H",
+      "residue": 2,
+      "CA_displacement_A": 0.33334024610905355,
+      "predicted_pLDDT": 94.0
+    },
+    {
+      "chain": "H",
+      "residue": 3,
+      "CA_displacement_A": 0.18462554156574845,
+      "predicted_pLDDT": 97.12
+    },
+    {
+      "chain": "H",
+      "residue": 4,
+      "CA_displacement_A": 0.03676983965703447,
+      "predicted_pLDDT": 98.25
+    },
+    {
+      "chain": "H",
+      "residue": 5,
+      "CA_displacement_A": 0.3624169155233496,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "H",
+      "residue": 6,
+      "CA_displacement_A": 0.4248417679584727,
+      "predicted_pLDDT": 98.25
+    },
+    {
+      "chain": "H",
+      "residue": 7,
+      "CA_displacement_A": 0.14833115421460816,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "H",
+      "residue": 8,
+      "CA_displacement_A": 0.23925692318678454,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "H",
+      "residue": 9,
+      "CA_displacement_A": 0.17525933164958568,
+      "predicted_pLDDT": 97.56
+    },
+    {
+      "chain": "H",
+      "residue": 10,
+      "CA_displacement_A": 0.177872534261269,
+      "predicted_pLDDT": 97.38
+    },
+    {
+      "chain": "H",
+      "residue": 11,
+      "CA_displacement_A": 0.376633970419688,
+      "predicted_pLDDT": 97.75
+    },
+    {
+      "chain": "H",
+      "residue": 12,
+      "CA_displacement_A": 0.2287294654273091,
+      "predicted_pLDDT": 97.38
+    },
+    {
+      "chain": "H",
+      "residue": 13,
+      "CA_displacement_A": 0.5031098795128993,
+      "predicted_pLDDT": 97.38
+    },
+    {
+      "chain": "H",
+      "residue": 14,
+      "CA_displacement_A": 0.5689184588240412,
+      "predicted_pLDDT": 97.56
+    },
+    {
+      "chain": "H",
+      "residue": 15,
+      "CA_displacement_A": 0.5038644101266683,
+      "predicted_pLDDT": 97.88
+    },
+    {
+      "chain": "H",
+      "residue": 16,
+      "CA_displacement_A": 0.18687718357798683,
+      "predicted_pLDDT": 97.81
+    },
+    {
+      "chain": "H",
+      "residue": 17,
+      "CA_displacement_A": 0.4930820971105373,
+      "predicted_pLDDT": 98.38
+    },
+    {
+      "chain": "H",
+      "residue": 18,
+      "CA_displacement_A": 0.4214996860743959,
+      "predicted_pLDDT": 98.38
+    },
+    {
+      "chain": "H",
+      "residue": 19,
+      "CA_displacement_A": 0.30054143035430836,
+      "predicted_pLDDT": 98.75
+    },
+    {
+      "chain": "H",
+      "residue": 20,
+      "CA_displacement_A": 0.38379164123993514,
+      "predicted_pLDDT": 98.88
+    },
+    {
+      "chain": "H",
+      "residue": 21,
+      "CA_displacement_A": 0.411057371665902,
+      "predicted_pLDDT": 98.81
+    },
+    {
+      "chain": "H",
+      "residue": 22,
+      "CA_displacement_A": 0.11452279647283929,
+      "predicted_pLDDT": 98.75
+    },
+    {
+      "chain": "H",
+      "residue": 23,
+      "CA_displacement_A": 0.3543434459075078,
+      "predicted_pLDDT": 98.62
+    },
+    {
+      "chain": "H",
+      "residue": 24,
+      "CA_displacement_A": 0.3685858365306151,
+      "predicted_pLDDT": 98.25
+    },
+    {
+      "chain": "H",
+      "residue": 25,
+      "CA_displacement_A": 0.3828930223344604,
+      "predicted_pLDDT": 98.06
+    },
+    {
+      "chain": "H",
+      "residue": 26,
+      "CA_displacement_A": 0.5537773762156526,
+      "predicted_pLDDT": 97.25
+    },
+    {
+      "chain": "H",
+      "residue": 27,
+      "CA_displacement_A": 0.5752324366881365,
+      "predicted_pLDDT": 95.38
+    },
+    {
+      "chain": "H",
+      "residue": 28,
+      "CA_displacement_A": 0.3937232533410739,
+      "predicted_pLDDT": 95.38
+    },
+    {
+      "chain": "H",
+      "residue": 29,
+      "CA_displacement_A": 0.8983992712782738,
+      "predicted_pLDDT": 96.38
+    },
+    {
+      "chain": "H",
+      "residue": 30,
+      "CA_displacement_A": 1.3767624022006084,
+      "predicted_pLDDT": 95.19
+    },
+    {
+      "chain": "H",
+      "residue": 31,
+      "CA_displacement_A": 1.00409458660512,
+      "predicted_pLDDT": 91.56
+    },
+    {
+      "chain": "H",
+      "residue": 32,
+      "CA_displacement_A": 0.9394844587860588,
+      "predicted_pLDDT": 93.62
+    },
+    {
+      "chain": "H",
+      "residue": 33,
+      "CA_displacement_A": 0.4919651969091061,
+      "predicted_pLDDT": 93.94
+    },
+    {
+      "chain": "H",
+      "residue": 34,
+      "CA_displacement_A": 0.5095191287797902,
+      "predicted_pLDDT": 97.25
+    },
+    {
+      "chain": "H",
+      "residue": 35,
+      "CA_displacement_A": 0.2681035604335211,
+      "predicted_pLDDT": 97.69
+    },
+    {
+      "chain": "H",
+      "residue": 36,
+      "CA_displacement_A": 0.060993723731333674,
+      "predicted_pLDDT": 98.69
+    },
+    {
+      "chain": "H",
+      "residue": 37,
+      "CA_displacement_A": 0.267821798644825,
+      "predicted_pLDDT": 98.5
+    },
+    {
+      "chain": "H",
+      "residue": 38,
+      "CA_displacement_A": 0.2700349290441635,
+      "predicted_pLDDT": 98.56
+    },
+    {
+      "chain": "H",
+      "residue": 39,
+      "CA_displacement_A": 0.2876501011976841,
+      "predicted_pLDDT": 98.44
+    },
+    {
+      "chain": "H",
+      "residue": 40,
+      "CA_displacement_A": 0.2898927081190954,
+      "predicted_pLDDT": 97.12
+    },
+    {
+      "chain": "H",
+      "residue": 41,
+      "CA_displacement_A": 0.29070749964722226,
+      "predicted_pLDDT": 93.12
+    },
+    {
+      "chain": "H",
+      "residue": 42,
+      "CA_displacement_A": 0.1040491438468076,
+      "predicted_pLDDT": 89.75
+    },
+    {
+      "chain": "H",
+      "residue": 43,
+      "CA_displacement_A": 0.0955939674917112,
+      "predicted_pLDDT": 94.56
+    },
+    {
+      "chain": "H",
+      "residue": 44,
+      "CA_displacement_A": 0.5038366293856332,
+      "predicted_pLDDT": 95.81
+    },
+    {
+      "chain": "H",
+      "residue": 45,
+      "CA_displacement_A": 0.22683002656809056,
+      "predicted_pLDDT": 98.0
+    },
+    {
+      "chain": "H",
+      "residue": 46,
+      "CA_displacement_A": 0.23419949411679225,
+      "predicted_pLDDT": 97.81
+    },
+    {
+      "chain": "H",
+      "residue": 47,
+      "CA_displacement_A": 0.18394418455661216,
+      "predicted_pLDDT": 97.62
+    },
+    {
+      "chain": "H",
+      "residue": 48,
+      "CA_displacement_A": 0.19740294337268233,
+      "predicted_pLDDT": 98.31
+    },
+    {
+      "chain": "H",
+      "residue": 49,
+      "CA_displacement_A": 0.40030952570350253,
+      "predicted_pLDDT": 98.25
+    },
+    {
+      "chain": "H",
+      "residue": 50,
+      "CA_displacement_A": 0.3889291780024422,
+      "predicted_pLDDT": 96.5
+    },
+    {
+      "chain": "H",
+      "residue": 51,
+      "CA_displacement_A": 0.3650133770926832,
+      "predicted_pLDDT": 97.31
+    },
+    {
+      "chain": "H",
+      "residue": 52,
+      "CA_displacement_A": 0.5356531430199871,
+      "predicted_pLDDT": 95.81
+    },
+    {
+      "chain": "H",
+      "residue": 53,
+      "CA_displacement_A": 0.5739945015506323,
+      "predicted_pLDDT": 95.12
+    },
+    {
+      "chain": "H",
+      "residue": 54,
+      "CA_displacement_A": 0.8373266673550438,
+      "predicted_pLDDT": 90.81
+    },
+    {
+      "chain": "H",
+      "residue": 55,
+      "CA_displacement_A": 2.041311114255694,
+      "predicted_pLDDT": 90.38
+    },
+    {
+      "chain": "H",
+      "residue": 56,
+      "CA_displacement_A": 1.719832612199278,
+      "predicted_pLDDT": 93.69
+    },
+    {
+      "chain": "H",
+      "residue": 57,
+      "CA_displacement_A": 0.9840791475474056,
+      "predicted_pLDDT": 96.0
+    },
+    {
+      "chain": "H",
+      "residue": 58,
+      "CA_displacement_A": 0.625942765731507,
+      "predicted_pLDDT": 97.44
+    },
+    {
+      "chain": "H",
+      "residue": 59,
+      "CA_displacement_A": 0.6089930379259257,
+      "predicted_pLDDT": 97.12
+    },
+    {
+      "chain": "H",
+      "residue": 60,
+      "CA_displacement_A": 0.043235890548675576,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "H",
+      "residue": 61,
+      "CA_displacement_A": 0.01429348390339169,
+      "predicted_pLDDT": 97.0
+    },
+    {
+      "chain": "H",
+      "residue": 62,
+      "CA_displacement_A": 0.16938965056878783,
+      "predicted_pLDDT": 95.69
+    },
+    {
+      "chain": "H",
+      "residue": 63,
+      "CA_displacement_A": 0.5504235258578999,
+      "predicted_pLDDT": 94.94
+    },
+    {
+      "chain": "H",
+      "residue": 64,
+      "CA_displacement_A": 0.33456212023051035,
+      "predicted_pLDDT": 97.75
+    },
+    {
+      "chain": "H",
+      "residue": 65,
+      "CA_displacement_A": 0.43830786348560774,
+      "predicted_pLDDT": 97.19
+    },
+    {
+      "chain": "H",
+      "residue": 66,
+      "CA_displacement_A": 0.45411888409958784,
+      "predicted_pLDDT": 97.62
+    },
+    {
+      "chain": "H",
+      "residue": 67,
+      "CA_displacement_A": 0.24406780552267263,
+      "predicted_pLDDT": 98.69
+    },
+    {
+      "chain": "H",
+      "residue": 68,
+      "CA_displacement_A": 0.4809815716971427,
+      "predicted_pLDDT": 98.88
+    },
+    {
+      "chain": "H",
+      "residue": 69,
+      "CA_displacement_A": 0.4218856852797591,
+      "predicted_pLDDT": 98.75
+    },
+    {
+      "chain": "H",
+      "residue": 70,
+      "CA_displacement_A": 0.31502510689973134,
+      "predicted_pLDDT": 98.75
+    },
+    {
+      "chain": "H",
+      "residue": 71,
+      "CA_displacement_A": 0.23361969194231325,
+      "predicted_pLDDT": 98.44
+    },
+    {
+      "chain": "H",
+      "residue": 72,
+      "CA_displacement_A": 0.25651593764126507,
+      "predicted_pLDDT": 98.31
+    },
+    {
+      "chain": "H",
+      "residue": 73,
+      "CA_displacement_A": 0.3574400474052132,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "H",
+      "residue": 74,
+      "CA_displacement_A": 0.46794843910721556,
+      "predicted_pLDDT": 97.25
+    },
+    {
+      "chain": "H",
+      "residue": 75,
+      "CA_displacement_A": 0.5554880374671745,
+      "predicted_pLDDT": 97.31
+    },
+    {
+      "chain": "H",
+      "residue": 76,
+      "CA_displacement_A": 0.8660943011769635,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "H",
+      "residue": 77,
+      "CA_displacement_A": 0.5704702898326492,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "H",
+      "residue": 78,
+      "CA_displacement_A": 0.09625422778402798,
+      "predicted_pLDDT": 98.56
+    },
+    {
+      "chain": "H",
+      "residue": 79,
+      "CA_displacement_A": 0.22499563405540482,
+      "predicted_pLDDT": 98.62
+    },
+    {
+      "chain": "H",
+      "residue": 80,
+      "CA_displacement_A": 0.22979419211401644,
+      "predicted_pLDDT": 98.69
+    },
+    {
+      "chain": "H",
+      "residue": 81,
+      "CA_displacement_A": 0.3560231683183661,
+      "predicted_pLDDT": 98.88
+    },
+    {
+      "chain": "H",
+      "residue": 82,
+      "CA_displacement_A": 0.354137182182288,
+      "predicted_pLDDT": 98.88
+    },
+    {
+      "chain": "H",
+      "residue": 83,
+      "CA_displacement_A": 0.357287040827573,
+      "predicted_pLDDT": 98.81
+    },
+    {
+      "chain": "H",
+      "residue": 84,
+      "CA_displacement_A": 0.2500055905707725,
+      "predicted_pLDDT": 98.69
+    },
+    {
+      "chain": "H",
+      "residue": 85,
+      "CA_displacement_A": 0.3193094377172399,
+      "predicted_pLDDT": 98.31
+    },
+    {
+      "chain": "H",
+      "residue": 86,
+      "CA_displacement_A": 0.26141048561379765,
+      "predicted_pLDDT": 98.5
+    },
+    {
+      "chain": "H",
+      "residue": 87,
+      "CA_displacement_A": 0.12476243979705615,
+      "predicted_pLDDT": 97.81
+    },
+    {
+      "chain": "H",
+      "residue": 88,
+      "CA_displacement_A": 0.5159358259158283,
+      "predicted_pLDDT": 96.81
+    },
+    {
+      "chain": "H",
+      "residue": 89,
+      "CA_displacement_A": 0.50305716905361,
+      "predicted_pLDDT": 96.19
+    },
+    {
+      "chain": "H",
+      "residue": 90,
+      "CA_displacement_A": 0.39564156951700835,
+      "predicted_pLDDT": 98.38
+    },
+    {
+      "chain": "H",
+      "residue": 91,
+      "CA_displacement_A": 0.4254876037894999,
+      "predicted_pLDDT": 98.44
+    },
+    {
+      "chain": "H",
+      "residue": 92,
+      "CA_displacement_A": 0.2959792945472523,
+      "predicted_pLDDT": 98.44
+    },
+    {
+      "chain": "H",
+      "residue": 93,
+      "CA_displacement_A": 0.2124832480846344,
+      "predicted_pLDDT": 98.38
+    },
+    {
+      "chain": "H",
+      "residue": 94,
+      "CA_displacement_A": 0.21543576455923902,
+      "predicted_pLDDT": 98.81
+    },
+    {
+      "chain": "H",
+      "residue": 95,
+      "CA_displacement_A": 0.10366160604629349,
+      "predicted_pLDDT": 98.75
+    },
+    {
+      "chain": "H",
+      "residue": 96,
+      "CA_displacement_A": 0.2669920618902634,
+      "predicted_pLDDT": 98.5
+    },
+    {
+      "chain": "H",
+      "residue": 97,
+      "CA_displacement_A": 0.18733411990779275,
+      "predicted_pLDDT": 98.0
+    },
+    {
+      "chain": "H",
+      "residue": 98,
+      "CA_displacement_A": 0.334154433560945,
+      "predicted_pLDDT": 97.19
+    },
+    {
+      "chain": "H",
+      "residue": 99,
+      "CA_displacement_A": 0.5933232981373113,
+      "predicted_pLDDT": 93.19
+    },
+    {
+      "chain": "H",
+      "residue": 100,
+      "CA_displacement_A": 3.323511052065127,
+      "predicted_pLDDT": 84.12
+    },
+    {
+      "chain": "H",
+      "residue": 101,
+      "CA_displacement_A": 1.6573824892607119,
+      "predicted_pLDDT": 73.75
+    },
+    {
+      "chain": "H",
+      "residue": 102,
+      "CA_displacement_A": 2.202904852188401,
+      "predicted_pLDDT": 70.75
+    },
+    {
+      "chain": "H",
+      "residue": 103,
+      "CA_displacement_A": 2.370382625672907,
+      "predicted_pLDDT": 79.19
+    },
+    {
+      "chain": "H",
+      "residue": 104,
+      "CA_displacement_A": 1.2063408432326257,
+      "predicted_pLDDT": 89.25
+    },
+    {
+      "chain": "H",
+      "residue": 105,
+      "CA_displacement_A": 0.3796113037562567,
+      "predicted_pLDDT": 96.06
+    },
+    {
+      "chain": "H",
+      "residue": 106,
+      "CA_displacement_A": 0.4878316642147039,
+      "predicted_pLDDT": 94.69
+    },
+    {
+      "chain": "H",
+      "residue": 107,
+      "CA_displacement_A": 0.15516855355507464,
+      "predicted_pLDDT": 96.12
+    },
+    {
+      "chain": "H",
+      "residue": 108,
+      "CA_displacement_A": 0.1285154345596697,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "H",
+      "residue": 109,
+      "CA_displacement_A": 0.20018506702949596,
+      "predicted_pLDDT": 98.06
+    },
+    {
+      "chain": "H",
+      "residue": 110,
+      "CA_displacement_A": 0.1496409327384725,
+      "predicted_pLDDT": 95.94
+    },
+    {
+      "chain": "H",
+      "residue": 111,
+      "CA_displacement_A": 0.3001166349737321,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "H",
+      "residue": 112,
+      "CA_displacement_A": 0.09714080312202483,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "H",
+      "residue": 113,
+      "CA_displacement_A": 0.07376585568363954,
+      "predicted_pLDDT": 97.88
+    },
+    {
+      "chain": "H",
+      "residue": 114,
+      "CA_displacement_A": 0.1460252483812149,
+      "predicted_pLDDT": 98.5
+    },
+    {
+      "chain": "H",
+      "residue": 115,
+      "CA_displacement_A": 0.349494235828947,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "H",
+      "residue": 116,
+      "CA_displacement_A": 0.28207587963749164,
+      "predicted_pLDDT": 97.81
+    },
+    {
+      "chain": "H",
+      "residue": 117,
+      "CA_displacement_A": 1.2389391478548453,
+      "predicted_pLDDT": 89.88
+    },
+    {
+      "chain": "H",
+      "residue": 118,
+      "CA_displacement_A": 1.8531711025200879,
+      "predicted_pLDDT": 74.56
+    },
+    {
+      "chain": "L",
+      "residue": 119,
+      "CA_displacement_A": 1.5053006728413054,
+      "predicted_pLDDT": 85.38
+    },
+    {
+      "chain": "L",
+      "residue": 120,
+      "CA_displacement_A": 2.205063201502898,
+      "predicted_pLDDT": 96.25
+    },
+    {
+      "chain": "L",
+      "residue": 121,
+      "CA_displacement_A": 2.1858727534821654,
+      "predicted_pLDDT": 97.56
+    },
+    {
+      "chain": "L",
+      "residue": 122,
+      "CA_displacement_A": 1.8848186454698783,
+      "predicted_pLDDT": 98.31
+    },
+    {
+      "chain": "L",
+      "residue": 123,
+      "CA_displacement_A": 2.0338541082339905,
+      "predicted_pLDDT": 98.31
+    },
+    {
+      "chain": "L",
+      "residue": 124,
+      "CA_displacement_A": 1.8276324451886703,
+      "predicted_pLDDT": 98.56
+    },
+    {
+      "chain": "L",
+      "residue": 125,
+      "CA_displacement_A": 2.1062524697856233,
+      "predicted_pLDDT": 97.44
+    },
+    {
+      "chain": "L",
+      "residue": 126,
+      "CA_displacement_A": 1.9970505729240364,
+      "predicted_pLDDT": 97.31
+    },
+    {
+      "chain": "L",
+      "residue": 127,
+      "CA_displacement_A": 2.317552641092022,
+      "predicted_pLDDT": 94.31
+    },
+    {
+      "chain": "L",
+      "residue": 128,
+      "CA_displacement_A": 2.2744155650193476,
+      "predicted_pLDDT": 96.0
+    },
+    {
+      "chain": "L",
+      "residue": 129,
+      "CA_displacement_A": 1.9290192747570045,
+      "predicted_pLDDT": 95.75
+    },
+    {
+      "chain": "L",
+      "residue": 130,
+      "CA_displacement_A": 1.8801804965073932,
+      "predicted_pLDDT": 97.19
+    },
+    {
+      "chain": "L",
+      "residue": 131,
+      "CA_displacement_A": 1.7414149996334434,
+      "predicted_pLDDT": 97.5
+    },
+    {
+      "chain": "L",
+      "residue": 132,
+      "CA_displacement_A": 1.7505451656835287,
+      "predicted_pLDDT": 97.62
+    },
+    {
+      "chain": "L",
+      "residue": 133,
+      "CA_displacement_A": 1.623792021761527,
+      "predicted_pLDDT": 97.06
+    },
+    {
+      "chain": "L",
+      "residue": 134,
+      "CA_displacement_A": 1.5862872247324784,
+      "predicted_pLDDT": 98.06
+    },
+    {
+      "chain": "L",
+      "residue": 135,
+      "CA_displacement_A": 1.7169429908007616,
+      "predicted_pLDDT": 98.0
+    },
+    {
+      "chain": "L",
+      "residue": 136,
+      "CA_displacement_A": 1.6013162196303872,
+      "predicted_pLDDT": 98.06
+    },
+    {
+      "chain": "L",
+      "residue": 137,
+      "CA_displacement_A": 1.7316594573545756,
+      "predicted_pLDDT": 97.44
+    },
+    {
+      "chain": "L",
+      "residue": 138,
+      "CA_displacement_A": 1.7889699896377067,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "L",
+      "residue": 139,
+      "CA_displacement_A": 1.7953003229571578,
+      "predicted_pLDDT": 98.56
+    },
+    {
+      "chain": "L",
+      "residue": 140,
+      "CA_displacement_A": 1.8858929092269523,
+      "predicted_pLDDT": 98.69
+    },
+    {
+      "chain": "L",
+      "residue": 141,
+      "CA_displacement_A": 1.909979538018684,
+      "predicted_pLDDT": 98.75
+    },
+    {
+      "chain": "L",
+      "residue": 142,
+      "CA_displacement_A": 2.3466641981468688,
+      "predicted_pLDDT": 98.75
+    },
+    {
+      "chain": "L",
+      "residue": 143,
+      "CA_displacement_A": 2.2780105531778347,
+      "predicted_pLDDT": 98.69
+    },
+    {
+      "chain": "L",
+      "residue": 144,
+      "CA_displacement_A": 2.3535790584039376,
+      "predicted_pLDDT": 98.56
+    },
+    {
+      "chain": "L",
+      "residue": 145,
+      "CA_displacement_A": 2.636508549377522,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "L",
+      "residue": 146,
+      "CA_displacement_A": 2.6582589710331095,
+      "predicted_pLDDT": 98.31
+    },
+    {
+      "chain": "L",
+      "residue": 147,
+      "CA_displacement_A": 2.174680322907379,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "L",
+      "residue": 148,
+      "CA_displacement_A": 2.228386920647587,
+      "predicted_pLDDT": 97.31
+    },
+    {
+      "chain": "L",
+      "residue": 149,
+      "CA_displacement_A": 1.548561901338671,
+      "predicted_pLDDT": 97.25
+    },
+    {
+      "chain": "L",
+      "residue": 150,
+      "CA_displacement_A": 1.5551006936962561,
+      "predicted_pLDDT": 96.12
+    },
+    {
+      "chain": "L",
+      "residue": 151,
+      "CA_displacement_A": 1.5246347787870582,
+      "predicted_pLDDT": 97.5
+    },
+    {
+      "chain": "L",
+      "residue": 152,
+      "CA_displacement_A": 1.2123759280666937,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "L",
+      "residue": 153,
+      "CA_displacement_A": 0.891019578684748,
+      "predicted_pLDDT": 98.62
+    },
+    {
+      "chain": "L",
+      "residue": 154,
+      "CA_displacement_A": 0.7280788978664814,
+      "predicted_pLDDT": 98.69
+    },
+    {
+      "chain": "L",
+      "residue": 155,
+      "CA_displacement_A": 0.6029194374223943,
+      "predicted_pLDDT": 98.69
+    },
+    {
+      "chain": "L",
+      "residue": 156,
+      "CA_displacement_A": 0.887269236562351,
+      "predicted_pLDDT": 98.38
+    },
+    {
+      "chain": "L",
+      "residue": 157,
+      "CA_displacement_A": 0.8942024565732849,
+      "predicted_pLDDT": 96.81
+    },
+    {
+      "chain": "L",
+      "residue": 158,
+      "CA_displacement_A": 1.0872159720436796,
+      "predicted_pLDDT": 93.56
+    },
+    {
+      "chain": "L",
+      "residue": 159,
+      "CA_displacement_A": 1.0520756423781719,
+      "predicted_pLDDT": 91.94
+    },
+    {
+      "chain": "L",
+      "residue": 160,
+      "CA_displacement_A": 0.48973051543704715,
+      "predicted_pLDDT": 96.25
+    },
+    {
+      "chain": "L",
+      "residue": 161,
+      "CA_displacement_A": 0.33812301984510984,
+      "predicted_pLDDT": 97.38
+    },
+    {
+      "chain": "L",
+      "residue": 162,
+      "CA_displacement_A": 0.3583251730020883,
+      "predicted_pLDDT": 98.06
+    },
+    {
+      "chain": "L",
+      "residue": 163,
+      "CA_displacement_A": 0.8165882220334939,
+      "predicted_pLDDT": 97.0
+    },
+    {
+      "chain": "L",
+      "residue": 164,
+      "CA_displacement_A": 0.6549382273832772,
+      "predicted_pLDDT": 97.38
+    },
+    {
+      "chain": "L",
+      "residue": 165,
+      "CA_displacement_A": 0.5592611640960556,
+      "predicted_pLDDT": 97.88
+    },
+    {
+      "chain": "L",
+      "residue": 166,
+      "CA_displacement_A": 0.8276478995207041,
+      "predicted_pLDDT": 98.0
+    },
+    {
+      "chain": "L",
+      "residue": 167,
+      "CA_displacement_A": 0.9843445973207456,
+      "predicted_pLDDT": 96.88
+    },
+    {
+      "chain": "L",
+      "residue": 168,
+      "CA_displacement_A": 1.3258811972531133,
+      "predicted_pLDDT": 96.44
+    },
+    {
+      "chain": "L",
+      "residue": 169,
+      "CA_displacement_A": 1.3346693368278284,
+      "predicted_pLDDT": 97.38
+    },
+    {
+      "chain": "L",
+      "residue": 170,
+      "CA_displacement_A": 1.0172129831827148,
+      "predicted_pLDDT": 97.69
+    },
+    {
+      "chain": "L",
+      "residue": 171,
+      "CA_displacement_A": 1.2116937819398583,
+      "predicted_pLDDT": 96.94
+    },
+    {
+      "chain": "L",
+      "residue": 172,
+      "CA_displacement_A": 0.39678204378246074,
+      "predicted_pLDDT": 96.94
+    },
+    {
+      "chain": "L",
+      "residue": 173,
+      "CA_displacement_A": 0.3323716041785992,
+      "predicted_pLDDT": 95.31
+    },
+    {
+      "chain": "L",
+      "residue": 174,
+      "CA_displacement_A": 0.2529983898959615,
+      "predicted_pLDDT": 93.0
+    },
+    {
+      "chain": "L",
+      "residue": 175,
+      "CA_displacement_A": 0.11670375498734908,
+      "predicted_pLDDT": 94.88
+    },
+    {
+      "chain": "L",
+      "residue": 176,
+      "CA_displacement_A": 0.25976283559539576,
+      "predicted_pLDDT": 96.88
+    },
+    {
+      "chain": "L",
+      "residue": 177,
+      "CA_displacement_A": 0.5552297445668597,
+      "predicted_pLDDT": 98.0
+    },
+    {
+      "chain": "L",
+      "residue": 178,
+      "CA_displacement_A": 0.5733774239952907,
+      "predicted_pLDDT": 97.75
+    },
+    {
+      "chain": "L",
+      "residue": 179,
+      "CA_displacement_A": 0.8513846658081003,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "L",
+      "residue": 180,
+      "CA_displacement_A": 0.8440285627774462,
+      "predicted_pLDDT": 98.81
+    },
+    {
+      "chain": "L",
+      "residue": 181,
+      "CA_displacement_A": 1.0422318045121195,
+      "predicted_pLDDT": 98.75
+    },
+    {
+      "chain": "L",
+      "residue": 182,
+      "CA_displacement_A": 1.4395786734926999,
+      "predicted_pLDDT": 98.5
+    },
+    {
+      "chain": "L",
+      "residue": 183,
+      "CA_displacement_A": 1.6612088235334932,
+      "predicted_pLDDT": 98.56
+    },
+    {
+      "chain": "L",
+      "residue": 184,
+      "CA_displacement_A": 1.5160398487442108,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "L",
+      "residue": 185,
+      "CA_displacement_A": 1.6625161688708505,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "L",
+      "residue": 186,
+      "CA_displacement_A": 2.326662920772046,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "L",
+      "residue": 187,
+      "CA_displacement_A": 2.4703936781627998,
+      "predicted_pLDDT": 98.44
+    },
+    {
+      "chain": "L",
+      "residue": 188,
+      "CA_displacement_A": 2.352597891560468,
+      "predicted_pLDDT": 98.62
+    },
+    {
+      "chain": "L",
+      "residue": 189,
+      "CA_displacement_A": 1.9670808372976825,
+      "predicted_pLDDT": 98.81
+    },
+    {
+      "chain": "L",
+      "residue": 190,
+      "CA_displacement_A": 1.8312681267635431,
+      "predicted_pLDDT": 98.75
+    },
+    {
+      "chain": "L",
+      "residue": 191,
+      "CA_displacement_A": 1.3079126768425118,
+      "predicted_pLDDT": 98.81
+    },
+    {
+      "chain": "L",
+      "residue": 192,
+      "CA_displacement_A": 1.362397966653557,
+      "predicted_pLDDT": 98.69
+    },
+    {
+      "chain": "L",
+      "residue": 193,
+      "CA_displacement_A": 1.3228289446295063,
+      "predicted_pLDDT": 98.56
+    },
+    {
+      "chain": "L",
+      "residue": 194,
+      "CA_displacement_A": 1.4204710056570347,
+      "predicted_pLDDT": 98.19
+    },
+    {
+      "chain": "L",
+      "residue": 195,
+      "CA_displacement_A": 1.3816339114327687,
+      "predicted_pLDDT": 97.81
+    },
+    {
+      "chain": "L",
+      "residue": 196,
+      "CA_displacement_A": 1.31891527893024,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "L",
+      "residue": 197,
+      "CA_displacement_A": 1.1514296066600735,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "L",
+      "residue": 198,
+      "CA_displacement_A": 1.4551155112633918,
+      "predicted_pLDDT": 97.06
+    },
+    {
+      "chain": "L",
+      "residue": 199,
+      "CA_displacement_A": 1.487215928862327,
+      "predicted_pLDDT": 96.5
+    },
+    {
+      "chain": "L",
+      "residue": 200,
+      "CA_displacement_A": 1.2654068381300596,
+      "predicted_pLDDT": 98.0
+    },
+    {
+      "chain": "L",
+      "residue": 201,
+      "CA_displacement_A": 1.2495457418098477,
+      "predicted_pLDDT": 97.56
+    },
+    {
+      "chain": "L",
+      "residue": 202,
+      "CA_displacement_A": 1.122703028192827,
+      "predicted_pLDDT": 98.0
+    },
+    {
+      "chain": "L",
+      "residue": 203,
+      "CA_displacement_A": 1.1762444002058712,
+      "predicted_pLDDT": 98.31
+    },
+    {
+      "chain": "L",
+      "residue": 204,
+      "CA_displacement_A": 1.1049207050385825,
+      "predicted_pLDDT": 98.81
+    },
+    {
+      "chain": "L",
+      "residue": 205,
+      "CA_displacement_A": 1.1077666383141926,
+      "predicted_pLDDT": 98.75
+    },
+    {
+      "chain": "L",
+      "residue": 206,
+      "CA_displacement_A": 1.374740762359976,
+      "predicted_pLDDT": 98.56
+    },
+    {
+      "chain": "L",
+      "residue": 207,
+      "CA_displacement_A": 1.419910062567711,
+      "predicted_pLDDT": 97.88
+    },
+    {
+      "chain": "L",
+      "residue": 208,
+      "CA_displacement_A": 1.4473674968741055,
+      "predicted_pLDDT": 97.25
+    },
+    {
+      "chain": "L",
+      "residue": 209,
+      "CA_displacement_A": 1.388374998860723,
+      "predicted_pLDDT": 92.75
+    },
+    {
+      "chain": "L",
+      "residue": 210,
+      "CA_displacement_A": 2.193348515113485,
+      "predicted_pLDDT": 89.88
+    },
+    {
+      "chain": "L",
+      "residue": 211,
+      "CA_displacement_A": 2.312633857693457,
+      "predicted_pLDDT": 91.62
+    },
+    {
+      "chain": "L",
+      "residue": 212,
+      "CA_displacement_A": 1.8423583394502467,
+      "predicted_pLDDT": 90.5
+    },
+    {
+      "chain": "L",
+      "residue": 213,
+      "CA_displacement_A": 1.5544016050890377,
+      "predicted_pLDDT": 92.81
+    },
+    {
+      "chain": "L",
+      "residue": 214,
+      "CA_displacement_A": 1.3050290168032705,
+      "predicted_pLDDT": 93.81
+    },
+    {
+      "chain": "L",
+      "residue": 215,
+      "CA_displacement_A": 1.1119854943526326,
+      "predicted_pLDDT": 96.94
+    },
+    {
+      "chain": "L",
+      "residue": 216,
+      "CA_displacement_A": 1.0287713611943663,
+      "predicted_pLDDT": 98.12
+    },
+    {
+      "chain": "L",
+      "residue": 217,
+      "CA_displacement_A": 1.0744949093683003,
+      "predicted_pLDDT": 98.06
+    },
+    {
+      "chain": "L",
+      "residue": 218,
+      "CA_displacement_A": 1.8478884042168724,
+      "predicted_pLDDT": 97.0
+    },
+    {
+      "chain": "L",
+      "residue": 219,
+      "CA_displacement_A": 2.0292188937314326,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "L",
+      "residue": 220,
+      "CA_displacement_A": 1.4988334969243142,
+      "predicted_pLDDT": 98.38
+    },
+    {
+      "chain": "L",
+      "residue": 221,
+      "CA_displacement_A": 1.543101237042021,
+      "predicted_pLDDT": 97.94
+    },
+    {
+      "chain": "L",
+      "residue": 222,
+      "CA_displacement_A": 1.5312781361179986,
+      "predicted_pLDDT": 97.88
+    },
+    {
+      "chain": "L",
+      "residue": 223,
+      "CA_displacement_A": 1.418399132658317,
+      "predicted_pLDDT": 96.44
+    },
+    {
+      "chain": "L",
+      "residue": 224,
+      "CA_displacement_A": 1.4363254252592306,
+      "predicted_pLDDT": 92.38
+    },
+    {
+      "chain": "L",
+      "residue": 225,
+      "CA_displacement_A": 2.056987704111916,
+      "predicted_pLDDT": 87.06
+    }
+  ],
+  "native_sha256": "b5f33e3ab7d57e9aefb44848d8f97350f6ff46e901e6bec48e1cf6d8016ff1bf",
+  "predicted_sha256": "ed474238814f5184a48e50869e06c88023621f605dc1f9e5d7e3b1e0aa6a6c07",
+  "sequence_differences": [
+    {
+      "chain": "A",
+      "residue": "29",
+      "experimental": "GLU",
+      "predicted": "GLN"
+    }
+  ],
+  "native_only_heavy_atom_keys": [
+    [
+      "A",
+      29,
+      "OE2"
+    ]
+  ],
+  "predicted_only_heavy_atom_keys": [
+    [
+      "A",
+      29,
+      "NE2"
+    ],
+    [
+      "H",
+      118,
+      "OXT"
+    ],
+    [
+      "L",
+      225,
+      "OXT"
+    ]
+  ],
+  "native_resolved_residues": {
+    "H": 118,
+    "L": 107,
+    "A": 112
+  },
+  "predicted_resolved_residues": {
+    "H": 118,
+    "L": 107,
+    "A": 112
+  },
+  "conditions": {
+    "experimental": {
+      "exposed_cdr": {
+        "H": [
+          26,
+          28,
+          30,
+          31,
+          52,
+          54,
+          55,
+          56,
+          57,
+          101,
+          102
+        ],
+        "L": [
+          145,
+          146,
+          148,
+          149,
+          170,
+          210,
+          211
+        ]
+      },
+      "exposed_antigen": [
+        2,
+        4,
+        7,
+        8,
+        9,
+        11,
+        13,
+        14,
+        15,
+        17,
+        23,
+        25,
+        27,
+        28,
+        29,
+        31,
+        33,
+        34,
+        36,
+        42,
+        43,
+        48,
+        51,
+        52,
+        53,
+        58,
+        61,
+        62,
+        64,
+        65,
+        68,
+        72,
+        73,
+        75,
+        76,
+        85,
+        87,
+        88,
+        89,
+        92,
+        93,
+        101,
+        102,
+        105,
+        107,
+        111,
+        113,
+        114,
+        115
+      ],
+      "post_topology_atom_counts": {
+        "heavy": 2627,
+        "hydrogen": 897
+      },
+      "processed_PSF_sha256": {
+        "antigen_haddock.psf.gz": "cf9eeeb671582ef87e1241907e856bb1d1c639afff6a005957c419cd434bc77e",
+        "antibody_haddock.psf.gz": "bea2591b62a7a19ae2701542c64d876c51dceb2e09d15a3ffe11c75774c7d70e"
+      },
+      "total_topology_charge_e": 2.000000000000068,
+      "settings_sha256": "f1156aba08eebc413f9f3d64910e7a66738a794accab78395926199f482dcca4"
+    },
+    "predicted_matched": {
+      "exposed_cdr": {
+        "H": [
+          26,
+          28,
+          31,
+          54,
+          55,
+          56,
+          57,
+          100,
+          101,
+          102,
+          107
+        ],
+        "L": [
+          145,
+          146,
+          148,
+          149,
+          170,
+          210,
+          211
+        ]
+      },
+      "exposed_antigen": [
+        2,
+        4,
+        7,
+        8,
+        9,
+        11,
+        13,
+        14,
+        16,
+        17,
+        23,
+        25,
+        27,
+        28,
+        29,
+        31,
+        32,
+        33,
+        34,
+        42,
+        43,
+        48,
+        51,
+        53,
+        58,
+        60,
+        61,
+        64,
+        65,
+        68,
+        71,
+        72,
+        75,
+        76,
+        84,
+        85,
+        88,
+        89,
+        92,
+        95,
+        97,
+        99,
+        101,
+        102,
+        103,
+        105,
+        107,
+        109,
+        111,
+        113,
+        115
+      ],
+      "post_topology_atom_counts": {
+        "heavy": 2627,
+        "hydrogen": 897
+      },
+      "processed_PSF_sha256": {
+        "antigen_haddock.psf.gz": "1ff799b036934e61587f03e286b77d7d1b60c23299f2ed4b587b9b21902493c1",
+        "antibody_haddock.psf.gz": "f8a41ba4325c8ccdd55338d46f87218915e4863cf2145f6714b1ebaafae5b02f"
+      },
+      "total_topology_charge_e": 1.0000000000000482,
+      "settings_sha256": "9638412da75424060681e83ac09cb5e212559dace01652531bc000fc66e22e63"
+    }
+  },
+  "post_topology_atom_differences": [
+    {
+      "key": "A:29:C",
+      "experimental": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLU",
+        "atom": "C",
+        "chemical_type": "C",
+        "charge_e": 0.5
+      },
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "C",
+        "chemical_type": "C",
+        "charge_e": 0.5
+      }
+    },
+    {
+      "key": "A:29:CA",
+      "experimental": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLU",
+        "atom": "CA",
+        "chemical_type": "CH1E",
+        "charge_e": 0.2
+      },
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "CA",
+        "chemical_type": "CH1E",
+        "charge_e": 0.2
+      }
+    },
+    {
+      "key": "A:29:CB",
+      "experimental": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLU",
+        "atom": "CB",
+        "chemical_type": "CH2E",
+        "charge_e": 0.0
+      },
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "CB",
+        "chemical_type": "CH2E",
+        "charge_e": 0.0
+      }
+    },
+    {
+      "key": "A:29:CD",
+      "experimental": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLU",
+        "atom": "CD",
+        "chemical_type": "C",
+        "charge_e": 0.7
+      },
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "CD",
+        "chemical_type": "C",
+        "charge_e": 0.5
+      }
+    },
+    {
+      "key": "A:29:CG",
+      "experimental": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLU",
+        "atom": "CG",
+        "chemical_type": "CH2E",
+        "charge_e": -0.1
+      },
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "CG",
+        "chemical_type": "CH2E",
+        "charge_e": 0.0
+      }
+    },
+    {
+      "key": "A:29:HA",
+      "experimental": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLU",
+        "atom": "HA",
+        "chemical_type": "HA",
+        "charge_e": 0.0
+      },
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "HA",
+        "chemical_type": "HA",
+        "charge_e": 0.0
+      }
+    },
+    {
+      "key": "A:29:HE21",
+      "experimental": null,
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "HE21",
+        "chemical_type": "H",
+        "charge_e": 0.425
+      }
+    },
+    {
+      "key": "A:29:HE22",
+      "experimental": null,
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "HE22",
+        "chemical_type": "H",
+        "charge_e": 0.425
+      }
+    },
+    {
+      "key": "A:29:HN",
+      "experimental": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLU",
+        "atom": "HN",
+        "chemical_type": "H",
+        "charge_e": 0.37
+      },
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "HN",
+        "chemical_type": "H",
+        "charge_e": 0.37
+      }
+    },
+    {
+      "key": "A:29:N",
+      "experimental": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLU",
+        "atom": "N",
+        "chemical_type": "NH1",
+        "charge_e": -0.57
+      },
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "N",
+        "chemical_type": "NH1",
+        "charge_e": -0.57
+      }
+    },
+    {
+      "key": "A:29:NE2",
+      "experimental": null,
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "NE2",
+        "chemical_type": "NH2",
+        "charge_e": -0.85
+      }
+    },
+    {
+      "key": "A:29:O",
+      "experimental": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLU",
+        "atom": "O",
+        "chemical_type": "O",
+        "charge_e": -0.5
+      },
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "O",
+        "chemical_type": "O",
+        "charge_e": -0.5
+      }
+    },
+    {
+      "key": "A:29:OE1",
+      "experimental": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLU",
+        "atom": "OE1",
+        "chemical_type": "OC",
+        "charge_e": -0.8
+      },
+      "predicted_matched": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLN",
+        "atom": "OE1",
+        "chemical_type": "O",
+        "charge_e": -0.5
+      }
+    },
+    {
+      "key": "A:29:OE2",
+      "experimental": {
+        "chain": "A",
+        "residue": 29,
+        "resname": "GLU",
+        "atom": "OE2",
+        "chemical_type": "OC",
+        "charge_e": -0.8
+      },
+      "predicted_matched": null
+    },
+    {
+      "key": "H:100:CD2",
+      "experimental": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "CD2",
+        "chemical_type": "CR1H",
+        "charge_e": 0.33
+      },
+      "predicted_matched": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "CD2",
+        "chemical_type": "CR1E",
+        "charge_e": 0.1
+      }
+    },
+    {
+      "key": "H:100:CE1",
+      "experimental": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "CE1",
+        "chemical_type": "CRHH",
+        "charge_e": 0.5
+      },
+      "predicted_matched": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "CE1",
+        "chemical_type": "CRH",
+        "charge_e": 0.41
+      }
+    },
+    {
+      "key": "H:100:CG",
+      "experimental": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "CG",
+        "chemical_type": "C5",
+        "charge_e": 0.33
+      },
+      "predicted_matched": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "CG",
+        "chemical_type": "C5",
+        "charge_e": 0.13
+      }
+    },
+    {
+      "key": "H:100:HD1",
+      "experimental": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "HD1",
+        "chemical_type": "H",
+        "charge_e": 0.46
+      },
+      "predicted_matched": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "HD1",
+        "chemical_type": "H",
+        "charge_e": 0.42
+      }
+    },
+    {
+      "key": "H:100:HE2",
+      "experimental": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "HE2",
+        "chemical_type": "H",
+        "charge_e": 0.46
+      },
+      "predicted_matched": null
+    },
+    {
+      "key": "H:100:ND1",
+      "experimental": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "ND1",
+        "chemical_type": "NH1",
+        "charge_e": -0.54
+      },
+      "predicted_matched": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "ND1",
+        "chemical_type": "NH1",
+        "charge_e": -0.57
+      }
+    },
+    {
+      "key": "H:100:NE2",
+      "experimental": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "NE2",
+        "chemical_type": "NH1",
+        "charge_e": -0.54
+      },
+      "predicted_matched": {
+        "chain": "H",
+        "residue": 100,
+        "resname": "HIS",
+        "atom": "NE2",
+        "chemical_type": "NR",
+        "charge_e": -0.49
+      }
+    },
+    {
+      "key": "H:101:C",
+      "experimental": {
+        "chain": "H",
+        "residue": 101,
+        "resname": "TRP",
+        "atom": "C",
+        "chemical_type": "C",
+        "charge_e": 0.5
+      },
+      "predicted_matched": {
+        "chain": "H",
+        "residue": 101,
+        "resname": "TRP",
+        "atom": "C",
+        "chemical_type": "CCIS",
+        "charge_e": 0.5
+      }
+    },
+    {
+      "key": "L:212:CD2",
+      "experimental": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "CD2",
+        "chemical_type": "CR1H",
+        "charge_e": 0.33
+      },
+      "predicted_matched": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "CD2",
+        "chemical_type": "CR1E",
+        "charge_e": 0.1
+      }
+    },
+    {
+      "key": "L:212:CE1",
+      "experimental": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "CE1",
+        "chemical_type": "CRHH",
+        "charge_e": 0.5
+      },
+      "predicted_matched": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "CE1",
+        "chemical_type": "CRH",
+        "charge_e": 0.41
+      }
+    },
+    {
+      "key": "L:212:CG",
+      "experimental": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "CG",
+        "chemical_type": "C5",
+        "charge_e": 0.33
+      },
+      "predicted_matched": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "CG",
+        "chemical_type": "C5",
+        "charge_e": 0.13
+      }
+    },
+    {
+      "key": "L:212:HD1",
+      "experimental": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "HD1",
+        "chemical_type": "H",
+        "charge_e": 0.46
+      },
+      "predicted_matched": null
+    },
+    {
+      "key": "L:212:HE2",
+      "experimental": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "HE2",
+        "chemical_type": "H",
+        "charge_e": 0.46
+      },
+      "predicted_matched": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "HE2",
+        "chemical_type": "H",
+        "charge_e": 0.42
+      }
+    },
+    {
+      "key": "L:212:ND1",
+      "experimental": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "ND1",
+        "chemical_type": "NH1",
+        "charge_e": -0.54
+      },
+      "predicted_matched": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "ND1",
+        "chemical_type": "NR",
+        "charge_e": -0.49
+      }
+    },
+    {
+      "key": "L:212:NE2",
+      "experimental": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "NE2",
+        "chemical_type": "NH1",
+        "charge_e": -0.54
+      },
+      "predicted_matched": {
+        "chain": "L",
+        "residue": 212,
+        "resname": "HIS",
+        "atom": "NE2",
+        "chemical_type": "NH1",
+        "charge_e": -0.57
+      }
+    }
+  ],
+  "AIR_comparison": {
+    "H": {
+      "experimental_n": 11,
+      "predicted_n": 11,
+      "common": [
+        26,
+        28,
+        31,
+        54,
+        55,
+        56,
+        57,
+        101,
+        102
+      ],
+      "experimental_only": [
+        30,
+        52
+      ],
+      "predicted_only": [
+        100,
+        107
+      ],
+      "jaccard": 0.6923076923076923
+    },
+    "L": {
+      "experimental_n": 7,
+      "predicted_n": 7,
+      "common": [
+        145,
+        146,
+        148,
+        149,
+        170,
+        210,
+        211
+      ],
+      "experimental_only": [],
+      "predicted_only": [],
+      "jaccard": 1.0
+    },
+    "A": {
+      "experimental_n": 49,
+      "predicted_n": 51,
+      "common": [
+        2,
+        4,
+        7,
+        8,
+        9,
+        11,
+        13,
+        14,
+        17,
+        23,
+        25,
+        27,
+        28,
+        29,
+        31,
+        33,
+        34,
+        42,
+        43,
+        48,
+        51,
+        53,
+        58,
+        61,
+        64,
+        65,
+        68,
+        72,
+        75,
+        76,
+        85,
+        88,
+        89,
+        92,
+        101,
+        102,
+        105,
+        107,
+        111,
+        113,
+        115
+      ],
+      "experimental_only": [
+        15,
+        36,
+        52,
+        62,
+        73,
+        87,
+        93,
+        114
+      ],
+      "predicted_only": [
+        16,
+        32,
+        60,
+        71,
+        84,
+        95,
+        97,
+        99,
+        103,
+        109
+      ],
+      "jaccard": 0.6949152542372882
+    }
+  },
+  "Fv_confidence": {
+    "id": "CTRL_atezolizumab",
+    "group": "control",
+    "VH_mean_pLDDT": 96.12364406779659,
+    "VL_mean_pLDDT": 97.00644859813083,
+    "CDR_mean_pLDDT": {
+      "CDR1.H": 94.8375,
+      "CDR2.H": 94.57,
+      "CDR3.H": 88.39181818181818,
+      "CDR1.L": 97.50833333333333,
+      "CDR2.L": 97.17,
+      "CDR3.L": 93.71555555555557
+    },
+    "pdb_sha256": "7437793302aa18adcc135597460a222010913788e0c09edee844c0bb53e859de",
+    "H_to_L_mean_PAE_A": 3.8401987961349593,
+    "L_to_H_mean_PAE_A": 3.3692737208933945
+  },
+  "scope": "Observed common backbone atoms. Each chain fitted independently except VL-after-VH. Interface defined from native 4A contacts for audit only. Side-chain RMSD excludes sequence mismatches and is not symmetry corrected. No causal attribution or binding prediction."
+}
