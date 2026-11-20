@@ -347,7 +347,7 @@ def write_partner(source, sequences, destination):
     return mapping
 
 
-def prepare_docking(row, sampling, refine, profile, native_reference=False, reference_source=None):
+def prepare_docking(row, sampling, refine, profile, native_reference=False, reference_source=None, controlled=None):
     from haddock.clis.restraints.calc_accessibility import get_accessibility, apply_cutoff
     root = ENV / 'runs' / profile / row['id']
     root.mkdir(parents=True, exist_ok=True)
@@ -385,6 +385,17 @@ def prepare_docking(row, sampling, refine, profile, native_reference=False, refe
     active = {chain: sorted(set(i for name, values in cdrs_global.items()
                                if name.endswith('.' + chain) for i in values)
                            & set(accessible_fv[chain])) for chain in ('H', 'L')}
+    if controlled:
+        if not native_reference or not profile.startswith('reference-pilot-controlled-'):
+            raise ValueError('Controlled policy is reserved for separate control-validation profiles')
+        fixed = controlled['fixed_AIR']
+        for chain in ('H', 'L'):
+            if not set(fixed[chain]) <= set(active[chain]):
+                raise ValueError(f'Fixed CDR restraints are not exposed in this input: {chain}')
+        if not set(fixed['A']) <= set(accessible_ag):
+            raise ValueError('Fixed antigen restraints are not exposed in this input')
+        active = {chain: sorted(fixed[chain]) for chain in ('H', 'L')}
+        accessible_ag = sorted(fixed['A'])
     if not accessible_ag or not all(active.values()):
         raise ValueError(f"No exposed antigen/CDR residues for {row['id']}")
     # Official HADDOCK representation: one segid for the Fv docking body, with
@@ -399,7 +410,11 @@ def prepare_docking(row, sampling, refine, profile, native_reference=False, refe
     antibody.write_text('\n'.join(merged) + '\nEND\n', encoding='ascii')
     maps['docking_Fv_chain'] = 'B'
     maps['VH_end_global_residue'] = len(row['VH_AA'])
-    maps['backbone_break'] = [len(row['VH_AA']), len(row['VH_AA']) + 1]
+    heavy_ids = [int(line[22:26]) for line in (root / 'antibody_HL.pdb').read_text().splitlines()
+                 if line.startswith('ATOM') and line[21] == 'H']
+    light_ids = [int(line[22:26]) for line in (root / 'antibody_HL.pdb').read_text().splitlines()
+                 if line.startswith('ATOM') and line[21] == 'L']
+    maps['backbone_break'] = [max(heavy_ids), min(light_ids)]
     # CNS truncates long input lines: put each residue alternative on its own line.
     ag_selection = '\n         or '.join(f'resid {i}' for i in accessible_ag)
     lines = [f'assign (segid B and resid {i})\n'
@@ -462,6 +477,10 @@ ilrmsd = false
 dockq = false
 global_rmsd = false
 '''
+    if controlled:
+        config = config.replace('[topoaa]\n', controlled_topology_block(controlled['histidines']))
+        settings['controlled_policy'] = controlled
+        settings['native_reference'] = controlled['antibody_source'] == 'experimental'
     (root / 'workflow.cfg').write_text(config, encoding='ascii')
     settings['config_sha256'] = digest(root / 'workflow.cfg')
     old = root / 'settings.json'
@@ -601,6 +620,210 @@ def evaluate_control_poses(row, profile, condition):
               'scope': 'Fnat uses 5A contacts, iRMSD uses 10A interface; internal H-L contacts excluded. Top100 best is oracle diagnostic, not prospective selection.'}
     write_json(cached, result)
     return result
+
+
+def controlled_topology_block(histidines):
+    """A fixed modeling policy, not a claim about measured physiological protonation."""
+    lines = ['[topoaa]', 'autohis = false', 'hydrogen_build = "all"', 'iniseed = 42']
+    for index, residues in enumerate(histidines, 1):
+        ids = sorted(set(residues))
+        lines += [f'[topoaa.mol{index}]', 'charged_nter = false', 'charged_cter = false',
+                  'nhisd = 0', f'nhise = {len(ids)}']
+        lines += [f'hise_{n} = {residue}' for n, residue in enumerate(ids, 1)]
+    return '\n'.join(lines) + '\n'
+
+
+def controlled_partner_structure(fv_source, antigen_source, destination):
+    """Keep Fv coordinates, use fixed experimental antigen; discard H/D and OXT."""
+    from Bio.PDB import PDBParser, PDBIO, Structure, Model
+    parser = PDBParser(QUIET=True)
+    fv = parser.get_structure('fv', fv_source)[0]
+    antigen = parser.get_structure('antigen', antigen_source)[0]
+    result = Structure.Structure('controlled'); result.add(Model.Model(0))
+    for chain, model in [('H', fv), ('L', fv), ('A', antigen)]:
+        copied = model[chain].copy()
+        for residue in copied:
+            for atom in list(residue):
+                if atom.element in {'H', 'D'} or atom.name == 'OXT': residue.detach_child(atom.id)
+        result[0].add(copied)
+    writer = PDBIO(); writer.set_structure(result); writer.save(str(destination))
+
+
+def read_controlled_topology(folder, heavy_length):
+    import io
+    from Bio.PDB.MMCIF2Dict import MMCIF2Dict
+    atoms, bonds, hashes = {}, set(), {}
+    for path in sorted(Path(folder).glob('*.psf*')):
+        if not (path.name.endswith('.psf') or path.name.endswith('.psf.gz')): continue
+        text = gzip.open(path, 'rt').read() if path.suffix == '.gz' else path.read_text()
+        data = MMCIF2Dict(io.StringIO(text)); id_map = {}
+        fields = ['id', 'segment_id', 'residue_id', 'residue_name', 'atom_name', 'chemical_type', 'charge', 'atom_mass']
+        for atom_id, segment, resid, resname, name, chemical, charge, mass in zip(*(data['_cns_mtf_atom.'+f] for f in fields)):
+            if atom_id == '-1': continue
+            number = int(resid)
+            chain = ('H' if number <= heavy_length else 'L') if segment == 'B' else segment
+            key = f'{chain}:{number}:{name}'
+            if key in atoms: raise ValueError(f'Duplicate processed atom: {key}')
+            atoms[key] = {'resname': resname, 'type': chemical, 'charge': float(charge), 'mass': float(mass)}
+            id_map[atom_id] = key
+        for first, second in zip(data['_cns_mtf_bond.id[1]'], data['_cns_mtf_bond.id[2]']):
+            if first == second == '-1': continue
+            bonds.add(tuple(sorted((id_map[first], id_map[second]))))
+        hashes[path.name] = digest(path)
+    if not atoms or not bonds: raise ValueError('Processed topology atoms/bonds missing')
+    return {'atoms': atoms, 'bonds': sorted([list(edge) for edge in bonds]), 'PSF_sha256': hashes}
+
+
+def compare_controlled_chemistry(first, second):
+    keys = set(first['atoms']) | set(second['atoms'])
+    changed = [key for key in sorted(keys) if first['atoms'].get(key) != second['atoms'].get(key)]
+    bonds1, bonds2 = {tuple(e) for e in first['bonds']}, {tuple(e) for e in second['bonds']}
+    structural_cis = []
+    for key in changed:
+        one, two = first['atoms'].get(key), second['atoms'].get(key)
+        if one and two and key.endswith(':C') and {one.get('type'), two.get('type')} == {'C', 'CCIS'}:
+            if {k: v for k, v in one.items() if k != 'type'} == {k: v for k, v in two.items() if k != 'type'}:
+                structural_cis.append(key)
+    return {'identical': not changed and bonds1 == bonds2, 'atom_differences': changed,
+            'protonation_charge_connectivity_identical': set(changed) == set(structural_cis) and bonds1 == bonds2,
+            'structural_cis_type_differences': structural_cis,
+            'experimental_only_bonds': sorted(bonds1 - bonds2), 'predicted_only_bonds': sorted(bonds2 - bonds1),
+            'experimental_atoms': len(first['atoms']), 'predicted_atoms': len(second['atoms']),
+            'experimental_charge_e': sum(a['charge'] for a in first['atoms'].values()),
+            'predicted_charge_e': sum(a['charge'] for a in second['atoms'].values())}
+
+
+def prepare_controlled_controls():
+    """Prepare four matched conditions and run topology only; never dock here."""
+    from Bio.PDB import PDBParser, PDBIO, Select
+    from Bio.SeqUtils import seq1
+    from haddock.clis.restraints.calc_accessibility import get_accessibility, apply_cutoff
+    directory = OUTPUT / 'controlled_controls_20261120'; directory.mkdir(exist_ok=True)
+    state = {'status': 'preparing', 'seed': 42, 'ncores': 6, 'sampling': 1000, 'refine': 100,
+             'docking_started': False, 'pairs': [], 'runner_sha256': digest(Path(__file__)),
+             'policy': 'Per-control fixed cognate experimental antigen; same observed sequence/mapped residues/AIR; all histidines neutral HISE; uncharged termini. Input Fv conformations and their internal-distance/cis-specific typing consequences are preserved and reported. Not measured physiological protonation.'}
+    write_json(directory / 'state.json', state)
+    parser = PDBParser(QUIET=True)
+    for row in read_json(OUTPUT / 'manifest.json')['candidates']:
+        if row['group'] != 'control': continue
+        native = OUTPUT / 'references' / row['id'] / 'resolved_Fv_PDL1.pdb'
+        predicted = OUTPUT / 'control_validation/inputs' / row['id'] / 'predicted_matched_Fv_PDL1.pdb'
+        inputs = directory / row['id']; inputs.mkdir(exist_ok=True)
+        sources = {}
+        for kind, fv in [('experimental', native), ('predicted', predicted)]:
+            path = inputs / f'{kind}_Fv_fixed_antigen.pdb'
+            controlled_partner_structure(fv, native, path); sources[kind] = path
+        models = {kind: parser.get_structure(kind, path)[0] for kind, path in sources.items()}
+        sequence_maps = {kind: {chain.id: [(r.id[1], seq1(r.resname)) for r in chain if r.id[0] == ' ']
+                               for chain in model} for kind, model in models.items()}
+        if sequence_maps['experimental'] != sequence_maps['predicted']:
+            raise ValueError('Controlled inputs do not have identical residue identities/numbering')
+        missing_residues = {}
+        for chain, key in [('H', 'VH_AA'), ('L', 'VL_AA')]:
+            offset = len(row['VH_AA']) if chain == 'L' else 0
+            observed = {index - offset: aa for index, aa in sequence_maps['experimental'][chain]}
+            if any(not 1 <= index <= len(row[key]) or row[key][index - 1] != aa for index, aa in observed.items()):
+                raise ValueError('Controlled antibody residue identity differs from manifest')
+            missing_residues[chain] = sorted(set(range(1, len(row[key]) + 1)) - set(observed))
+        # Exact coordinate/identity equality of the common antigen, not just sequence equality.
+        def antigen_atoms(model):
+            return [(r.id, a.name, tuple(float(v) for v in a.coord)) for r in model['A'] for a in r]
+        if antigen_atoms(models['experimental']) != antigen_atoms(models['predicted']):
+            raise ValueError('Antigen coordinates differ between controlled inputs')
+        class Chains(Select):
+            def __init__(self, names): self.names = names
+            def accept_chain(self, chain): return chain.id in self.names
+        access = {}
+        for kind, model in models.items():
+            writer = PDBIO(); writer.set_structure(model)
+            fv_path, ag_path = inputs / f'{kind}_Fv_isolated.pdb', inputs / f'{kind}_antigen_isolated.pdb'
+            writer.save(str(fv_path), Chains({'H', 'L'})); writer.save(str(ag_path), Chains({'A'}))
+            # FreeSASA's C API rejects non-ASCII paths; keep a short-lived ASCII copy.
+            import tempfile
+            with tempfile.TemporaryDirectory(prefix='pdl1-controlled-access-') as temporary:
+                temp_fv, temp_ag = Path(temporary) / 'fv.pdb', Path(temporary) / 'antigen.pdb'
+                shutil.copy2(fv_path, temp_fv); shutil.copy2(ag_path, temp_ag)
+                access[kind] = apply_cutoff(get_accessibility(str(temp_fv)), .4)
+                access[kind]['A'] = apply_cutoff(get_accessibility(str(temp_ag)), .4)['A']
+        cdr = cdr_positions(row); fixed = {}
+        for chain in ('H', 'L'):
+            positions = {i + (len(row['VH_AA']) if chain == 'L' else 0)
+                         for name, ids in cdr.items() if name.endswith('.' + chain) for i in ids}
+            fixed[chain] = sorted(positions & set(access['experimental'][chain]) & set(access['predicted'][chain]))
+        fixed['A'] = sorted(set(access['experimental']['A']) & set(access['predicted']['A']))
+        if not all(fixed.values()): raise ValueError('No shared exposed restraint residues')
+        histidines = [[r.id[1] for chain in ('H', 'L') for r in models['experimental'][chain] if r.resname == 'HIS'],
+                      [r.id[1] for r in models['experimental']['A'] if r.resname == 'HIS']]
+        roots, chemistry = {}, {}
+        for kind in ('experimental', 'predicted'):
+            profile = 'reference-pilot-controlled-20261120-' + kind
+            policy = {'antibody_source': kind, 'fixed_AIR': fixed, 'histidines': histidines,
+                      'histidine_policy': 'all neutral HISE, autohis disabled',
+                      'antigen_policy': 'same cognate experimental antigen for both Fv inputs',
+                      'internal_restraints': 'same restrain_bodies algorithm/default seed917; input-dependent target distances retained, not frozen to experimental geometry'}
+            root = prepare_docking(row, 1000, 100, profile, True, reference_source=sources[kind], controlled=policy)
+            roots[kind] = root
+            check = (root / 'workflow.cfg').read_text().split('[rigidbody]')[0].replace('run_dir = "run"', 'run_dir = "topology_check"')
+            cfg = root / 'topology_check.cfg'; cfg.write_text(check, encoding='ascii')
+            marker = root / 'topology_check_ready.json'
+            signature = {'config_sha256': digest(cfg), 'settings_sha256': digest(root / 'settings.json')}
+            if marker.exists():
+                if read_json(marker)['signature'] != signature: raise RuntimeError('Topology preflight settings changed')
+            else:
+                if (root / 'topology_check').exists(): raise RuntimeError(f'Interrupted topology preflight: {root}')
+                run_logged([ENV / 'docking/bin/haddock3', cfg.name], root / 'topology_check.log', cwd=root,
+                           extra_env={'PATH': str(ENV / 'docking/bin') + ':' + os.environ.get('PATH', '')})
+            chemistry[kind] = read_controlled_topology(root / 'topology_check/0_topoaa', len(row['VH_AA']))
+            histidine_checks = []
+            for molecule, ids in enumerate(histidines):
+                for number in ids:
+                    chain = ('H' if number <= len(row['VH_AA']) else 'L') if molecule == 0 else 'A'
+                    prefix = f'{chain}:{number}:'
+                    atoms = {key.rsplit(':', 1)[-1]: value for key, value in chemistry[kind]['atoms'].items() if key.startswith(prefix)}
+                    charge = sum(value['charge'] for value in atoms.values())
+                    valid = 'HE2' in atoms and 'HD1' not in atoms and abs(charge) < 1e-5
+                    if not valid: raise ValueError(f'Processed histidine is not neutral HISE: {prefix}')
+                    histidine_checks.append({'residue': f'{chain}:{number}', 'HISE_verified': True, 'charge_e': charge})
+            chemistry[kind]['histidine_policy_checks'] = histidine_checks
+            write_json(root / 'topology_chemistry.json', chemistry[kind])
+            if marker.exists() and read_json(marker)['PSF_sha256'] != chemistry[kind]['PSF_sha256']:
+                raise RuntimeError('Cached topology PSF files changed')
+            write_json(marker, {'signature': signature, 'PSF_sha256': chemistry[kind]['PSF_sha256']})
+        report = compare_controlled_chemistry(chemistry['experimental'], chemistry['predicted'])
+        from Bio.PDB import calc_dihedral
+        import math
+        cis_geometry = []
+        for key in report['structural_cis_type_differences']:
+            chain, residue, _ = key.split(':'); residue = int(residue); angles = {}
+            for kind, model in models.items():
+                first, second = model[chain][residue], model[chain][residue + 1]
+                omega = math.degrees(calc_dihedral(first['CA'].get_vector(), first['C'].get_vector(),
+                                                   second['N'].get_vector(), second['CA'].get_vector()))
+                if (chemistry[kind]['atoms'][key]['type'] == 'CCIS') != (abs(omega) < 90):
+                    raise ValueError('Cis-specific atom typing is inconsistent with measured input geometry')
+                angles[kind] = float(omega)
+            cis_geometry.append({'atom': key, 'omega_degrees': angles,
+                                 'scope': 'Input cis/trans structural difference preserved; charges/masses/connectivity equal, force-field C/CCIS types differ.'})
+        report.update({'id': row['id'], 'fixed_AIR': fixed, 'histidines': histidines,
+                       'preserved_structural_cis_differences': cis_geometry,
+                       'resolved_sequence_maps': sequence_maps['experimental'],
+                       'source_sha256': {'experimental_complex': digest(native), 'predicted_matched_complex': digest(predicted)},
+                       'sequence_and_residue_mapping_identical': True,
+                       'unresolved_antibody_sequence_positions_omitted_in_both': missing_residues,
+                       'antigen_PDB_identical': digest(roots['experimental'] / 'antigen.pdb') == digest(roots['predicted'] / 'antigen.pdb'),
+                       'AIR_table_identical': digest(roots['experimental'] / 'ambig.tbl') == digest(roots['predicted'] / 'ambig.tbl'),
+                       'topology_policy_identical': (roots['experimental'] / 'topology_check.cfg').read_text() == (roots['predicted'] / 'topology_check.cfg').read_text(),
+                       'internal_Fv_distance_targets_identical': digest(roots['experimental'] / 'unambig.tbl') == digest(roots['predicted'] / 'unambig.tbl'),
+                       'root_paths': {k: str(v) for k, v in roots.items()},
+                       'sequence_scope': 'Same within each antibody control pair; two controls retain their own experimental PD-L1 conformations/resolved scopes.'})
+        write_json(inputs / 'normalization_report.json', report)
+        if not all(report[k] for k in ('protonation_charge_connectivity_identical', 'antigen_PDB_identical', 'AIR_table_identical', 'topology_policy_identical')):
+            state.update(status='failed', failed_pair=report); write_json(directory / 'state.json', state)
+            raise RuntimeError('Controlled sequence/antigen/AIR/chemistry matching failed')
+        state['pairs'].append(report); write_json(directory / 'state.json', state)
+    state.update(status='ready', docking_started=False)
+    write_json(directory / 'state.json', state)
+    print('Four controlled inputs READY: identical per-pair sequence/antigen/AIR/protonation/charges/bonds. Input cis-specific atom types are separately reported. Topology only, no docking.', flush=True)
 
 
 def control_selection_orders(poses, cluster_order, cluster_representatives):
@@ -1846,7 +2069,7 @@ files.download(archive)
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'validate-controls', 'audit-controls', 'make-colab', 'import-colab', 'run-main', 'resume-main', 'resume-rigidbody-worker', 'resume-flexref', 'resume-flexref-worker'])
+    parser.add_argument('mode', choices=['prepare', 'fold', 'fold-batch', 'dock', 'analyze', 'status', 'fold-summary', 'reference-controls', 'validate-controls', 'audit-controls', 'prepare-controlled-controls', 'make-colab', 'import-colab', 'run-main', 'resume-main', 'resume-rigidbody-worker', 'resume-flexref', 'resume-flexref-worker'])
     parser.add_argument('--limit', type=int)
     parser.add_argument('--ids', nargs='+')
     parser.add_argument('--profile', default='pilot')
@@ -1873,6 +2096,8 @@ def main():
         validate_controls()
     elif args.mode == 'audit-controls':
         audit_controls()
+    elif args.mode == 'prepare-controlled-controls':
+        prepare_controlled_controls()
     elif args.mode == 'make-colab':
         make_colab()
     elif args.mode == 'import-colab':

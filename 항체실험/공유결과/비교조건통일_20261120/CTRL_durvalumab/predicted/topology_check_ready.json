@@ -1,0 +1,10 @@
+{
+  "signature": {
+    "config_sha256": "d9fd93488b5f1a9d0b0811a2b70620eacbac63cd16273af36e1c58b3d86a21a8",
+    "settings_sha256": "8be8f6cd034a2bfd5864fef6155939fd541e74be54ad837eb2fea1078cb715f1"
+  },
+  "PSF_sha256": {
+    "antibody_haddock.psf.gz": "c2b64a74284d2633940d0c58a384cdf7a1dd6816fabc97898fdb1116ded6dfb7",
+    "antigen_haddock.psf.gz": "27d83a8062f56b1b69bdea9c26d029641d54d32f5fd42fc58b930feb2f670ab7"
+  }
+}
